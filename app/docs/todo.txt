@@ -7,4 +7,5 @@
   see http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Covariance
 - allow to enter digits and period, eg 0.123= in prog mode
 - handle GTO, RST properly etc... as they that have different behaviour in calc or prog mode
-  
+
+- review/fix application css and js
