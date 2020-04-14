@@ -62,6 +62,7 @@ function set_token_pattern($tokens)
     // captures numerics, see php.net/manual/en/language.types.float.php
     $pattern[] = '[0-9]*[\.][0-9]+|[0-9]+[\.][0-9]*'; // DNUM
     $pattern[] = '[0-9]+'; // LNUM
+    // TODO: capture EE format, EXPONENT_DNUM (({LNUM} | {DNUM}) [eE][+-]? {LNUM}), see ti57.pdf page 2-10
 
     // adds pattern to captures anything else that is not spaces
     $pattern[] = '[^\s]+';

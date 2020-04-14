@@ -1,13 +1,4 @@
-from flask import (
-    Blueprint,
-    flash,
-    make_response,
-    redirect,
-    render_template,
-    request,
-    session,
-    url_for,
-)
+from flask import Blueprint, render_template
 from flask_babel import _
 
 bp = Blueprint("program", __name__)
