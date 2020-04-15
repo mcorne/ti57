@@ -103,7 +103,7 @@ tokens = """
 "2nd s2"           : {"ti-code": "  80"  , "action": "php_code"              , "statement": "x = (mem[2] - mem[1] * mem[1] / mem[0]) / mem[0])"}, # var(Y) = sum(Y^2) / N - avg(Y)
 "INV 2nd s2"       : {"ti-code": "- 80"  , "action": "php_code"              , "statement": "x = (mem[4] - mem[3] * mem[3] / mem[0]) / mem[0])"}, # var(X) = sum(X^2) / N - avg(X)
 "R/S"              : {"ti-code": "  81"},
-#"."               : {"ti-code": "  83"},
+#"."               : {"ti-code": "  83"}, # Not a token as a single character
 "+/-"              : {"ti-code": "  84"  , "action": "php_code"              , "statement": "x = -x"},
 "="                : {"ti-code": "  85"  , "action": "equality"              , "type": "="},
 "2nd Lbl 0"        : {"ti-code": "  86 0", "action": "php_code"              , "statement": "lbl_0:"},
@@ -113,7 +113,7 @@ tokens = """
 "2nd x"            : {"ti-code": "  89"  , "action": "php_code"              , "statement": "x = mem[1] / mem[0]"}, # avg(Y) = sum(Y) / N
 "INV 2nd x"        : {"ti-code": "- 89"  , "action": "php_code"              , "statement": "x = mem[3] / mem[0]"}, # avg(X) = sum(X) / N
 
-# The following tokens must be after  the tokens that use them, eg "+/-"
+# Operators must be after the tokens because some of them use them, ex. "+/-"
 "/"                : {"ti-code": "  45"  , "action": "multiplication"        , "type": "/"},
 "-"                : {"ti-code": "  65"  , "action": "addition"              , "type": "-"},
 "+"                : {"ti-code": "  75"  , "action": "addition"              , "type": "+"},
