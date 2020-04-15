@@ -1,11 +1,11 @@
 - allow array of code lines in token.php, and remove unnecessary actions
 - use generic token as keys, eg "exp" instead of "INV 2nd ln" so it can be mapped easily for other calculators
-- handle memory as a pattern to capture any number, eg "STO [0-7]"
+- handle memory, goto, label as a pattern to capture any number, eg "STO [0-7]"
 - shift statements group to the right 4 spaces
 - use "statement" instead of "code_line", "group" instead of "code_lines", "script" instead of "code"
 - add a covariance token, covariance = q = (sum(X*Y) - sum(X) * sum(Y) / n) / n
   see http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Covariance
-- allow to enter digits and period, eg 0.123= in prog mode
-- handle GTO, RST properly etc... as they that have different behaviour in calc or prog mode
+- handle RST
 
 - review/fix application css and js
+- import time, math, goto (https://pypi.org/project/goto-statement/) along with internal functions
