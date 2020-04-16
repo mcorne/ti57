@@ -25,7 +25,7 @@ class Generator:
         self.process_prev_equality()
 
         if self.prev_operator != "(":
-            raise Exception("unexpected closing parenthesis")
+            raise Exception("Unexpected closing parenthesis")
 
         self.operators.pop()
 

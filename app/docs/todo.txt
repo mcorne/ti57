@@ -9,4 +9,4 @@
 
 - review/fix application css and js
 - import time, math, goto (https://pypi.org/project/goto-statement/) along with internal functions
-- use finditer() (see https://docs.python.org/3.8/library/re.html) in parser
+- replace string.format() with f""
