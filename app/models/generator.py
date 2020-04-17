@@ -111,7 +111,7 @@ return calculator_state()
         self.operators.append(self.token["type"])
 
     def add_subroutines(self, code):
-        numbers = re.findall("sbr_(\d+)", code)
+        numbers = re.findall(r"sbr_([0-9]]+)", code, re.A)
 
         for number in numbers:
             match = re.search(
@@ -130,8 +130,8 @@ return calculator_state()
 
         return code
 
-    def generate_code(self, code, debug=False):
-        code_lines = self.process_tokens(code, debug)
+    def generate_code(self, code):
+        code_lines = self.process_tokens(code)
         code = self.implode_code_lines(code_lines)
         code = self.add_subroutines(code)
 
@@ -178,7 +178,7 @@ return calculator_state()
             self.code_line.append("x = y * math.pow(10, x)")
             self.update_prev_operator()
 
-    def process_tokens(self, code, debug=False):
+    def process_tokens(self, code):
         self.operators = []
         is_statement_group = False
         code_lines = []
@@ -195,9 +195,6 @@ return calculator_state()
             self.code_line[
                 0
             ] = f"{self.code_line[0]: <27} # {self.token['value']: <12} #{self.token['step']: <2} {ti_code}"
-
-            if debug:
-                self.code_line.append(f"trace[{self.token['step']}] = fix(x)")
 
             if is_statement_group:
                 # TODO: indent statements 4 spaces

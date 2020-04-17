@@ -4,8 +4,8 @@ from tokens import tokens
 
 
 class Parser:
-    DECIMAL = r"(\d*\.\d+)|(\d+\.\d*)"
-    INTEGER = r"\d+"
+    DECIMAL = r"([0-9]*\.[0-9]+)|([0-9]+\.[0-9]*)"
+    INTEGER = r"[0-9]+"
     # https://docs.python.org/3/howto/regex.html#regex-howto
     METACHARACTERS = r"[.\^$*+?{}[\]|()]"
     MISMATCH = r"\S+"
