@@ -1,6 +1,6 @@
 import re
 from parser import Parser
-from tokens import tokens
+from ti57 import instruction_set
 
 
 class Generator:
@@ -183,8 +183,8 @@ return calculator_state()
         self.operators = []
         is_statement_group = False
         code_lines = []
-        parser = Parser(code, tokens)
-        for self.token in parser.next_token():
+        parser = Parser(code, instruction_set)
+        for self.token in parser.next_instruction():
             self.code_line = []
             action = getattr(self, "action_" + self.token["action"])
             action()
