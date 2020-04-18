@@ -110,7 +110,7 @@ tokens = """
 "SBR 7"            : {"ti_code": "  61 1", "action": "python_code"           , "statement": "sbr_7()"},
 "SBR 8"            : {"ti_code": "  61 1", "action": "python_code"           , "statement": "sbr_8()"},
 "SBR 9"            : {"ti_code": "  61 1", "action": "python_code"           , "statement": "sbr_9()"},
-"INV SBR"          : {"ti_code": "- 61"  , "action": "php_code"},
+"INV SBR"          : {"ti_code": "- 61"  , "action": "python_code"},
 "2nd x=t"          : {"ti_code": "  66"  , "action": "python_code"           , "statement": "if x == sto[7]:"},
 "INV 2nd x=t"      : {"ti_code": "- 66"  , "action": "python_code"           , "statement": "if x != sto[7]:"},
 "2nd Grd"          : {"ti_code": "  70"  , "action": "python_code"           , "statement": "unit = 'Grd'"},

@@ -1,5 +1,6 @@
 import re
 from parser import Parser
+from tokens import tokens
 
 
 class Generator:
@@ -182,7 +183,7 @@ return calculator_state()
         self.operators = []
         is_statement_group = False
         code_lines = []
-        parser = Parser(code)
+        parser = Parser(code, tokens)
         for self.token in parser.next_token():
             self.code_line = []
             action = getattr(self, "action_" + self.token["action"])
@@ -223,5 +224,5 @@ code = """
     45 2nd sin =
     """
 g = Generator()
-python_code = g.generate_code(code, False)
+python_code = g.generate_code(code)
 print(python_code)

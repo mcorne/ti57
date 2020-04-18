@@ -1,7 +1,5 @@
 import re
 
-from tokens import tokens
-
 
 class Parser:
     DECIMAL = r"([0-9]*\.[0-9]+)|([0-9]+\.[0-9]*)"
@@ -10,7 +8,7 @@ class Parser:
     METACHARACTERS = r"[.\^$*+?{}[\]|()]"
     MISMATCH = r"\S+"
 
-    def __init__(self, code):
+    def __init__(self, code, tokens):
         self.code = code
         self.lower_case_tokens = self.get_lower_case_tokens(tokens)
         self.token_patterns = self.get_token_patterns(tokens)
