@@ -1,8 +1,7 @@
 - allow array of code lines in token.php, and remove unnecessary actions
 - use generic token as keys, eg "exp" instead of "INV 2nd ln" so it can be mapped easily for other calculators
 - handle memory, goto, label as a pattern to capture any number, eg "STO [0-7]"
-- shift statements group to the right 4 spaces
-- use "statement" instead of "code_line", "group" instead of "code_lines", "script" instead of "code"
+- shift code inside if etc.4 spaces to the right
 - add a covariance token, covariance = q = (sum(X*Y) - sum(X) * sum(Y) / n) / n
   see http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Covariance
 - handle RST
