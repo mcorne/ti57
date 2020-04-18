@@ -6,12 +6,11 @@ from ti57 import instruction_set
 
 class Generator:
     CODE = """
-import internal_functions
-init_calculator()
+from calculator import *
 
 {}
 
-return calculator_state()
+print(state())
 """
 
     SUBROUTINE = """
@@ -214,14 +213,11 @@ return calculator_state()
 
 instructions = """
     500 STO 1
-    0.015 STO 2
-    3 STO 3
-    RCL 1 *
-    ( RCL 2 /
-    ( 1 - ( 1 + RCL 2 )
-    Y^X RCL 3 +/- ) ) =
-    45 2nd sin =
+    2 STO 2
+    RCL 1 * RCL 2 =
     """
 g = Generator()
 code = g.generate_code(instructions)
+with open("app/models/test.py", "w") as file:
+    file.write(code)
 print(code)
