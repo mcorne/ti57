@@ -55,7 +55,7 @@ return calculator_state()
         self.code_line.append("elif sto[0] < 0:")
         self.code_line.append("    sto[0] += 1")
         self.code_line.append("")
-        self.code_line.append(self.token["statement"])
+        self.code_line.append(self.token["python"])
 
     def action_equality(self):
         self.process_prev_equality()
@@ -86,8 +86,8 @@ return calculator_state()
         self.process_prev_power()
         self.add_operation()
 
-    def action_python_code(self):
-        self.code_line.append(self.token["statement"])
+    def action_python(self):
+        self.code_line.append(self.token["python"])
 
     def action_rectangular_to_polar(self):
         self.code_line.append("y = x")
@@ -202,8 +202,8 @@ return calculator_state()
                 self.code_line.append("")
                 is_statement_group = False
 
-            if "statement" in self.token:
-                is_statement_group = self.token["statement"][-1] == ":"
+            if "python" in self.token:
+                is_statement_group = self.token["python"][-1] == ":"
 
             code_lines.append(self.code_line)
 
