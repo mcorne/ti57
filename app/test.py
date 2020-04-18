@@ -28,13 +28,3 @@
 
 # a = range(1, 10)
 # print(a)
-
-import re, math
-
-a = re.fullmatch(
-    r"(?P<sign>[+-])?(?P<degree>[0-9]+)\.?(?P<minute>[0-9]{1,2})?(?P<second>[0-9]{1,2})?(?P<remainder>[0-9]*)",
-    "12",
-)
-b = a.groupdict()
-degrees = math.radians("123")
-print(b)

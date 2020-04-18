@@ -12,24 +12,25 @@ class Calculator:
         self.x = 0  # Reset display
 
     def degrees2dms(self, degrees):
+        degrees = float(degrees)
         is_positive = degrees >= 0
         if not is_positive:
             degrees = -degrees
 
-        int_degrees = int(degrees)
-        remainder = (float(degrees) - int_degrees) * 60
-        minutes = int(remainder)
-        seconds = (remainder - minutes) * 60
+        minutes, seconds = divmod(degrees * 3600, 60)
+        degrees, minutes = divmod(minutes, 60)
+        # Internal mantissa has 11 digits on TI-57 and 13 on TI-59
+        seconds = f"{seconds:016.13f}".replace(".", "")
 
-        dms = float(f"{int_degrees}.{minutes}{seconds}")
+        dms = f"{int(degrees)}.{int(minutes):02}{seconds}".rstrip("0")
         if not is_positive:
-            dms = -dms
+            dms = "-" + dms
         return dms
 
     def dms2degrees(self, dms):
         match = re.fullmatch(
             r"(?P<sign>[+-])?(?P<degrees>[0-9]+)\.?(?P<minutes>[0-9]{1,2})?(?P<seconds>[0-9]{1,2})?(?P<remainder>[0-9]*)",
-            dms,
+            str(dms),
         )
         if match is None:
             raise Exception(f"Invalid DMS angle {dms}")
@@ -37,20 +38,20 @@ class Calculator:
         angle = match.groupdict()
         degrees = float(angle["degrees"])
 
-        if "minutes" in angle:
+        if angle["minutes"]:
             if len(angle["minutes"]) == 1:
-                angle["minutes"] += 0
+                angle["minutes"] += "0"
             degrees += float(angle["minutes"]) / 60
 
-        if "seconds" in angle:
+        if angle["seconds"]:
             if len(angle["seconds"]) == 1:
-                angle["seconds"] += 0
+                angle["seconds"] += "0"
             degrees += float(angle["seconds"]) / 3600
 
-        if "remainder" in angle:
+        if angle["remainder"]:
             degrees += float("0." + angle["remainder"]) / 3600
 
-        if "sign" in angle and angle["sign"] == "-":
+        if angle["sign"] == "-":
             degrees = -degrees
         return degrees
 
