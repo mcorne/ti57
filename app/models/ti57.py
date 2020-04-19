@@ -112,16 +112,16 @@ instruction_set = """
 "SBR 7"            : {"ti_code": "  61 1", "action": "python"                , "python": "sbr_7()"},
 "SBR 8"            : {"ti_code": "  61 1", "action": "python"                , "python": "sbr_8()"},
 "SBR 9"            : {"ti_code": "  61 1", "action": "python"                , "python": "sbr_9()"},
-"INV SBR"          : {"ti_code": "- 61"  , "action": "python"},
+"INV SBR"          : {"ti_code": "- 61"  , "action": None,},
 "2nd x=t"          : {"ti_code": "  66"  , "action": "python"                , "python": "if x == sto[7]:"},
 "INV 2nd x=t"      : {"ti_code": "- 66"  , "action": "python"                , "python": "if x != sto[7]:"},
 "2nd Grd"          : {"ti_code": "  70"  , "action": "python"                , "python": "unit = 'Grd'"},
-"RST"              : {"ti_code": "  71"},
+"RST"              : {"ti_code": "  71"}, # TODO: process !!!
 "2nd x>=t"         : {"ti_code": "  76"  , "action": "python"                , "python": "if x >= sto[7]:"},
 "INV 2nd x>=t"     : {"ti_code": "- 76"  , "action": "python"                , "python": "if x < sto[7]:"},
-"2nd s2"           : {"ti_code": "  80"  , "action": "python"                , "python": "x = (sto[2] - sto[1] * sto[1] / sto[0]) / sto[0])"}, # var(Y) = sum(Y^2) / N - avg(Y)
-"INV 2nd s2"       : {"ti_code": "- 80"  , "action": "python"                , "python": "x = (sto[4] - sto[3] * sto[3] / sto[0]) / sto[0])"}, # var(X) = sum(X^2) / N - avg(X)
-"R/S"              : {"ti_code": "  81"},
+"2nd s2"           : {"ti_code": "  80"  , "action": "python"                , "python": "x = (sto[2] - sto[1] * sto[1] / sto[0]) / sto[0]"}, # var(Y) = sum(Y^2) / N - avg(Y)
+"INV 2nd s2"       : {"ti_code": "- 80"  , "action": "python"                , "python": "x = (sto[4] - sto[3] * sto[3] / sto[0]) / sto[0]"}, # var(X) = sum(X^2) / N - avg(X)
+"R/S"              : {"ti_code": "  81"}, # TODO: process !!!
 #"."               : {"ti_code": "  83"}, # Not a token as a single character
 "+/-"              : {"ti_code": "  84"  , "action": "python"                , "python": "x = -x"},
 "="                : {"ti_code": "  85"  , "action": "equality"              , "type": "="},
@@ -136,7 +136,7 @@ instruction_set = """
 "2nd Lbl 8"        : {"ti_code": "  86 1", "action": "python"                , "python": "label .label_8"},
 "2nd Lbl 9"        : {"ti_code": "  86 1", "action": "python"                , "python": "label .label_9"},
 "2nd S+"           : {"ti_code": "  88"  , "action": "sum"},
-"INV 2nd S+"       : {"ti_code": "- 88"},
+"INV 2nd S+"       : {"ti_code": "- 88"}, # TODO: process !!!
 "2nd x"            : {"ti_code": "  89"  , "action": "python"                , "python": "x = sto[1] / sto[0]"}, # avg(Y) = sum(Y) / N
 "INV 2nd x"        : {"ti_code": "- 89"  , "action": "python"                , "python": "x = sto[3] / sto[0]"}, # avg(X) = sum(X) / N
 

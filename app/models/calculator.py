@@ -11,6 +11,7 @@ sto = [0 for i in range(8)]  # Reset memory
 unit = "Deg"  # Set degree mode
 x = 0  # Reset display
 
+
 def degrees2dms(degrees):
     degrees = float(degrees)
     is_positive = degrees >= 0
@@ -99,3 +100,7 @@ def unit2rad(number):
         number = grd2rad(number)
     return number
 
+
+# @with_goto
+def main():
+    global ee, reg, rounding, sto, unit, x
