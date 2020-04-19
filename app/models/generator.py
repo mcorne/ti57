@@ -35,6 +35,9 @@ class Generator:
 
         self.operators.pop()
 
+    def action_comment(self):
+        self.lines.append(self.instruction["value"])
+
     def action_decrement_skip_on_zero(self):
         self.lines.append("sto[0] = math.floor(sto[0])")
         self.lines.append("if sto[0] > 0:")
@@ -136,14 +139,17 @@ def sbr_\g<1>():      \g<2>
                 self.lines.append("")
             elif is_statement_group:
                 self.lines[0] = "    " + self.lines[0]
-                is_statement_group = False
+                if self.instruction["action"] != "comment":
+                    is_statement_group = False
 
-            ti_code = (
-                self.instruction["ti_code"] if "ti_code" in self.instruction else ""
-            )
-            self.lines[
-                0
-            ] = f"{self.lines[0]: <27} # {self.instruction['value']: <12} #{self.instruction['step']: <2} {ti_code}"
+            if "ti_code" in self.instruction:
+                ti_code = self.instruction["ti_code"]
+            else:
+                ti_code = ""
+
+            if self.instruction["action"] != "comment":
+                line = f"{self.lines[0]: <27} # {self.instruction['value']: <12} #{self.instruction['step']: <2} {ti_code}"
+                self.lines[0] = line
 
             if "python" in self.instruction:
                 is_statement_group = self.instruction["python"][-1] == ":"
@@ -302,11 +308,16 @@ def sbr_\g<1>():      \g<2>
 #         """
 
 instructions = """
+        # comment 1
+        # comment 2
         5 STO 4
+        # comment 3
         SBR 1
+        # func 1
         2nd Lbl 0
         3 STO 4
         INV SBR
+        # func 2
         2nd Lbl 1
         2 STO 4
         SBR 0

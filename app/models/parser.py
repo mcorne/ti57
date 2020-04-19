@@ -25,6 +25,7 @@ class Parser:
         groups = [
             ("KEY", "|".join(patterns)),
             ("NUMERIC", Parser.DECIMAL + "|" + Parser.INTEGER),
+            ("COMMENT", r"#[^\n\r]*"),
             ("NEWLINE", r"\r\n|\n|\r"),
             ("SKIP", r"[ \t]+"),
             ("MISMATCH", r"."),
@@ -61,7 +62,9 @@ class Parser:
 
             instruction = {"line": line, "step": step, "value": value}
 
-            if type == "NUMERIC":
+            if type == "COMMENT":
+                instruction["action"] = "comment"
+            elif type == "NUMERIC":
                 instruction["action"] = "numeric"
             elif type == "KEY":
                 lower_case_key = value.lower()

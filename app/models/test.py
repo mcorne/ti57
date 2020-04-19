@@ -104,23 +104,28 @@ def unit2rad(number):
 # @with_goto
 def main():
     global ee, reg, rounding, sto, unit, x
-    x = 5                       # 5            #1  
-    sto[4] = x                  # STO 4        #2    32 4
-    sbr_1()                     # SBR 1        #3    61 1
+    # comment 1
+    # comment 2
+    x = 5                       # 5            #3  
+    sto[4] = x                  # STO 4        #4    32 4
+    # comment 3
+    sbr_1()                     # SBR 1        #6    61 1
+    # func 1
 
 
 # @with_goto
-def sbr_0():                    # 2nd Lbl 0    #4    86 0
+def sbr_0():                    # 2nd Lbl 0    #8    86 0
     global ee, reg, rounding, sto, unit, x
-    x = 3                       # 3            #5  
-    sto[4] = x                  # STO 4        #6    32 4
-                                # INV SBR      #7  - 61
-
-
-# @with_goto
-def sbr_1():                    # 2nd Lbl 1    #8    86 1
-    global ee, reg, rounding, sto, unit, x
-    x = 2                       # 2            #9  
+    x = 3                       # 3            #9  
     sto[4] = x                  # STO 4        #10   32 4
-    sbr_0()                     # SBR 0        #11   61 0
-                                # INV SBR      #12 - 61
+                                # INV SBR      #11 - 61
+    # func 2
+
+
+# @with_goto
+def sbr_1():                    # 2nd Lbl 1    #13   86 1
+    global ee, reg, rounding, sto, unit, x
+    x = 2                       # 2            #14 
+    sto[4] = x                  # STO 4        #15   32 4
+    sbr_0()                     # SBR 0        #16   61 0
+                                # INV SBR      #17 - 61
