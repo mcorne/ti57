@@ -100,21 +100,32 @@ class Generator:
         self.lines.append("reg.append(x)")
         self.operators.append(self.instruction["type"])
 
-    def add_subroutines(self, code):
-        pattern = r"    label .label_([0-9]+)([^\n]+)\n(.+?INV SBR)"
+    def fix_subroutines(self, code):
+        pattern = r"(?:^ +(#[^\n]*)\n)+    label .label_([0-9]+)([^\n]+)\n(.+?INV SBR)"
+        replacement = r"""
+
+\g<1>
+# @with_goto
+def sbr_\g<2>():      \g<3>
+    global ee, reg, rounding, sto, unit, x
+\g<4>"""
+        code = re.sub(pattern, replacement, code, 0, re.M | re.S)
+
+        pattern = r"^    label .label_([0-9]+)([^\n]+)\n(.+?INV SBR)"
         replacement = r"""
 
 # @with_goto
 def sbr_\g<1>():      \g<2>
     global ee, reg, rounding, sto, unit, x
 \g<3>"""
-        code = re.sub(pattern, replacement, code, 0, re.S,)
+        code = re.sub(pattern, replacement, code, 0, re.M | re.S)
+
         return code
 
     def generate_code(self, instructions):
         code = self.process_instructions(instructions)
         code = re.sub("^.+$", r"    \g<0>", code, 0, re.M)
-        code = self.add_subroutines(code)
+        code = self.fix_subroutines(code)
 
         with open("app/models/calculator.py", "r") as file:
             calculator = file.read()
@@ -314,12 +325,16 @@ instructions = """
         # comment 3
         SBR 1
         # func 1
+        # func 11
+        # func 111
         2nd Lbl 0
+        # func 1111
         3 STO 4
         INV SBR
-        # func 2
         2nd Lbl 1
         2 STO 4
+        # call 0
+        # call 00
         SBR 0
         INV SBR
         """
