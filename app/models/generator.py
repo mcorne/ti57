@@ -100,25 +100,33 @@ class Generator:
         self.lines.append("reg.append(x)")
         self.operators.append(self.instruction["type"])
 
-    def fix_subroutines(self, code):
-        pattern = r"^    label .label_([0-9]+)(.+?)\n(.+?INV SBR)"
-        replacement = r"""
+    def change_subroutine_labels_to_function_calls(self, lines):
+        subroutine_numbers = self.extract_subroutine_numbers(lines)
+        fixed = []
+        for line in lines:
+            label_number = self.get_label_number(line)
+            if label_number not in subroutine_numbers:
+                fixed.append(line)
+            else:
+                function = line.replace(f"label .label_{label_number}", f"def sbr_{label_number}():     ")
+                fixed += ["@with_goto", function, "global ee, reg, rounding, sto, unit, x"]
+        return fixed
 
-@with_goto
-def sbr_\g<1>():      \g<2>
-    global ee, reg, rounding, sto, unit, x
-\g<3>"""
-        code = re.sub(pattern, replacement, code, 0, re.M | re.S)
-        return code
+    def extract_last_comments(self, lines):
+        comments = []
+        for line in (reversed(lines)):
+            if line[0] == "#":
+                comments.append(line)
+                lines.pop()
+        return [lines, comments]
 
-    def fix_subroutines_top_comments(self, code):
-        pattern = r"(^    #[^\n]*?\n)+\n+^@with_goto\ndef sbr"
-        match = re.findall(pattern, code, re.M | re.S)
-
-        replacement = r"\n\n\g<1>\n\g<2>"
-        # code = re.sub(pattern, replacement, code, 0, re.M | re.S)
-
-        return code
+    def extract_subroutine_numbers(self, lines):
+        subroutine_numbers = []
+        for line in lines:
+            subroutine_number = self.get_subroutine_number(line)
+            if subroutine_number:
+                subroutine_numbers.append(subroutine_number)
+        return subroutine_numbers
 
     def generate_code(self, instructions):
         lines = self.process_instructions(instructions)
@@ -133,6 +141,16 @@ def sbr_\g<1>():      \g<2>
 
         return calculator
 
+    def get_label_number(self, line):
+        match = re.match(r"sbr_(\d)", line)
+        if match:
+            return match.group(1)
+
+    def get_subroutine_number(self, line):
+        match = re.match(r"label .label_(\d)", line)
+        if match:
+            return match.group(1)
+
     def indent_code(self, code):
         return re.sub("^.+$", r"    \g<0>", code, 0, re.M)
 
@@ -140,17 +158,25 @@ def sbr_\g<1>():      \g<2>
         follows_if_statement = False
         for number, line in enumerate(lines):
             if follows_if_statement:
-                # This is a line following an "if" statement, ident the line 4 spaces
+                # This is a line following an "if" statement
+                if self.is_if_statement(line):
+                    raise Exception(
+                        'Nested "if" statements not allowed: {line}')
+                # Ident the line
                 lines[number] = "    " + line
-                if line[0:2] == "if":
-                    raise Exception('Nested "if" statements not allowed: {line}')
                 if line[0] != "#":
                     # This is the line of code, the end of the "if" statement
                     follows_if_statement = False
                 # Else this is a comment line and not yet the line of code following the "if" statement
-            elif line[0:2] == "if":
+            elif self.is_if_statement(line):
                 follows_if_statement = True
         return lines
+
+    def is_end_subroutine(self, line):
+        return bool(re.match(r" +# INV +SBR", line, re.I))
+
+    def is_if_statement(self, line):
+        return line[0:2] == "if"
 
     def process_instructions(self, instructions):
         parser = Parser(instructions, instruction_set)
@@ -352,4 +378,4 @@ g = Generator()
 # exec(code)
 # main()
 # print(state())
-print(g.indent_if_statement(["aaa", "if qsd:", "#eee", "#rrr", "ttt", "yyy", "uuu",]))
+print(g.extract_last_comments(["sbr_0", "qsd", "sbr_2", "# qsd", "# qsd"]))
