@@ -101,6 +101,6 @@ def unit2rad(number):
     return number
 
 
-# @with_goto
+@with_goto
 def main():
     global ee, reg, rounding, sto, unit, x

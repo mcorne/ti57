@@ -41,9 +41,9 @@ class Generator:
     def action_decrement_skip_on_zero(self):
         self.lines.append("sto[0] = math.floor(sto[0])")
         self.lines.append("if sto[0] > 0:")
-        self.lines.append("    sto[0] -= 1")
+        self.lines.append("sto[0] -= 1")
         self.lines.append("elif sto[0] < 0:")
-        self.lines.append("    sto[0] += 1")
+        self.lines.append("sto[0] += 1")
         self.lines.append(self.instruction["python"])
 
     def action_equality(self):
@@ -101,73 +101,74 @@ class Generator:
         self.operators.append(self.instruction["type"])
 
     def fix_subroutines(self, code):
-        pattern = r"(?:^ +(#[^\n]*)\n)+    label .label_([0-9]+)([^\n]+)\n(.+?INV SBR)"
+        pattern = r"^    label .label_([0-9]+)(.+?)\n(.+?INV SBR)"
         replacement = r"""
 
-\g<1>
-# @with_goto
-def sbr_\g<2>():      \g<3>
-    global ee, reg, rounding, sto, unit, x
-\g<4>"""
-        code = re.sub(pattern, replacement, code, 0, re.M | re.S)
-
-        pattern = r"^    label .label_([0-9]+)([^\n]+)\n(.+?INV SBR)"
-        replacement = r"""
-
-# @with_goto
+@with_goto
 def sbr_\g<1>():      \g<2>
     global ee, reg, rounding, sto, unit, x
 \g<3>"""
         code = re.sub(pattern, replacement, code, 0, re.M | re.S)
+        return code
+
+    def fix_subroutines_top_comments(self, code):
+        pattern = r"(^    #[^\n]*?\n)+\n+^@with_goto\ndef sbr"
+        match = re.findall(pattern, code, re.M | re.S)
+
+        replacement = r"\n\n\g<1>\n\g<2>"
+        # code = re.sub(pattern, replacement, code, 0, re.M | re.S)
 
         return code
 
     def generate_code(self, instructions):
-        code = self.process_instructions(instructions)
-        code = re.sub("^.+$", r"    \g<0>", code, 0, re.M)
-        code = self.fix_subroutines(code)
+        lines = self.process_instructions(instructions)
+        # code = self.indent_code(code)
+        # code = self.fix_subroutines(code)
+        # code = self.fix_subroutines_top_comments(code)
 
         with open("app/models/calculator.py", "r") as file:
             calculator = file.read()
 
-        calculator += code
+        calculator += "\n".join(lines)
 
         return calculator
 
+    def indent_code(self, code):
+        return re.sub("^.+$", r"    \g<0>", code, 0, re.M)
+
+    def indent_if_statement(self, lines):
+        follows_if_statement = False
+        for number, line in enumerate(lines):
+            if follows_if_statement:
+                # This is a line following an "if" statement, ident the line 4 spaces
+                lines[number] = "    " + line
+                if line[0:2] == "if":
+                    raise Exception('Nested "if" statements not allowed: {line}')
+                if line[0] != "#":
+                    # This is the line of code, the end of the "if" statement
+                    follows_if_statement = False
+                # Else this is a comment line and not yet the line of code following the "if" statement
+            elif line[0:2] == "if":
+                follows_if_statement = True
+        return lines
+
     def process_instructions(self, instructions):
-        self.operators = []
-        is_statement_group = False
-        code = []
         parser = Parser(instructions, instruction_set)
         for self.instruction in parser.next_instruction():
-            self.lines = []
-
+            count = len(self.lines)
             if self.instruction["action"]:
                 action = getattr(self, "action_" + self.instruction["action"])
                 action()
-
-            if not self.lines:
+            if len(self.lines) == count:  # No python code added, ex. "INV SBR"
                 self.lines.append("")
-            elif is_statement_group:
-                self.lines[0] = "    " + self.lines[0]
-                if self.instruction["action"] != "comment":
-                    is_statement_group = False
-
-            if "ti_code" in self.instruction:
-                ti_code = self.instruction["ti_code"]
-            else:
-                ti_code = ""
-
             if self.instruction["action"] != "comment":
-                line = f"{self.lines[0]: <27} # {self.instruction['value']: <12} #{self.instruction['step']: <2} {ti_code}"
-                self.lines[0] = line
+                number = count - 1
+                line = f"{self.lines[number]: <27} # {self.instruction['value']: <12} #{self.instruction['step']: <2}"
+                self.lines[number] = line
+                if "ti_code" in self.instruction:
+                    self.lines[number] += " # " + self.instruction["ti_code"]
 
-            if "python" in self.instruction:
-                is_statement_group = self.instruction["python"][-1] == ":"
-
-            code.append("\n".join(self.lines))
-
-        return "\n".join(code)
+        return self.lines
 
     def process_prev_equality(self):
         self.process_prev_multiplication()
@@ -330,6 +331,10 @@ instructions = """
         2nd Lbl 0
         # func 1111
         3 STO 4
+        2.5 +/- STO 0
+        2nd Dsz
+        4
+        5
         INV SBR
         2nd Lbl 1
         2 STO 4
@@ -340,10 +345,11 @@ instructions = """
         """
 
 g = Generator()
-code = g.generate_code(instructions)
-with open("app/models/test.py", "w") as file:
-    file.write(code)
-print(code)
-exec(code)
-main()
-print(state())
+# code = g.generate_code(instructions)
+# with open("app/models/test.py", "w") as file:
+#     file.write(code)
+# print(code)
+# exec(code)
+# main()
+# print(state())
+print(g.indent_if_statement(["aaa", "if qsd:", "#eee", "#rrr", "ttt", "yyy", "uuu",]))
