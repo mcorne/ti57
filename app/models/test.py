@@ -125,24 +125,26 @@ def sbr_0():
     x = 2.5                     # 2.5          #14
     x = -x                      # +/-          #15 #   84
     sto[0] = x                  # STO 0        #16 #   32 0
-    sto[0] = math.floor(sto[0]) # 2nd Dsz      #17 #   56
+    # comment 4
+    sto[0] = math.floor(sto[0]) # 2nd Dsz      #18 #   56
     if sto[0] > 0:
         sto[0] -= 1
     elif sto[0] < 0:
         sto[0] += 1
     if sto[0] != 0:
-        x = 4                   # 4            #18
-    x = 5                       # 5            #19
-                                # INV SBR      #20 # - 61
+        # comment 5
+        x = 4                   # 4            #20
+    x = 5                       # 5            #21
+                                # INV SBR      #22 # - 61
 
 
 @with_goto
 def sbr_1():
     global ee, reg, rounding, sto, unit, x
-    label .label_1              # 2nd Lbl 1    #21 #   86 1
-    x = 2                       # 2            #22
-    sto[4] = x                  # STO 4        #23 #   32 4
+    label .label_1              # 2nd Lbl 1    #23 #   86 1
+    x = 2                       # 2            #24
+    sto[4] = x                  # STO 4        #25 #   32 4
     # call 0
     # call 00
-    sbr_0()                     # SBR 0        #26 #   61 0
-                                # INV SBR      #27 # - 61
+    sbr_0()                     # SBR 0        #28 #   61 0
+                                # INV SBR      #29 # - 61

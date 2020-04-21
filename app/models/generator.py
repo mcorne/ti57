@@ -142,7 +142,7 @@ class Generator:
     def extract_last_comments(self, lines):
         comments = []
         for line in reversed(lines):
-            if line[0] != "#":  # TODO: maybe test not empty !!!
+            if line and line[0] != "#":
                 break
             comments.insert(0, line)
             lines.pop()
@@ -199,6 +199,9 @@ class Generator:
     def indent_if_statement(self, lines):
         follows_if_statement = False
         for number, line in enumerate(lines):
+            if not line:
+                # Ignore empty lines
+                continue
             if follows_if_statement:
                 # This is a line following an "if" statement
                 if self.is_if_statement(line):
@@ -216,7 +219,7 @@ class Generator:
         return bool(re.match(r" +# INV +SBR", line, re.I))
 
     def is_if_statement(self, line):
-        return line[0:2] == "if" or line[0:4] == "elif"
+        return line and (line[0:2] == "if" or line[0:4] == "elif")
 
     def process_prev_equality(self):
         self.process_prev_multiplication()
@@ -380,7 +383,9 @@ instructions = """
         # func 1111
         3 STO 4
         2.5 +/- STO 0
+        # comment 4
         2nd Dsz
+        # comment 5
         4
         5
         INV SBR
@@ -397,6 +402,6 @@ code = g.generate_code(instructions)
 with open("app/models/test.py", "w") as file:
     file.write(code)
 print(code)
-# exec(code)
-# main()
-# print(state())
+exec(code)
+main()
+print(state())
