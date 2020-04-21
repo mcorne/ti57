@@ -88,12 +88,12 @@ def index():
     # instructions = "2nd pi 2nd Int "
     # instructions = "2nd pi INV 2nd Int"
 
-    # instructions = """
-    #         2.5 +/- STO 0
-    #         2nd Dsz
-    #         4
-    #         5
-    #         """
+    instructions = """
+            2.5 +/- STO 0
+            INV 2nd Dsz
+            4
+            5
+            """
 
     # instructions = """
     #         1 STO 7
@@ -103,19 +103,19 @@ def index():
     #         4
     #         """
 
-    instructions = """
-            2 x<>t 10 2nd S+
-            3 x<>t 20 2nd S+
-            5 x<>t 30 2nd S+
-            6 x<>t 40 2nd S+
-            10 x<>t 2 2nd S+
-            10 x<>t 2 INV 2nd S+
-            10 x<>t 2 2nd S+
-            INV 2nd x
-            2nd x
-            INV 2nd s2
-            2nd s2
-            """
+    # instructions = """
+    #         2 x<>t 10 2nd S+
+    #         3 x<>t 20 2nd S+
+    #         5 x<>t 30 2nd S+
+    #         6 x<>t 40 2nd S+
+    #         10 x<>t 2 2nd S+
+    #         10 x<>t 2 INV 2nd S+
+    #         10 x<>t 2 2nd S+
+    #         INV 2nd x
+    #         2nd x
+    #         INV 2nd s2
+    #         2nd s2
+    #         """
 
     # instructions = """
     #         # comment 1

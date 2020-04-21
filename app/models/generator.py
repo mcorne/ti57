@@ -38,14 +38,6 @@ class Generator:
     def action_comment(self):
         self.lines.append(self.instruction["value"])
 
-    def action_decrement_skip_on_zero(self):
-        self.lines.append("sto[0] = math.floor(sto[0])")
-        self.lines.append("if sto[0] > 0:")
-        self.lines.append("sto[0] -= 1")
-        self.lines.append("elif sto[0] < 0:")
-        self.lines.append("sto[0] += 1")
-        self.lines.append(self.instruction["python"])
-
     def action_equality(self):
         self.process_prev_equality()
 
