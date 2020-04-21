@@ -3,7 +3,6 @@ import re
 
 from goto import with_goto
 
-
 ee = False  # Disable scientific notation
 reg = []  # Reset internal registers
 rounding = None  # Disable rounding of numbers

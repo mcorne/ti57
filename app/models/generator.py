@@ -87,7 +87,16 @@ class Generator:
         self.lines.append("ee = True")
         self.add_operation()
 
-    def action_sum(self):
+    def action_sum_minus(self):
+        self.lines.append("sto[0] -= 1")  # population
+        self.lines.append("sto[1] -= x")  # sum Y
+        self.lines.append("sto[2] -= x * x")  # sum Y * Y
+        self.lines.append("sto[3] -= sto[7]")  # sum X
+        self.lines.append("sto[4] -= sto[7] * sto[7]")  # sum X * X
+        self.lines.append("sto[5] -= sto[7] * x")  # sum X * Y
+        self.lines.append("sto[7] -= 1")
+
+    def action_sum_plus(self):
         self.lines.append("sto[0] += 1")  # population
         self.lines.append("sto[1] += x")  # sum Y
         self.lines.append("sto[2] += x * x")  # sum Y * Y
@@ -373,6 +382,8 @@ class Generator:
 instructions = """
         # comment 1
         # comment 2
+        R/S
+        RST
         5 STO 4
         # comment 3
         SBR 1
@@ -398,11 +409,17 @@ instructions = """
         INV SBR
         """
 
-g = Generator()
-code = g.generate_code(instructions)
-with open("app/models/test.py", "w") as file:
-    file.write(code)
-print(code)
-# exec(code)
-# main()
-# print(state())
+
+try:
+    g = Generator()
+    code = g.generate_code(instructions)
+    with open("app/models/test.py", "w") as file:
+        file.write(code)
+    print(code)
+    exec(code)
+    main()
+except UserWarning as e:
+    if str(e) != "R/S":
+        raise
+
+print(state())
