@@ -104,45 +104,45 @@ def unit2rad(number):
 @with_goto
 def main():
     global ee, reg, rounding, sto, unit, x
-# comment 1
-# comment 2
-x = 5                       # 5            #3 
-sto[4] = x                  # STO 4        #4  #   32 4
-# comment 3
-sbr_1()                     # SBR 1        #6  #   61 1
-
-
+                                # INV SBR      #27 # - 61
+    sbr_0()                     # SBR 0        #26 #   61 0
+    # call 00
+    # call 0
+    sto[4] = x                  # STO 4        #23 #   32 4
+    x = 2                       # 2            #22
+    label .label_1              # 2nd Lbl 1    #21 #   86 1
+    global ee, reg, rounding, sto, unit, x
 # func 1
 # func 11
 # func 111
 @with_goto
-def sbr_0():
-global ee, reg, rounding, sto, unit, x
-label .label_0              # 2nd Lbl 0    #10 #   86 0
-# func 1111
-x = 3                       # 3            #12
-sto[4] = x                  # STO 4        #13 #   32 4
-x = 2.5                     # 2.5          #14
-x = -x                      # +/-          #15 #   84
-sto[0] = x                  # STO 0        #16 #   32 0
-sto[0] = math.floor(sto[0]) # 2nd Dsz      #17 #   56
-if sto[0] > 0:
-    sto[0] -= 1
-elif sto[0] < 0:
-    sto[0] += 1
-if sto[0] != 0:
-    x = 4                   # 4            #18
-x = 5                       # 5            #19
-                            # INV SBR      #20 # - 61
-
-
-@with_goto
-def sbr_1():
-global ee, reg, rounding, sto, unit, x
-label .label_1              # 2nd Lbl 1    #21 #   86 1
-x = 2                       # 2            #22
-sto[4] = x                  # STO 4        #23 #   32 4
-# call 0
-# call 00
-sbr_0()                     # SBR 0        #26 #   61 0
-                            # INV SBR      #27 # - 61
+                                # INV SBR      #20 # - 61
+    x = 5                       # 5            #19
+        x = 4                   # 4            #18
+    if sto[0] != 0:
+        sto[0] += 1
+    elif sto[0] < 0:
+        sto[0] -= 1
+    if sto[0] > 0:
+    sto[0] = math.floor(sto[0]) # 2nd Dsz      #17 #   56
+        sto[0] = math.floor(sto[0]) # 2nd Dsz      #17 #   56
+        if sto[0] > 0:
+            sto[0] -= 1
+        elif sto[0] < 0:
+            sto[0] += 1
+        if sto[0] != 0:
+            x = 4                   # 4            #18
+        x = 5                       # 5            #19
+                                    # INV SBR      #20 # - 61
+    @with_goto
+    # func 111
+    # func 11
+    # func 1
+        global ee, reg, rounding, sto, unit, x
+        label .label_1              # 2nd Lbl 1    #21 #   86 1
+        x = 2                       # 2            #22
+        sto[4] = x                  # STO 4        #23 #   32 4
+        # call 0
+        # call 00
+        sbr_0()                     # SBR 0        #26 #   61 0
+                                    # INV SBR      #27 # - 61

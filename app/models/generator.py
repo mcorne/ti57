@@ -122,7 +122,7 @@ class Generator:
         self.lines.append("reg.append(x)")
         self.operators.append(self.instruction["type"])
 
-    def create_python_code_lines(self, instructions):
+    def convert_instructions_to_code_lines(self, instructions):
         parser = Parser(instructions, instruction_set)
         for self.instruction in parser.next_instruction():
             number = len(self.lines)
@@ -157,12 +157,12 @@ class Generator:
         return subroutine_numbers
 
     def generate_code(self, instructions):
-        lines = self.create_python_code_lines(instructions)
-        lines = self.indent_if_statement(lines)
+        lines = self.convert_instructions_to_code_lines(instructions)
+        self.indent_if_statement(lines)
         subroutine_numbers = self.extract_subroutine_numbers(lines)
         if subroutine_numbers:
             lines = self.add_functions(lines, subroutine_numbers)
-        # code = self.indent_code(code)
+        self.indent_lines(lines)
 
         with open("app/models/calculator.py", "r") as file:
             calculator = file.read()
@@ -181,8 +181,19 @@ class Generator:
         if match:
             return match.group(1)
 
-    def indent_code(self, code):
-        return re.sub("^.+$", r"    \g<0>", code, 0, re.M)
+    def indent_lines(self, lines):
+        preceedes_def = False
+        for number, line in enumerate(reversed(lines)):
+            if not line:
+                # This is a blank line, typically preceeding a function definition
+                preceedes_def = False
+            elif line[0:3] == "def":
+                # This is a function definition
+                preceedes_def = True
+            elif not preceedes_def:
+                # This is any line of code
+                lines[number] = "    " + line
+            # Else this is a comment or the "with_goto" decorator preceeding the function definition
 
     def indent_if_statement(self, lines):
         follows_if_statement = False
@@ -191,18 +202,14 @@ class Generator:
                 # This is a line following an "if" statement
                 if self.is_if_statement(line):
                     raise Exception('Nested "if" statements not allowed: {line}')
-                lines[number] = self.indent_line(line)
+                # Ident the line and move the instruction part to the left
+                lines[number] = "    " + line.replace("    #", "#", 1)
                 if line[0] != "#":
                     # This is the line of code, the end of the "if" statement
                     follows_if_statement = False
                 # Else this is a comment line and not yet the line of code following the "if" statement
             elif self.is_if_statement(line):
                 follows_if_statement = True
-        return lines
-
-    def indent_line(self, line):
-        # Ident the line and move the instruction part to the left
-        return "    " + line.replace("    #", "#", 1)
 
     def is_end_subroutine(self, line):
         return bool(re.match(r" +# INV +SBR", line, re.I))
