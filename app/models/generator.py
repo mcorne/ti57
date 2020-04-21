@@ -96,29 +96,57 @@ class Generator:
         self.lines.append("sto[5] += sto[7] * x")  # sum X * Y
         self.lines.append("sto[7] += 1")
 
+    def add_function(self, lines, subroutine_numbers, line, fixed):
+        label_number = self.get_label_number(line)
+        if label_number not in subroutine_numbers:
+            fixed.append(line)
+        else:
+            comments = self.extract_last_comments(fixed)
+            fixed += [
+                "",
+                "",
+                *comments,
+                "@with_goto",
+                f"def sbr_{label_number}():",
+                "global ee, reg, rounding, sto, unit, x",
+                line,
+            ]
+
+    def add_functions(self, lines, subroutine_numbers):
+        fixed = []
+        for line in lines:
+            self.add_function(lines, subroutine_numbers, line, fixed)
+        return fixed
+
     def add_operation(self):
         self.lines.append("reg.append(x)")
         self.operators.append(self.instruction["type"])
 
-    def change_subroutine_labels_to_function_calls(self, lines):
-        subroutine_numbers = self.extract_subroutine_numbers(lines)
-        fixed = []
-        for line in lines:
-            label_number = self.get_label_number(line)
-            if label_number not in subroutine_numbers:
-                fixed.append(line)
-            else:
-                function = line.replace(f"label .label_{label_number}", f"def sbr_{label_number}():     ")
-                fixed += ["@with_goto", function, "global ee, reg, rounding, sto, unit, x"]
-        return fixed
+    def create_python_code_lines(self, instructions):
+        parser = Parser(instructions, instruction_set)
+        for self.instruction in parser.next_instruction():
+            number = len(self.lines)
+            if self.instruction["action"]:
+                action = getattr(self, "action_" + self.instruction["action"])
+                action()
+            if len(self.lines) == number:  # No python code added, ex. "INV SBR"
+                self.lines.append("")
+            if self.instruction["action"] != "comment":
+                line = f"{self.lines[number]: <27} # {self.instruction['value']: <12} #{self.instruction['step']: <2}"
+                self.lines[number] = line
+                if "ti_code" in self.instruction:
+                    self.lines[number] += " # " + self.instruction["ti_code"]
+
+        return self.lines
 
     def extract_last_comments(self, lines):
         comments = []
-        for line in (reversed(lines)):
-            if line[0] == "#":
-                comments.append(line)
-                lines.pop()
-        return [lines, comments]
+        for line in reversed(lines):
+            if line[0] != "#":  # TODO: maybe test not empty !!!
+                break
+            comments.insert(0, line)
+            lines.pop()
+        return comments
 
     def extract_subroutine_numbers(self, lines):
         subroutine_numbers = []
@@ -129,10 +157,12 @@ class Generator:
         return subroutine_numbers
 
     def generate_code(self, instructions):
-        lines = self.process_instructions(instructions)
+        lines = self.create_python_code_lines(instructions)
+        lines = self.indent_if_statement(lines)
+        subroutine_numbers = self.extract_subroutine_numbers(lines)
+        if subroutine_numbers:
+            lines = self.add_functions(lines, subroutine_numbers)
         # code = self.indent_code(code)
-        # code = self.fix_subroutines(code)
-        # code = self.fix_subroutines_top_comments(code)
 
         with open("app/models/calculator.py", "r") as file:
             calculator = file.read()
@@ -142,12 +172,12 @@ class Generator:
         return calculator
 
     def get_label_number(self, line):
-        match = re.match(r"sbr_(\d)", line)
+        match = re.match(r"label .label_(\d)", line)
         if match:
             return match.group(1)
 
     def get_subroutine_number(self, line):
-        match = re.match(r"label .label_(\d)", line)
+        match = re.match(r"sbr_(\d)", line)
         if match:
             return match.group(1)
 
@@ -160,10 +190,8 @@ class Generator:
             if follows_if_statement:
                 # This is a line following an "if" statement
                 if self.is_if_statement(line):
-                    raise Exception(
-                        'Nested "if" statements not allowed: {line}')
-                # Ident the line
-                lines[number] = "    " + line
+                    raise Exception('Nested "if" statements not allowed: {line}')
+                lines[number] = self.indent_line(line)
                 if line[0] != "#":
                     # This is the line of code, the end of the "if" statement
                     follows_if_statement = False
@@ -172,29 +200,15 @@ class Generator:
                 follows_if_statement = True
         return lines
 
+    def indent_line(self, line):
+        # Ident the line and move the instruction part to the left
+        return "    " + line.replace("    #", "#", 1)
+
     def is_end_subroutine(self, line):
         return bool(re.match(r" +# INV +SBR", line, re.I))
 
     def is_if_statement(self, line):
-        return line[0:2] == "if"
-
-    def process_instructions(self, instructions):
-        parser = Parser(instructions, instruction_set)
-        for self.instruction in parser.next_instruction():
-            count = len(self.lines)
-            if self.instruction["action"]:
-                action = getattr(self, "action_" + self.instruction["action"])
-                action()
-            if len(self.lines) == count:  # No python code added, ex. "INV SBR"
-                self.lines.append("")
-            if self.instruction["action"] != "comment":
-                number = count - 1
-                line = f"{self.lines[number]: <27} # {self.instruction['value']: <12} #{self.instruction['step']: <2}"
-                self.lines[number] = line
-                if "ti_code" in self.instruction:
-                    self.lines[number] += " # " + self.instruction["ti_code"]
-
-        return self.lines
+        return line[0:2] == "if" or line[0:4] == "elif"
 
     def process_prev_equality(self):
         self.process_prev_multiplication()
@@ -371,11 +385,10 @@ instructions = """
         """
 
 g = Generator()
-# code = g.generate_code(instructions)
-# with open("app/models/test.py", "w") as file:
-#     file.write(code)
-# print(code)
+code = g.generate_code(instructions)
+with open("app/models/test.py", "w") as file:
+    file.write(code)
+print(code)
 # exec(code)
 # main()
 # print(state())
-print(g.extract_last_comments(["sbr_0", "qsd", "sbr_2", "# qsd", "# qsd"]))

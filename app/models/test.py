@@ -105,33 +105,44 @@ def unit2rad(number):
 def main():
     global ee, reg, rounding, sto, unit, x
 # comment 1
-# comment 2                 # 5            #3
-x = 5                       # STO 4        #4  #   32 4
-sto[4] = x
-# comment 3                 # SBR 1        #6  #   61 1
-sbr_1()
+# comment 2
+x = 5                       # 5            #3 
+sto[4] = x                  # STO 4        #4  #   32 4
+# comment 3
+sbr_1()                     # SBR 1        #6  #   61 1
+
+
 # func 1
 # func 11
-# func 111                  # 2nd Lbl 0    #10 #   86 0
-label .label_0
-# func 1111                 # 3            #12
-x = 3                       # STO 4        #13 #   32 4
-sto[4] = x                  # 2.5          #14
-x = 2.5                     # +/-          #15 #   84
-x = -x                      # STO 0        #16 #   32 0
-sto[0] = x                  # 2nd Dsz      #17 #   56
-sto[0] = math.floor(sto[0])
+# func 111
+@with_goto
+def sbr_0():
+global ee, reg, rounding, sto, unit, x
+label .label_0              # 2nd Lbl 0    #10 #   86 0
+# func 1111
+x = 3                       # 3            #12
+sto[4] = x                  # STO 4        #13 #   32 4
+x = 2.5                     # 2.5          #14
+x = -x                      # +/-          #15 #   84
+sto[0] = x                  # STO 0        #16 #   32 0
+sto[0] = math.floor(sto[0]) # 2nd Dsz      #17 #   56
 if sto[0] > 0:
-sto[0] -= 1
+    sto[0] -= 1
 elif sto[0] < 0:
-sto[0] += 1
-if sto[0] != 0:             # 4            #18
-x = 4                       # 5            #19
-x = 5                       # INV SBR      #20 # - 61
-                            # 2nd Lbl 1    #21 #   86 1
-label .label_1              # 2            #22
-x = 2                       # STO 4        #23 #   32 4
-sto[4] = x
+    sto[0] += 1
+if sto[0] != 0:
+    x = 4                   # 4            #18
+x = 5                       # 5            #19
+                            # INV SBR      #20 # - 61
+
+
+@with_goto
+def sbr_1():
+global ee, reg, rounding, sto, unit, x
+label .label_1              # 2nd Lbl 1    #21 #   86 1
+x = 2                       # 2            #22
+sto[4] = x                  # STO 4        #23 #   32 4
 # call 0
-# call 00                   # SBR 0        #26 #   61 0
-sbr_0()                     # INV SBR      #27 # - 61
+# call 00
+sbr_0()                     # SBR 0        #26 #   61 0
+                            # INV SBR      #27 # - 61
