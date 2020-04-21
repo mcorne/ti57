@@ -183,6 +183,7 @@ class Generator:
 
     def indent_lines(self, lines):
         preceedes_def = False
+        last = len(lines) - 1
         for number, line in enumerate(reversed(lines)):
             if not line:
                 # This is a blank line, typically preceeding a function definition
@@ -192,7 +193,7 @@ class Generator:
                 preceedes_def = True
             elif not preceedes_def:
                 # This is any line of code
-                lines[number] = "    " + line
+                lines[last - number] = "    " + line
             # Else this is a comment or the "with_goto" decorator preceeding the function definition
 
     def indent_if_statement(self, lines):
