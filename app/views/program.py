@@ -78,7 +78,7 @@ def index():
     #         INV 2nd D.MS
     #         """
 
-    # instructions = "10 x<>t 120 2nd P->R x<>t"
+    # instructions = "3 2nd Fix 10 x<>t 120 2nd P->R x<>t"
 
     # instructions = """
     #         3 2nd Fix
@@ -103,44 +103,46 @@ def index():
     #         4
     #         """
 
-    # instructions = """
-    #         2 x<>t 10 2nd S+
-    #         3 x<>t 20 2nd S+
-    #         5 x<>t 30 2nd S+
-    #         6 x<>t 40 2nd S+
-    #         10 x<>t 2 2nd S+
-    #         INV 2nd x
-    #         2nd x
-    #         INV 2nd s2
-    #         2nd s2
-    #         """
-
     instructions = """
-            # comment 1
-            # comment 2
-            5 STO 4
-            # comment 3
-            SBR 1
-            # func 1
-            # func 11
-            # func 111
-            2nd Lbl 0
-            # func 1111
-            3 STO 4
-            2.5 +/- STO 0
-            # comment 4
-            2nd Dsz
-            # comment 5
-            4
-            5
-            INV SBR
-            2nd Lbl 1
-            2 STO 4
-            # call 0
-            # call 00
-            SBR 0
-            INV SBR
+            2 x<>t 10 2nd S+
+            3 x<>t 20 2nd S+
+            5 x<>t 30 2nd S+
+            6 x<>t 40 2nd S+
+            10 x<>t 2 2nd S+
+            10 x<>t 2 INV 2nd S+
+            10 x<>t 2 2nd S+
+            INV 2nd x
+            2nd x
+            INV 2nd s2
+            2nd s2
             """
+
+    # instructions = """
+    #         # comment 1
+    #         # comment 2
+    #         5 STO 4
+    #         # comment 3
+    #         SBR 1
+    #         # func 1
+    #         # func 11
+    #         # func 111
+    #         2nd Lbl 0
+    #         # func 1111
+    #         3 STO 4
+    #         2.5 +/- STO 0
+    #         # comment 4
+    #         2nd Dsz
+    #         # comment 5
+    #         4
+    #         5
+    #         INV SBR
+    #         2nd Lbl 1
+    #         2 STO 4
+    #         # call 0
+    #         # call 00
+    #         SBR 0
+    #         INV SBR
+    #         """
 
     try:
         g = Generator()

@@ -65,48 +65,19 @@ class Generator:
         self.lines.append("")
         self.operators.append(self.instruction["type"])
 
-    def action_polar_to_rectangular(self):
-        self.lines.append("t = x")
-        self.lines.append("y = unit2rad(t)")
-        self.lines.append("x = sto[7] * math.sin(y)")
-        self.lines.append("sto[7] = sto[7] * math.cos(y)")
-
     def action_power(self):
         self.process_prev_power()
         self.add_operation()
 
     def action_python(self):
-        if self.instruction["python"] is list:
+        if type(self.instruction["python"]) is list:
             self.lines += self.instruction["python"]
         else:
             self.lines.append(self.instruction["python"])
 
-    def action_rectangular_to_polar(self):
-        self.lines.append("y = x")
-        self.lines.append("x = rad2unit(math.atan2(y, sto[7]))")
-        self.lines.append("sto[7] = math.sqrt(sto[7] * sto[7] + y * y)")
-
     def action_scientific_notation(self):
         self.lines.append("ee = True")
         self.add_operation()
-
-    def action_sum_minus(self):
-        self.lines.append("sto[0] -= 1")  # population
-        self.lines.append("sto[1] -= x")  # sum Y
-        self.lines.append("sto[2] -= x * x")  # sum Y * Y
-        self.lines.append("sto[3] -= sto[7]")  # sum X
-        self.lines.append("sto[4] -= sto[7] * sto[7]")  # sum X * X
-        self.lines.append("sto[5] -= sto[7] * x")  # sum X * Y
-        self.lines.append("sto[7] -= 1")
-
-    def action_sum_plus(self):
-        self.lines.append("sto[0] += 1")  # population
-        self.lines.append("sto[1] += x")  # sum Y
-        self.lines.append("sto[2] += x * x")  # sum Y * Y
-        self.lines.append("sto[3] += sto[7]")  # sum X
-        self.lines.append("sto[4] += sto[7] * sto[7]")  # sum X * X
-        self.lines.append("sto[5] += sto[7] * x")  # sum X * Y
-        self.lines.append("sto[7] += 1")
 
     def add_function(self, lines, subroutine_numbers, line, fixed):
         label_number = self.get_label_number(line)

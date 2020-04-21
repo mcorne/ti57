@@ -18,8 +18,17 @@ instruction_set = """
 "1/x"              : {"ti_code": "  25"  , "action": "python"                , "python": "x = 1 / x"},
 "2nd D.MS"         : {"ti_code": "  26"  , "action": "python"                , "python": "x = dms2degrees(x)"},
 "INV 2nd D.MS"     : {"ti_code": "- 26"  , "action": "python"                , "python": "x = degrees2dms(x)"},
-"2nd P->R"         : {"ti_code": "  27"  , "action": "polar_to_rectangular"},
-"INV 2nd P->R"     : {"ti_code": "- 27"  , "action": "rectangular_to_polar"},
+"2nd P->R"         : {"ti_code": "  27"  , "action": "python"                , "python": [
+                                                                                    "t = x",
+                                                                                    "y = unit2rad(t)",
+                                                                                    "x = sto[7] * math.sin(y)",
+                                                                                    "sto[7] = sto[7] * math.cos(y)",
+                                                                                ]},
+"INV 2nd P->R"     : {"ti_code": "- 27"  , "action": "python"                , "python": [
+                                                                                    "y = x",
+                                                                                    "x = rad2unit(math.atan2(y, sto[7]))",
+                                                                                    "sto[7] = math.sqrt(sto[7] * sto[7] + y * y)",
+                                                                                ]},
 "2nd sin"          : {"ti_code": "  28"  , "action": "python"                , "python": "x = math.sin(unit2rad(x))"},
 "INV 2nd sin"      : {"ti_code": "- 28"  , "action": "python"                , "python": "x = rad2unit(math.asin(x))"},
 "2nd cos"          : {"ti_code": "  29"  , "action": "python"                , "python": "x = math.cos(unit2rad(x))"},
@@ -135,8 +144,24 @@ instruction_set = """
 "2nd Lbl 7"        : {"ti_code": "  86 1", "action": "python"                , "python": "label .label_7"},
 "2nd Lbl 8"        : {"ti_code": "  86 1", "action": "python"                , "python": "label .label_8"},
 "2nd Lbl 9"        : {"ti_code": "  86 1", "action": "python"                , "python": "label .label_9"},
-"2nd S+"           : {"ti_code": "  88"  , "action": "sum_plus"},
-"INV 2nd S+"       : {"ti_code": "- 88"  , "action": "sum_minus"},
+"2nd S+"           : {"ti_code": "  88"  , "action": "python"                , "python": [
+                                                                                    "sto[0] += 1",  # population
+                                                                                    "sto[1] += x",  # sum Y
+                                                                                    "sto[2] += x * x",  # sum Y * Y
+                                                                                    "sto[3] += sto[7]",  # sum X
+                                                                                    "sto[4] += sto[7] * sto[7]",  # sum X * X
+                                                                                    "sto[5] += sto[7] * x",  # sum X * Y
+                                                                                    "sto[7] += 1",
+                                                                                ]},
+"INV 2nd S+"       : {"ti_code": "- 88"  , "action": "python"                , "python": [
+                                                                                    "sto[0] -= 1",  # population
+                                                                                    "sto[1] -= x",  # sum Y
+                                                                                    "sto[2] -= x * x",  # sum Y * Y
+                                                                                    "sto[3] -= sto[7]",  # sum X
+                                                                                    "sto[4] -= sto[7] * sto[7]",  # sum X * X
+                                                                                    "sto[5] -= sto[7] * x",  # sum X * Y
+                                                                                    "sto[7] -= 1",
+                                                                                ]},
 "2nd x"            : {"ti_code": "  89"  , "action": "python"                , "python": "x = sto[1] / sto[0]"}, # avg(Y) = sum(Y) / N
 "INV 2nd x"        : {"ti_code": "- 89"  , "action": "python"                , "python": "x = sto[3] / sto[0]"}, # avg(X) = sum(X) / N
 

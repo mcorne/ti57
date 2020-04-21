@@ -104,47 +104,91 @@ def unit2rad(number):
 def main():
     global ee, reg, rounding, sto, unit, x
     label.label_rst
-    # comment 1
-    # comment 2
-    x = 5                       # 5            #3 
-    sto[4] = x                  # STO 4        #4  #   32 4
-    # comment 3
-    sbr_1()                     # SBR 1        #6  #   61 1
-
-
-# func 1
-# func 11
-# func 111
-@with_goto
-def sbr_0():
-    global ee, reg, rounding, sto, unit, x
-    label .label_0              # 2nd Lbl 0    #10 #   86 0
-    # func 1111
-    x = 3                       # 3            #12
-    sto[4] = x                  # STO 4        #13 #   32 4
-    x = 2.5                     # 2.5          #14
-    x = -x                      # +/-          #15 #   84
-    sto[0] = x                  # STO 0        #16 #   32 0
-    # comment 4
-    sto[0] = math.floor(sto[0]) # 2nd Dsz      #18 #   56
-    if sto[0] > 0:
-        sto[0] -= 1
-    elif sto[0] < 0:
-        sto[0] += 1
-    if sto[0] != 0:
-        # comment 5
-        x = 4                   # 4            #20
-    x = 5                       # 5            #21
-                                # INV SBR      #22 # - 61
-
-
-@with_goto
-def sbr_1():
-    global ee, reg, rounding, sto, unit, x
-    label .label_1              # 2nd Lbl 1    #23 #   86 1
-    x = 2                       # 2            #24
-    sto[4] = x                  # STO 4        #25 #   32 4
-    # call 0
-    # call 00
-    sbr_0()                     # SBR 0        #28 #   61 0
-                                # INV SBR      #29 # - 61
+    x = 2                       # 2            #1 
+    y = sto[7]                  # x<>t         #2  #   22
+    sto[7] = x
+    x = y
+    x = 10                      # 10           #3 
+    sto[0] += 1                 # 2nd S+       #4  #   88
+    sto[1] += x
+    sto[2] += x * x
+    sto[3] += sto[7]
+    sto[4] += sto[7] * sto[7]
+    sto[5] += sto[7] * x
+    sto[7] += 1
+    x = 3                       # 3            #5 
+    y = sto[7]                  # x<>t         #6  #   22
+    sto[7] = x
+    x = y
+    x = 20                      # 20           #7 
+    sto[0] += 1                 # 2nd S+       #8  #   88
+    sto[1] += x
+    sto[2] += x * x
+    sto[3] += sto[7]
+    sto[4] += sto[7] * sto[7]
+    sto[5] += sto[7] * x
+    sto[7] += 1
+    x = 5                       # 5            #9 
+    y = sto[7]                  # x<>t         #10 #   22
+    sto[7] = x
+    x = y
+    x = 30                      # 30           #11
+    sto[0] += 1                 # 2nd S+       #12 #   88
+    sto[1] += x
+    sto[2] += x * x
+    sto[3] += sto[7]
+    sto[4] += sto[7] * sto[7]
+    sto[5] += sto[7] * x
+    sto[7] += 1
+    x = 6                       # 6            #13
+    y = sto[7]                  # x<>t         #14 #   22
+    sto[7] = x
+    x = y
+    x = 40                      # 40           #15
+    sto[0] += 1                 # 2nd S+       #16 #   88
+    sto[1] += x
+    sto[2] += x * x
+    sto[3] += sto[7]
+    sto[4] += sto[7] * sto[7]
+    sto[5] += sto[7] * x
+    sto[7] += 1
+    x = 10                      # 10           #17
+    y = sto[7]                  # x<>t         #18 #   22
+    sto[7] = x
+    x = y
+    x = 2                       # 2            #19
+    sto[0] += 1                 # 2nd S+       #20 #   88
+    sto[1] += x
+    sto[2] += x * x
+    sto[3] += sto[7]
+    sto[4] += sto[7] * sto[7]
+    sto[5] += sto[7] * x
+    sto[7] += 1
+    x = 10                      # 10           #21
+    y = sto[7]                  # x<>t         #22 #   22
+    sto[7] = x
+    x = y
+    x = 2                       # 2            #23
+    sto[0] -= 1                 # INV 2nd S+   #24 # - 88
+    sto[1] -= x
+    sto[2] -= x * x
+    sto[3] -= sto[7]
+    sto[4] -= sto[7] * sto[7]
+    sto[5] -= sto[7] * x
+    sto[7] -= 1
+    x = 10                      # 10           #25
+    y = sto[7]                  # x<>t         #26 #   22
+    sto[7] = x
+    x = y
+    x = 2                       # 2            #27
+    sto[0] += 1                 # 2nd S+       #28 #   88
+    sto[1] += x
+    sto[2] += x * x
+    sto[3] += sto[7]
+    sto[4] += sto[7] * sto[7]
+    sto[5] += sto[7] * x
+    sto[7] += 1
+    x = sto[3] / sto[0]         # INV 2nd x    #29 # - 89
+    x = sto[1] / sto[0]         # 2nd x        #30 #   89
+    x = (sto[4] - sto[3] * sto[3] / sto[0]) / sto[0] # INV 2nd s2   #31 # - 80
+    x = (sto[2] - sto[1] * sto[1] / sto[0]) / sto[0] # 2nd s2       #32 #   80
