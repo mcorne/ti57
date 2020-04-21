@@ -50,8 +50,8 @@ class Generator:
         self.process_prev_equality()
 
     def action_exchange_memory(self):
-        self.lines.append("y = sto[{}]".format(self.instruction["number"]))
-        self.lines.append("sto[{}] = x".format(self.instruction["number"]))
+        self.lines.append(f"y = sto[{self.instruction['number']}]")
+        self.lines.append(f"sto[{self.instruction['number']}] = x")
         self.lines.append("x = y")
 
     def action_multiplication(self):
@@ -59,7 +59,7 @@ class Generator:
         self.add_operation()
 
     def action_numeric(self):
-        self.lines.append("x = {}".format(self.instruction["value"]))
+        self.lines.append(f"x = {self.instruction['value']}")
 
     def action_open_parenthesis(self):
         self.lines.append("")
@@ -382,14 +382,11 @@ class Generator:
 instructions = """
         # comment 1
         # comment 2
-        R/S
-        RST
         5 STO 4
         # comment 3
         SBR 1
         # func 1
         # func 11
-        RST
         # func 111
         2nd Lbl 0
         # func 1111

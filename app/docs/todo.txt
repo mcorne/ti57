@@ -1,5 +1,4 @@
 - allow array of code lines in token.php, and remove unnecessary actions
 - handle memory, goto, label as a pattern to capture any number, eg "STO [0-7]"
 - review/fix application css and js
-- replace string.format() with f""
 - change instruction key as a list item in instruction set
