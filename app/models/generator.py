@@ -1,7 +1,7 @@
 import re
 
-from .parser import Parser
-from .ti57 import instruction_set
+from app.models.parser import Parser
+from app.models.ti57 import instruction_set
 
 
 class Generator:
@@ -76,7 +76,10 @@ class Generator:
         self.add_operation()
 
     def action_python(self):
-        self.lines.append(self.instruction["python"])
+        if self.instruction["python"] is list:
+            self.lines += self.instruction["python"]
+        else:
+            self.lines.append(self.instruction["python"])
 
     def action_rectangular_to_polar(self):
         self.lines.append("y = x")
