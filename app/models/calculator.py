@@ -104,3 +104,4 @@ def unit2rad(number):
 @with_goto
 def main():
     global ee, reg, rounding, sto, unit, x
+    label.label_rst

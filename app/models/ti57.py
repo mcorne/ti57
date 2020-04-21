@@ -116,7 +116,7 @@ instruction_set = """
 "2nd x=t"          : {"ti_code": "  66"  , "action": "python"                , "python": "if x == sto[7]:"},
 "INV 2nd x=t"      : {"ti_code": "- 66"  , "action": "python"                , "python": "if x != sto[7]:"},
 "2nd Grd"          : {"ti_code": "  70"  , "action": "python"                , "python": "unit = 'Grd'"},
-"RST"              : {"ti_code": "  71"}, # TODO: process !!!
+"RST"              : {"ti_code": "  71"  , "action": "python"                , "python": "goto .label_rst"},
 "2nd x>=t"         : {"ti_code": "  76"  , "action": "python"                , "python": "if x >= sto[7]:"},
 "INV 2nd x>=t"     : {"ti_code": "- 76"  , "action": "python"                , "python": "if x < sto[7]:"},
 "2nd s2"           : {"ti_code": "  80"  , "action": "python"                , "python": "x = (sto[2] - sto[1] * sto[1] / sto[0]) / sto[0]"}, # var(Y) = sum(Y^2) / N - avg(Y)

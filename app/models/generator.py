@@ -378,6 +378,7 @@ instructions = """
         SBR 1
         # func 1
         # func 11
+        RST
         # func 111
         2nd Lbl 0
         # func 1111
@@ -402,6 +403,6 @@ code = g.generate_code(instructions)
 with open("app/models/test.py", "w") as file:
     file.write(code)
 print(code)
-exec(code)
-main()
-print(state())
+# exec(code)
+# main()
+# print(state())
