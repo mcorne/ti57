@@ -1,5 +1,22 @@
-import math
 import re
+from math import (
+    acos,
+    asin,
+    atan,
+    atan2,
+    cos,
+    degrees,
+    exp,
+    floor,
+    log,
+    log10,
+    pi,
+    pow,
+    radians,
+    sin,
+    sqrt,
+    tan,
+)
 
 from goto import with_goto
 
@@ -58,18 +75,18 @@ def dms2degrees(dms):
 
 
 def grd2rad(number):
-    return (number / 200) * math.pi
+    return (number / 200) * pi
 
 
 def rad2grd(number):
-    return (number / math.pi) * 200
+    return (number / pi) * 200
 
 
 def rad2unit(number):
     global unit
     number = float(number)
     if unit == "Deg":
-        number = math.degrees(number)
+        number = degrees(number)
     elif unit == "Grd":
         number = rad2grd(number)
     return number
@@ -94,7 +111,7 @@ def unit2rad(number):
     global unit
     number = float(number)
     if unit == "Deg":
-        number = math.radians(number)
+        number = radians(number)
     elif unit == "Grd":
         number = grd2rad(number)
     return number

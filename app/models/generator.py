@@ -216,7 +216,7 @@ class Generator:
             self.operators.pop()
             self.py_lines.append("y = reg.pop()")
             exponent_sign = "-" if self.prev_operator == "root" else ""
-            self.py_lines.append(f"x = math.pow(y, {exponent_sign}x)")
+            self.py_lines.append(f"x = pow(y, {exponent_sign}x)")
             self.update_prev_operator()
 
     def process_prev_scientific_notation(self):
@@ -225,7 +225,7 @@ class Generator:
         if self.prev_operator == "EE":
             self.operators.pop()
             self.py_lines.append("y = reg.pop()")
-            self.py_lines.append("x = y * math.pow(10, x)")
+            self.py_lines.append("x = y * pow(10, x)")
             self.update_prev_operator()
 
     def update_prev_operator(self):

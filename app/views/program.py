@@ -7,16 +7,16 @@ bp = Blueprint("program", __name__)
 
 @bp.route("/")
 def index():
-    # ti_instructions = """
-    #         500 STO 1
-    #         0.015 STO 2
-    #         3 STO 3
-    #         RCL 1 *
-    #         ( RCL 2 /
-    #         ( 1 - ( 1 + RCL 2 )
-    #         Y^X RCL 3 +/- ) ) =
-    #         45 2nd sin =
-    #         """
+    ti_instructions = """
+            500 STO 1
+            0.015 STO 2
+            3 STO 3
+            RCL 1 *
+            ( RCL 2 /
+            ( 1 - ( 1 + RCL 2 )
+            Y^X RCL 3 +/- ) ) =
+            45 2nd sin =
+            """
 
     # ti_instructions = """
     #         10.25 EE 2 * 3 =
@@ -117,32 +117,32 @@ def index():
     #         2nd s2
     #         """
 
-    ti_instructions = """
-            # comment 1
-            # comment 2
-            5 STO 4
-            # comment 3
-            SBR 1
-            # func 1
-            # func 11
-            # func 111
-            2nd Lbl 0
-            # func 1111
-            3 STO 4
-            2.5 +/- STO 0
-            # comment 4
-            2nd Dsz
-            # comment 5
-            4
-            5
-            INV SBR
-            2nd Lbl 1
-            2 STO 4
-            # call 0
-            # call 00
-            SBR 0
-            INV SBR
-            """
+    # ti_instructions = """
+    #         # comment 1
+    #         # comment 2
+    #         5 STO 4
+    #         # comment 3
+    #         SBR 1
+    #         # func 1
+    #         # func 11
+    #         # func 111
+    #         2nd Lbl 0
+    #         # func 1111
+    #         3 STO 4
+    #         2.5 +/- STO 0
+    #         # comment 4
+    #         2nd Dsz
+    #         # comment 5
+    #         4
+    #         5
+    #         INV SBR
+    #         2nd Lbl 1
+    #         2 STO 4
+    #         # call 0
+    #         # call 00
+    #         SBR 0
+    #         INV SBR
+    #         """
 
     try:
         g = Generator()
