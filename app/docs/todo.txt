@@ -1,5 +1,4 @@
 - review/fix application css and js
 - replace "reg" with "stack" and "sto" with "mem"
-- rename "python" to "py_line"
 - parse empty lines and pass them on to generator
 - change "import math" to "from math import *"

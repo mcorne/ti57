@@ -120,9 +120,9 @@ class Parser:
             raise Exception(f"Action not implemented for {value}")
 
         if number is not None:
-            if not "python" in ti_instruction:
+            if not "py_line" in ti_instruction:
                 raise Exception(f"Python line missing for {value}")
-            ti_instruction["python"] = self.fix_number_in_py_lines(
-                number, ti_instruction["python"]
+            ti_instruction["py_line"] = self.fix_number_in_py_lines(
+                number, ti_instruction["py_line"]
             )
         return ti_instruction
