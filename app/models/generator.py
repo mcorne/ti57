@@ -9,7 +9,7 @@ class Generator:
         self.lines = []
         self.operators = []
         self.prev_operator = None
-        self.instruction = {}
+        self.ti_instruction = {}
 
     def action_addition(self):
         self.process_prev_equality()
@@ -36,7 +36,7 @@ class Generator:
         self.operators.pop()
 
     def action_comment(self):
-        self.lines.append(self.instruction["value"])
+        self.lines.append(self.ti_instruction["value"])
 
     def action_equality(self):
         self.process_prev_equality()
@@ -46,21 +46,21 @@ class Generator:
         self.add_operation()
 
     def action_numeric(self):
-        self.lines.append(f"x = {self.instruction['value']}")
+        self.lines.append(f"x = {self.ti_instruction['value']}")
 
     def action_open_parenthesis(self):
         self.lines.append("")
-        self.operators.append(self.instruction["type"])
+        self.operators.append(self.ti_instruction["type"])
 
     def action_power(self):
         self.process_prev_power()
         self.add_operation()
 
     def action_python(self):
-        if type(self.instruction["python"]) is list:
-            self.lines += self.instruction["python"]
+        if type(self.ti_instruction["python"]) is list:
+            self.lines += self.ti_instruction["python"]
         else:
-            self.lines.append(self.instruction["python"])
+            self.lines.append(self.ti_instruction["python"])
 
     def action_scientific_notation(self):
         self.lines.append("ee = True")
@@ -90,22 +90,22 @@ class Generator:
 
     def add_operation(self):
         self.lines.append("reg.append(x)")
-        self.operators.append(self.instruction["type"])
+        self.operators.append(self.ti_instruction["type"])
 
-    def convert_instructions_to_code_lines(self, instructions):
-        parser = Parser(instructions, instruction_set)
-        for self.instruction in parser.next_instruction():
+    def convert_ti_instructions_to_py_lines(self, ti_instructions):
+        parser = Parser(ti_instructions, instruction_set)
+        for self.ti_instruction in parser.next_instruction():
             number = len(self.lines)
-            if self.instruction["action"]:
-                action = getattr(self, "action_" + self.instruction["action"])
+            if self.ti_instruction["action"]:
+                action = getattr(self, "action_" + self.ti_instruction["action"])
                 action()
             if len(self.lines) == number:  # No python code added, ex. "INV SBR"
                 self.lines.append("")
-            if self.instruction["action"] != "comment":
-                line = f"{self.lines[number]: <27} # {self.instruction['value']: <12} #{self.instruction['step']: <2}"
+            if self.ti_instruction["action"] != "comment":
+                line = f"{self.lines[number]: <27} # {self.ti_instruction['value']: <12} #{self.ti_instruction['step']: <2}"
                 self.lines[number] = line
-                if "ti_code" in self.instruction:
-                    self.lines[number] += " # " + self.instruction["ti_code"]
+                if "ti_code" in self.ti_instruction:
+                    self.lines[number] += " # " + self.ti_instruction["ti_code"]
 
         return self.lines
 
@@ -126,8 +126,8 @@ class Generator:
                 subroutine_numbers.append(subroutine_number)
         return subroutine_numbers
 
-    def generate_code(self, instructions):
-        lines = self.convert_instructions_to_code_lines(instructions)
+    def generate_code(self, ti_instructions):
+        lines = self.convert_ti_instructions_to_py_lines(ti_instructions)
         self.indent_if_statement(lines)
         subroutine_numbers = self.extract_subroutine_numbers(lines)
         if subroutine_numbers:

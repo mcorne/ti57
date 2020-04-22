@@ -8,9 +8,9 @@ class Parser:
     METACHARACTERS = r"[.\^$*+?{}[\]|()]"
     MISMATCH = r"\S+"
 
-    def __init__(self, instructions, instruction_set):
-        self.instructions = instructions
-        self.instruction_set = eval(instruction_set)
+    def __init__(self, ti_instructions, instruction_set):
+        self.ti_instructions = ti_instructions
+        self.ti_instruction_set = eval(instruction_set)
 
     def convert_key_to_pattern(self, key):
         # Escape metacharacters
@@ -66,13 +66,13 @@ class Parser:
 
     # See https://docs.python.org/3.8/library/re.html#writing-a-tokenizer
     def next_instruction(self):
-        lower_case_keys = self.get_lower_case_keys(self.instruction_set)
-        patterns = self.get_instruction_patterns(self.instruction_set)
+        lower_case_keys = self.get_lower_case_keys(self.ti_instruction_set)
+        patterns = self.get_instruction_patterns(self.ti_instruction_set)
         line = 1
         start = 0
         step = 1
 
-        for match in re.finditer(patterns, self.instructions, re.I):
+        for match in re.finditer(patterns, self.ti_instructions, re.I):
             column = match.start() - start
             type = match.lastgroup
             value = match.group()
@@ -89,40 +89,40 @@ class Parser:
             if type == "SKIP":
                 continue
 
-            instruction = {"line": line, "step": step, "value": value}
+            ti_instruction = {"line": line, "step": step, "value": value}
 
             if type == "COMMENT":
-                instruction["action"] = "comment"
+                ti_instruction["action"] = "comment"
             elif type == "NUMERIC":
-                instruction["action"] = "numeric"
+                ti_instruction["action"] = "numeric"
             elif type == "KEY":
                 instruction_set = self.process_key_type_instruction(
-                    instruction, groups, lower_case_keys
+                    ti_instruction, groups, lower_case_keys
                 )
             else:
                 raise Exception(f"Unexpected instruction type {type}")
 
             step += 1
-            yield instruction
+            yield ti_instruction
 
-    def process_key_type_instruction(self, instruction, groups, lower_case_keys):
+    def process_key_type_instruction(self, ti_instruction, groups, lower_case_keys):
         original_key, number = self.get_original_key_and_number(groups)
         if original_key is not None:
             value = original_key
         else:
-            value = instruction["value"]
+            value = ti_instruction["value"]
         lower_case_key = value.lower()
         if not lower_case_key in lower_case_keys:
             raise Exception(f"Invalid instruction key {value}")
 
-        instruction.update(self.instruction_set[lower_case_keys[lower_case_key]])
-        if not "action" in instruction:
+        ti_instruction.update(self.ti_instruction_set[lower_case_keys[lower_case_key]])
+        if not "action" in ti_instruction:
             raise Exception(f"Action not implemented for {value}")
 
         if number is not None:
-            if not "python" in instruction:
+            if not "python" in ti_instruction:
                 raise Exception(f"Python line missing for {value}")
-            instruction["python"] = self.fix_number_in_py_lines(
-                number, instruction["python"]
+            ti_instruction["python"] = self.fix_number_in_py_lines(
+                number, ti_instruction["python"]
             )
-        return instruction
+        return ti_instruction
