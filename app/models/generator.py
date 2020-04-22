@@ -25,7 +25,7 @@ class Generator:
 
     def action_clear_all(self):
         self.action_clear()
-        self.py_lines.append("sto = [0 for i in range(8)]")
+        self.py_lines.append("mem = [0 for i in range(8)]")
 
     def action_closing_parenthesis(self):
         self.process_prev_equality()
@@ -78,7 +78,7 @@ class Generator:
                 *comments,
                 "@with_goto",
                 f"def sbr_{label_number}():",
-                "global ee, reg, rounding, sto, unit, x",
+                "global ee, mem, reg, rounding, unit, x",
                 py_line,
             ]
 
