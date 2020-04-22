@@ -18,7 +18,7 @@ class Generator:
     def action_clear(self):
         self.py_lines.append("x = 0")
         self.py_lines.append("ee = False")
-        self.py_lines.append("reg = []")
+        self.py_lines.append("stack = []")
 
         self.operators = []
         self.prev_operator = None
@@ -78,7 +78,7 @@ class Generator:
                 *comments,
                 "@with_goto",
                 f"def sbr_{label_number}():",
-                "global ee, mem, reg, rounding, unit, x",
+                "global ee, mem, rounding, stack, unit, x",
                 py_line,
             ]
 
@@ -89,7 +89,7 @@ class Generator:
         return fixed
 
     def add_operation(self):
-        self.py_lines.append("reg.append(x)")
+        self.py_lines.append("stack.append(x)")
         self.operators.append(self.ti_instruction["type"])
 
     def convert_ti_instructions_to_py_lines(self, ti_instructions):
@@ -196,7 +196,7 @@ class Generator:
 
         if self.prev_operator == "+" or self.prev_operator == "-":
             self.operators.pop()
-            self.py_lines.append("y = reg.pop()")
+            self.py_lines.append("y = stack.pop()")
             self.py_lines.append(f"x = y {self.prev_operator} x")
             self.update_prev_operator()
 
@@ -205,7 +205,7 @@ class Generator:
 
         if self.prev_operator == "*" or self.prev_operator == "/":
             self.operators.pop()
-            self.py_lines.append("y = reg.pop()")
+            self.py_lines.append("y = stack.pop()")
             self.py_lines.append(f"x = y {self.prev_operator} x")
             self.update_prev_operator()
 
@@ -214,7 +214,7 @@ class Generator:
 
         if self.prev_operator == "power" or self.prev_operator == "root":
             self.operators.pop()
-            self.py_lines.append("y = reg.pop()")
+            self.py_lines.append("y = stack.pop()")
             exponent_sign = "-" if self.prev_operator == "root" else ""
             self.py_lines.append(f"x = pow(y, {exponent_sign}x)")
             self.update_prev_operator()
@@ -224,7 +224,7 @@ class Generator:
 
         if self.prev_operator == "EE":
             self.operators.pop()
-            self.py_lines.append("y = reg.pop()")
+            self.py_lines.append("y = stack.pop()")
             self.py_lines.append("x = y * pow(10, x)")
             self.update_prev_operator()
 

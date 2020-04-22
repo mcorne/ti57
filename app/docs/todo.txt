@@ -1,3 +1,2 @@
 - review/fix application css and js
-- replace "reg" with "stack"
 - parse empty lines and pass them on to generator

@@ -22,7 +22,7 @@ from goto import with_goto
 
 ee = False  # Disable scientific notation
 mem = [0 for i in range(8)]  # Reset memory
-reg = []  # Reset internal registers
+stack = []  # Reset internal registers
 rounding = None  # Disable rounding of numbers
 unit = "Deg"  # Set degree mode
 x = 0  # Reset display
@@ -93,12 +93,12 @@ def rad2unit(number):
 
 
 def state():
-    global ee, mem, reg, rounding, unit, x
+    global ee, mem, rounding, stack, unit, x
     rounded = x if rounding is None else round(x, rounding)
     state = {
         "ee": ee,
         "mem": mem,
-        "reg": reg,
+        "stack": stack,
         "rounded": rounded,
         "rounding": rounding,
         "unit": unit,
@@ -119,5 +119,5 @@ def unit2rad(number):
 
 @with_goto
 def main():
-    global ee, mem, reg, rounding, unit, x
+    global ee, mem, rounding, stack, unit, x
     label.label_rst

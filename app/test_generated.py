@@ -22,7 +22,7 @@ from goto import with_goto
 
 ee = False  # Disable scientific notation
 mem = [0 for i in range(8)]  # Reset memory
-reg = []  # Reset internal registers
+stack = []  # Reset internal registers
 rounding = None  # Disable rounding of numbers
 unit = "Deg"  # Set degree mode
 x = 0  # Reset display
@@ -93,14 +93,14 @@ def rad2unit(number):
 
 
 def state():
-    global ee, mem, reg, rounding, unit, x
+    global ee, mem, rounding, stack, unit, x
     rounded = x if rounding is None else round(x, rounding)
     state = {
         "ee": ee,
-        "reg": reg,
+        "mem": mem,
+        "stack": stack,
         "rounded": rounded,
         "rounding": rounding,
-        "mem": mem,
         "unit": unit,
         "x": x,
     }
@@ -119,7 +119,7 @@ def unit2rad(number):
 
 @with_goto
 def main():
-    global ee, mem, reg, rounding, unit, x
+    global ee, mem, rounding, stack, unit, x
     label.label_rst
     x = 500                     # 500          #1 
     mem[1] = x                  # STO 1        #2  #   32 0
@@ -128,29 +128,29 @@ def main():
     x = 3                       # 3            #5 
     mem[3] = x                  # STO 3        #6  #   32 0
     x = mem[1]                  # RCL 1        #7  #   33 0
-    reg.append(x)               # *            #8  #   55
+    stack.append(x)             # *            #8  #   55
                                 # (            #9  #   43
     x = mem[2]                  # RCL 2        #10 #   33 0
-    reg.append(x)               # /            #11 #   45
+    stack.append(x)             # /            #11 #   45
                                 # (            #12 #   43
     x = 1                       # 1            #13
-    reg.append(x)               # -            #14 #   65
+    stack.append(x)             # -            #14 #   65
                                 # (            #15 #   43
     x = 1                       # 1            #16
-    reg.append(x)               # +            #17 #   75
+    stack.append(x)             # +            #17 #   75
     x = mem[2]                  # RCL 2        #18 #   33 0
-    y = reg.pop()               # )            #19 #   44
+    y = stack.pop()             # )            #19 #   44
     x = y + x
-    reg.append(x)               # Y^X          #20 #   35
+    stack.append(x)             # Y^X          #20 #   35
     x = mem[3]                  # RCL 3        #21 #   33 0
     x = -x                      # +/-          #22 #   84
-    y = reg.pop()               # )            #23 #   44
+    y = stack.pop()             # )            #23 #   44
     x = pow(y, x)
-    y = reg.pop()
+    y = stack.pop()
     x = y - x
-    y = reg.pop()               # )            #24 #   44
+    y = stack.pop()             # )            #24 #   44
     x = y / x
-    y = reg.pop()               # =            #25 #   85
+    y = stack.pop()             # =            #25 #   85
     x = y * x
     x = 45                      # 45           #26
     x = sin(unit2rad(x))        # 2nd sin      #27 #   28
