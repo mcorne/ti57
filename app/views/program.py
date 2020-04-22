@@ -146,7 +146,7 @@ def index():
 
     try:
         g = Generator()
-        code = g.generate_code(ti_instructions)
+        code = g.generate_py_code(ti_instructions)
         with open("app/test_generated.py", "w") as file:
             file.write(code)
         print(code)

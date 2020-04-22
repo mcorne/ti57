@@ -99,7 +99,7 @@ class Generator:
             if self.ti_instruction["action"]:
                 action = getattr(self, "action_" + self.ti_instruction["action"])
                 action()
-            if len(self.py_lines) == number:  # No python code added, ex. "INV SBR"
+            if len(self.py_lines) == number:  # No python line added, ex. "INV SBR"
                 self.py_lines.append("")
             if self.ti_instruction["action"] != "comment":
                 py_line = f"{self.py_lines[number]: <27} # {self.ti_instruction['value']: <12} #{self.ti_instruction['step']: <2}"
@@ -126,7 +126,7 @@ class Generator:
                 subroutine_numbers.append(subroutine_number)
         return subroutine_numbers
 
-    def generate_code(self, ti_instructions):
+    def generate_py_code(self, ti_instructions):
         py_lines = self.convert_ti_instructions_to_py_lines(ti_instructions)
         self.indent_if_statement(py_lines)
         subroutine_numbers = self.extract_subroutine_numbers(py_lines)
