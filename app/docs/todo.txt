@@ -1,3 +1,5 @@
-- handle memory, goto, label as a pattern to capture any number, eg "STO [0-7]"
 - review/fix application css and js
-- change instruction key as a list item in instruction set
+- replace "reg" with "stack" and "sto" with "mem"
+- rename "instruction" to "ti_instruction" and "python" to "py_line"
+- parse empty lines and pass them on to generator
+- change "import math" to "from math import *"

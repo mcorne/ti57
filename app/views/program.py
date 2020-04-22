@@ -7,16 +7,16 @@ bp = Blueprint("program", __name__)
 
 @bp.route("/")
 def index():
-    # instructions = """
-    #         500 STO 1
-    #         0.015 STO 2
-    #         3 STO 3
-    #         RCL 1 *
-    #         ( RCL 2 /
-    #         ( 1 - ( 1 + RCL 2 )
-    #         Y^X RCL 3 +/- ) ) =
-    #         45 2nd sin =
-    #         """
+    instructions = """
+            500 STO 1
+            0.015 STO 2
+            3 STO 3
+            RCL 1 *
+            ( RCL 2 /
+            ( 1 - ( 1 + RCL 2 )
+            Y^X RCL 3 +/- ) ) =
+            45 2nd sin =
+            """
 
     # instructions = """
     #         10.25 EE 2 * 3 =
@@ -88,12 +88,12 @@ def index():
     # instructions = "2nd pi 2nd Int "
     # instructions = "2nd pi INV 2nd Int"
 
-    instructions = """
-            2.5 +/- STO 0
-            INV 2nd Dsz
-            4
-            5
-            """
+    # instructions = """
+    #         2.5 +/- STO 0
+    #         INV 2nd Dsz
+    #         4
+    #         5
+    #         """
 
     # instructions = """
     #         1 STO 7

@@ -104,14 +104,37 @@ def unit2rad(number):
 def main():
     global ee, reg, rounding, sto, unit, x
     label.label_rst
-    x = 2.5                     # 2.5          #1 
-    x = -x                      # +/-          #2  #   84
-    sto[0] = x                  # STO 0        #3  #   32 0
-    sto[0] = math.floor(sto[0]) # INV 2nd Dsz  #4  # - 56
-    if sto[0] > 0:
-        sto[0] -= 1
-    elif sto[0] < 0:
-        sto[0] += 1
-    if sto[0] == 0:
-        x = 4                   # 4            #5 
-    x = 5                       # 5            #6 
+    x = 500                     # 500          #1 
+    sto[1] = x                  # STO 1        #2  #   32 0
+    x = 0.015                   # 0.015        #3 
+    sto[2] = x                  # STO 2        #4  #   32 0
+    x = 3                       # 3            #5 
+    sto[3] = x                  # STO 3        #6  #   32 0
+    x = sto[1]                  # RCL 1        #7  #   33 0
+    reg.append(x)               # *            #8  #   55
+                                # (            #9  #   43
+    x = sto[2]                  # RCL 2        #10 #   33 0
+    reg.append(x)               # /            #11 #   45
+                                # (            #12 #   43
+    x = 1                       # 1            #13
+    reg.append(x)               # -            #14 #   65
+                                # (            #15 #   43
+    x = 1                       # 1            #16
+    reg.append(x)               # +            #17 #   75
+    x = sto[2]                  # RCL 2        #18 #   33 0
+    y = reg.pop()               # )            #19 #   44
+    x = y + x
+    reg.append(x)               # Y^X          #20 #   35
+    x = sto[3]                  # RCL 3        #21 #   33 0
+    x = -x                      # +/-          #22 #   84
+    y = reg.pop()               # )            #23 #   44
+    x = math.pow(y, x)
+    y = reg.pop()
+    x = y - x
+    y = reg.pop()               # )            #24 #   44
+    x = y / x
+    y = reg.pop()               # =            #25 #   85
+    x = y * x
+    x = 45                      # 45           #26
+    x = math.sin(unit2rad(x))   # 2nd sin      #27 #   28
+                                # =            #28 #   85

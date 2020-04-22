@@ -41,11 +41,6 @@ class Generator:
     def action_equality(self):
         self.process_prev_equality()
 
-    def action_exchange_memory(self):
-        self.lines.append(f"y = sto[{self.instruction['number']}]")
-        self.lines.append(f"sto[{self.instruction['number']}] = x")
-        self.lines.append("x = y")
-
     def action_multiplication(self):
         self.process_prev_multiplication()
         self.add_operation()
