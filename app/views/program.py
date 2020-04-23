@@ -13,6 +13,7 @@ def index():
 
             3 STO 3 # comment 2
             1
+            # comment 3
             INV 2nd Prod 3
             RCL 1 *
             ( RCL 2 /

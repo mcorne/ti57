@@ -33,21 +33,6 @@ class Parser:
         py_lines = [py_line.replace("NUMBER", number) for py_line in py_lines]
         return py_lines
 
-    def get_instruction_patterns(self):
-        patterns = [
-            self.convert_key_to_pattern(key) for key in self.ti_instruction_set.keys()
-        ]
-        groups = [
-            ("KEY", "|".join(patterns)),
-            ("NUMERIC", Parser.DECIMAL + "|" + Parser.INTEGER),
-            ("COMMENT", r"#[^\n\r]*"),
-            ("NEWLINE", r"(?:\r\n|\n|\r){2,}"),
-            ("SKIP", r"[ \t]+"),
-            ("MISMATCH", r"."),
-        ]
-        patterns = "|".join("(?P<%s>%s)" % group for group in groups)
-        return patterns
-
     def get_original_key_and_number(self, groups):
         group_name, number = next(
             (
@@ -63,13 +48,16 @@ class Parser:
             original_key = None
         return [original_key, number]
 
-    def get_lower_case_keys(self):
-        return dict([(key.lower(), key) for key in self.ti_instruction_set.keys()])
+    def move_inline_comments_up(self):
+        self.ti_instructions = re.sub(
+            r"^(.*?[^ ] *)(#.*?)$", r"\g<2>\n\g<1>", self.ti_instructions, 0, re.M
+        )
 
     # See https://docs.python.org/3.8/library/re.html#writing-a-tokenizer
     def next_instruction(self):
-        self.lower_case_keys = self.get_lower_case_keys()
-        self.patterns = self.get_instruction_patterns()
+        self.set_lower_case_keys()
+        self.set_instruction_patterns()
+        self.move_inline_comments_up()
         return self.tokenizer()
 
     def process_key_type_instruction(self, ti_instruction, groups):
@@ -123,6 +111,25 @@ class Parser:
             raise Exception(f"Unexpected instruction type {type}")
 
         return [ti_instruction, start, line]
+
+    def set_instruction_patterns(self):
+        patterns = [
+            self.convert_key_to_pattern(key) for key in self.ti_instruction_set.keys()
+        ]
+        groups = [
+            ("KEY", "|".join(patterns)),
+            ("NUMERIC", Parser.DECIMAL + "|" + Parser.INTEGER),
+            ("COMMENT", r"#[^\n\r]*"),
+            ("NEWLINE", r"(?:\r\n|\n|\r){2,}"),
+            ("SKIP", r"[ \t]+"),
+            ("MISMATCH", r"."),
+        ]
+        self.patterns = "|".join("(?P<%s>%s)" % group for group in groups)
+
+    def set_lower_case_keys(self):
+        self.lower_case_keys = dict(
+            [(key.lower(), key) for key in self.ti_instruction_set.keys()]
+        )
 
     # See https://docs.python.org/3.8/library/re.html#writing-a-tokenizer
     def tokenizer(self):
