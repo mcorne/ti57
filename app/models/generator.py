@@ -5,6 +5,17 @@ from app.models.ti57 import instruction_set
 
 
 class Generator:
+    # Python line length:
+    # Median = 14 (ex. "if mem[0] > 0:")
+    # Q3     = 18 (ex. "x = degrees2dms(x)")
+    # Max    = 48 (ex. "x = (mem[4] - mem[3] * mem[3] / mem[0]) / mem[0]")
+    PY_LINE_LENGTH = 18
+    # TI instruction length:
+    # Median = 7 (ex. "2nd Dsz")
+    # Q3     = 9 (ex. "2nd Exc 0")
+    # Max    = 14 (ex. "INV 2nd Prod 0")
+    TI_INSTRUCTION_LENGTH = 9
+
     def __init__(self):
         self.py_lines = []
         self.operators = []
@@ -102,10 +113,7 @@ class Generator:
             if len(self.py_lines) == number:  # No python line added, ex. "INV SBR"
                 self.py_lines.append("")
             if self.ti_instruction["action"] != "comment":
-                py_line = f"{self.py_lines[number]: <27} # {self.ti_instruction['value']: <12} #{self.ti_instruction['step']: <2}"
-                self.py_lines[number] = py_line
-                if "ti_code" in self.ti_instruction:
-                    self.py_lines[number] += " # " + self.ti_instruction["ti_code"]
+                self.py_lines[number] = self.format_py_line(self.py_lines[number], self.ti_instruction)
 
         return self.py_lines
 
@@ -125,6 +133,12 @@ class Generator:
             if subroutine_number:
                 subroutine_numbers.append(subroutine_number)
         return subroutine_numbers
+
+    def format_py_line(self, py_line, ti_instruction):
+        fixed = f"{py_line: <{self.PY_LINE_LENGTH}} # {ti_instruction['value']: <{self.TI_INSTRUCTION_LENGTH}}"
+        if "ti_code" in ti_instruction:
+            fixed += f" ({ti_instruction['ti_code'].strip()})"
+        return fixed
 
     def generate_py_code(self, ti_instructions):
         py_lines = self.convert_ti_instructions_to_py_lines(ti_instructions)

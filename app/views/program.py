@@ -8,9 +8,11 @@ bp = Blueprint("program", __name__)
 @bp.route("/")
 def index():
     ti_instructions = """
-            500 STO 1
+            500 STO 1 # comment 1
             0.015 STO 2
-            3 STO 3
+            3 STO 3 # comment 2
+            1
+            INV 2nd Prod 3
             RCL 1 *
             ( RCL 2 /
             ( 1 - ( 1 + RCL 2 )

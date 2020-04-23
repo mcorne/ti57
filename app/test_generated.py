@@ -36,7 +36,7 @@ def degrees2dms(degrees):
 
     minutes, seconds = divmod(degrees * 3600, 60)
     degrees, minutes = divmod(minutes, 60)
-    # Internal mantissa has 11 digits on TI-57 and 13 on TI-59
+    # Internal mantissa has 11 digits on TI-57
     seconds = f"{seconds:016.13f}".replace(".", "")
 
     dms = f"{int(degrees)}.{int(minutes):02}{seconds}".rstrip("0")
@@ -121,37 +121,41 @@ def unit2rad(number):
 def main():
     global ee, mem, rounding, stack, unit, x
     label.label_rst
-    x = 500                     # 500          #1 
-    mem[1] = x                  # STO 1        #2  #   32 0
-    x = 0.015                   # 0.015        #3 
-    mem[2] = x                  # STO 2        #4  #   32 0
-    x = 3                       # 3            #5 
-    mem[3] = x                  # STO 3        #6  #   32 0
-    x = mem[1]                  # RCL 1        #7  #   33 0
-    stack.append(x)             # *            #8  #   55
-                                # (            #9  #   43
-    x = mem[2]                  # RCL 2        #10 #   33 0
-    stack.append(x)             # /            #11 #   45
-                                # (            #12 #   43
-    x = 1                       # 1            #13
-    stack.append(x)             # -            #14 #   65
-                                # (            #15 #   43
-    x = 1                       # 1            #16
-    stack.append(x)             # +            #17 #   75
-    x = mem[2]                  # RCL 2        #18 #   33 0
-    y = stack.pop()             # )            #19 #   44
+    x = 500            # 500      
+    mem[1] = x         # STO 1     (32 0)
+    # comment 1
+    x = 0.015          # 0.015    
+    mem[2] = x         # STO 2     (32 0)
+    x = 3              # 3        
+    mem[3] = x         # STO 3     (32 0)
+    # comment 2
+    x = 1              # 1        
+    mem[3] /= x        # INV 2nd Prod 3 (- 39 0)
+    x = mem[1]         # RCL 1     (33 0)
+    stack.append(x)    # *         (55)
+                       # (         (43)
+    x = mem[2]         # RCL 2     (33 0)
+    stack.append(x)    # /         (45)
+                       # (         (43)
+    x = 1              # 1        
+    stack.append(x)    # -         (65)
+                       # (         (43)
+    x = 1              # 1        
+    stack.append(x)    # +         (75)
+    x = mem[2]         # RCL 2     (33 0)
+    y = stack.pop()    # )         (44)
     x = y + x
-    stack.append(x)             # Y^X          #20 #   35
-    x = mem[3]                  # RCL 3        #21 #   33 0
-    x = -x                      # +/-          #22 #   84
-    y = stack.pop()             # )            #23 #   44
+    stack.append(x)    # Y^X       (35)
+    x = mem[3]         # RCL 3     (33 0)
+    x = -x             # +/-       (84)
+    y = stack.pop()    # )         (44)
     x = pow(y, x)
     y = stack.pop()
     x = y - x
-    y = stack.pop()             # )            #24 #   44
+    y = stack.pop()    # )         (44)
     x = y / x
-    y = stack.pop()             # =            #25 #   85
+    y = stack.pop()    # =         (85)
     x = y * x
-    x = 45                      # 45           #26
-    x = sin(unit2rad(x))        # 2nd sin      #27 #   28
-                                # =            #28 #   85
+    x = 45             # 45       
+    x = sin(unit2rad(x)) # 2nd sin   (28)
+                       # =         (85)

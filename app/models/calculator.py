@@ -36,7 +36,7 @@ def degrees2dms(degrees):
 
     minutes, seconds = divmod(degrees * 3600, 60)
     degrees, minutes = divmod(minutes, 60)
-    # Internal mantissa has 11 digits on TI-57 and 13 on TI-59
+    # Internal mantissa has 11 digits on TI-57
     seconds = f"{seconds:016.13f}".replace(".", "")
 
     dms = f"{int(degrees)}.{int(minutes):02}{seconds}".rstrip("0")
