@@ -113,7 +113,9 @@ class Generator:
             if len(self.py_lines) == number:  # No python line added, ex. "INV SBR"
                 self.py_lines.append("")
             if self.ti_instruction["action"] != "comment":
-                self.py_lines[number] = self.format_py_line(self.py_lines[number], self.ti_instruction)
+                self.py_lines[number] = self.format_py_line(
+                    self.py_lines[number], self.ti_instruction
+                )
 
         return self.py_lines
 
@@ -175,9 +177,9 @@ class Generator:
             elif py_line[0:3] == "def":
                 # This is a function definition
                 preceedes_def = True
-            elif not preceedes_def:
+            elif not preceedes_def and py_line != "\n":
                 # This is any line of code
-                py_lines[last - number] = "    " + py_line
+                py_lines[last - number] = "    " + py_line.rstrip()
             # Else this is a comment or the "with_goto" decorator preceeding the function definition
 
     def indent_if_statement(self, py_lines):

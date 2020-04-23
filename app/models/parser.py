@@ -41,7 +41,7 @@ class Parser:
             ("KEY", "|".join(patterns)),
             ("NUMERIC", Parser.DECIMAL + "|" + Parser.INTEGER),
             ("COMMENT", r"#[^\n\r]*"),
-            ("NEWLINE", r"\r\n|\n|\r"),
+            ("NEWLINE", r"(?:\r\n|\n|\r){2,}"),
             ("SKIP", r"[ \t]+"),
             ("MISMATCH", r"."),
         ]
@@ -103,25 +103,22 @@ class Parser:
         value = match.group()
         groups = match.groupdict()
 
-        if type == "MISMATCH":
-            raise Exception(
-                f"Invalid instruction {value} on line {line} and column {column}"
-            )
-        if type == "NEWLINE":
-            start = match.end()
-            line += 1
-            return
-        if type == "SKIP":
-            return
-
         ti_instruction = {"value": value}
 
         if type == "COMMENT":
             ti_instruction["action"] = "comment"
-        elif type == "NUMERIC":
-            ti_instruction["action"] = "numeric"
         elif type == "KEY":
             ti_instruction = self.process_key_type_instruction(ti_instruction, groups)
+        elif type == "MISMATCH":
+            raise Exception(
+                f"Invalid instruction {value} on line {line} and column {column}"
+            )
+        elif type == "NEWLINE":
+            start = match.end()
+            line += 1
+            ti_instruction["action"] = "comment"
+        elif type == "NUMERIC":
+            ti_instruction["action"] = "numeric"
         else:
             raise Exception(f"Unexpected instruction type {type}")
 
@@ -132,8 +129,6 @@ class Parser:
         line = 1
         start = 0
         for match in re.finditer(self.patterns, self.ti_instructions, re.I):
-            result = self.process_token(match, line, start)
-            if result is None:
-                continue
-            ti_instruction, start, line = result
-            yield ti_instruction
+            if match.lastgroup != "SKIP":
+                ti_instruction, start, line = self.process_token(match, line, start)
+                yield ti_instruction

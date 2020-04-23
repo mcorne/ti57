@@ -1,2 +1,2 @@
 - review/fix application css and js
-- parse empty lines and pass them on to generator
+- move in line comment before instruction

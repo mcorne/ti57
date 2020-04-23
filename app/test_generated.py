@@ -121,15 +121,16 @@ def unit2rad(number):
 def main():
     global ee, mem, rounding, stack, unit, x
     label.label_rst
-    x = 500            # 500      
+    x = 500            # 500
     mem[1] = x         # STO 1     (32 0)
     # comment 1
-    x = 0.015          # 0.015    
+    x = 0.015          # 0.015
     mem[2] = x         # STO 2     (32 0)
-    x = 3              # 3        
+    
+    x = 3              # 3
     mem[3] = x         # STO 3     (32 0)
     # comment 2
-    x = 1              # 1        
+    x = 1              # 1
     mem[3] /= x        # INV 2nd Prod 3 (- 39 0)
     x = mem[1]         # RCL 1     (33 0)
     stack.append(x)    # *         (55)
@@ -137,10 +138,10 @@ def main():
     x = mem[2]         # RCL 2     (33 0)
     stack.append(x)    # /         (45)
                        # (         (43)
-    x = 1              # 1        
+    x = 1              # 1
     stack.append(x)    # -         (65)
                        # (         (43)
-    x = 1              # 1        
+    x = 1              # 1
     stack.append(x)    # +         (75)
     x = mem[2]         # RCL 2     (33 0)
     y = stack.pop()    # )         (44)
@@ -156,6 +157,6 @@ def main():
     x = y / x
     y = stack.pop()    # =         (85)
     x = y * x
-    x = 45             # 45       
+    x = 45             # 45
     x = sin(unit2rad(x)) # 2nd sin   (28)
                        # =         (85)
