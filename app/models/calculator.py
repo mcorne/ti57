@@ -25,12 +25,13 @@ class Stop(Exception):
     pass
 
 
-ee = False  # Disable scientific notation
-mem = [0 for i in range(8)]  # Reset memory
-stack = []  # Reset internal registers
-rounding = None  # Disable rounding of numbers
-unit = "Deg"  # Set degree mode
-x = 0  # Reset display
+ee = False  # Scientific notation (EE)
+mem = [0 for i in range(8)]  # Memories (STO)
+regx = []  # Intermediate values rounded and displayed after each pause (2nd Pause)
+stack = []  # Internal memory stack used for computing nested operations
+rounding = None  # Number of digit after the decimal point (2nd Fix)
+unit = "Deg"  # Angle unit (DEG, RAD, GRAD)
+x = 0  # Display
 
 
 def degrees2dms(degrees):
@@ -97,17 +98,24 @@ def rad2unit(number):
     return number
 
 
+def roundn(number):
+    global rounding
+    if rounding is not None:
+        number = round(number, rounding)
+    return number
+
+
 def state():
-    global ee, mem, rounding, stack, unit, x
-    rounded = x if rounding is None else round(x, rounding)
+    global ee, mem, regx, rounding, stack, unit, x
     state = {
         "ee": ee,
         "mem": mem,
-        "stack": stack,
-        "rounded": rounded,
+        "regx": regx,
         "rounding": rounding,
+        "stack": stack,
         "unit": unit,
         "x": x,
+        "xrounded": roundn(x),
     }
     return state
 

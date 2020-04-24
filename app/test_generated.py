@@ -25,12 +25,13 @@ class Stop(Exception):
     pass
 
 
-ee = False  # Disable scientific notation
-mem = [0 for i in range(8)]  # Reset memory
-stack = []  # Reset internal registers
-rounding = None  # Disable rounding of numbers
-unit = "Deg"  # Set degree mode
-x = 0  # Reset display
+ee = False  # Scientific notation (EE)
+mem = [0 for i in range(8)]  # Memories (STO)
+regx = []  # Intermediate values rounded and displayed after each pause (2nd Pause)
+stack = []  # Internal memory stack used for computing nested operations
+rounding = None  # Number of digit after the decimal point (2nd Fix)
+unit = "Deg"  # Angle unit (DEG, RAD, GRAD)
+x = 0  # Display
 
 
 def degrees2dms(degrees):
@@ -97,17 +98,24 @@ def rad2unit(number):
     return number
 
 
+def roundn(number):
+    global rounding
+    if rounding is not None:
+        number = round(number, rounding)
+    return number
+
+
 def state():
-    global ee, mem, rounding, stack, unit, x
-    rounded = x if rounding is None else round(x, rounding)
+    global ee, mem, regx, rounding, stack, unit, x
     state = {
         "ee": ee,
         "mem": mem,
-        "stack": stack,
-        "rounded": rounded,
+        "regx": regx,
         "rounding": rounding,
+        "stack": stack,
         "unit": unit,
         "x": x,
+        "xrounded": roundn(x),
     }
     return state
 
@@ -126,28 +134,51 @@ def unit2rad(number):
 def main():
     global ee, mem, rounding, stack, unit, x
     label.label_rst
-    # Take 25% off shoes selling for $14.95, $17.99 and $18.99.
-    # Then mark 13% off books seling for $6.00, $7.99 and $12.50.
-    # What are the new prices ?
-    # For example, expecting $11.21 for $14.95 and $5.22 for $6.00.
-    
-    # Input
-    # Enter discount
-    x = 0.25           # 0.25
-    mem[3] = x         # STO 3     (32 0)
-    # Enter shoe price
-    x = 14.95          # 14.95
+    # Pause for a rest stop
+    # Add the digits 1 through 9 and pause for each result before the next digit is added.
+    # Note that a pause is simulated by storing the intermediate results in a registry.
     
     # Main program
-    rounding = 2       # 2nd Fix 2 (48)
-    # New price = old price X (1 - old price)
-    stack.append(x)    # X         (55)
-                       # (         (43)
     x = 1              # 1
-    stack.append(x)    # -         (65)
-    x = mem[3]         # RCL 3     (33 0)
-    y = stack.pop()    # )         (44)
-    x = y - x
+    regx.append(roundn(x)) # 2nd Pause (36)
+    stack.append(x)    # +         (75)
+    x = 2              # 2
     y = stack.pop()    # =         (85)
-    x = y * x
-    # R/S
+    x = y + x
+    regx.append(roundn(x)) # 2nd Pause (36)
+    stack.append(x)    # +         (75)
+    x = 3              # 3
+    y = stack.pop()    # =         (85)
+    x = y + x
+    regx.append(roundn(x)) # 2nd Pause (36)
+    stack.append(x)    # +         (75)
+    x = 4              # 4
+    y = stack.pop()    # =         (85)
+    x = y + x
+    regx.append(roundn(x)) # 2nd Pause (36)
+    stack.append(x)    # +         (75)
+    x = 5              # 5
+    y = stack.pop()    # =         (85)
+    x = y + x
+    regx.append(roundn(x)) # 2nd Pause (36)
+    stack.append(x)    # +         (75)
+    x = 6              # 6
+    y = stack.pop()    # =         (85)
+    x = y + x
+    regx.append(roundn(x)) # 2nd Pause (36)
+    stack.append(x)    # +         (75)
+    x = 7              # 7
+    y = stack.pop()    # =         (85)
+    x = y + x
+    regx.append(roundn(x)) # 2nd Pause (36)
+    stack.append(x)    # +         (75)
+    x = 8              # 8
+    y = stack.pop()    # =         (85)
+    x = y + x
+    regx.append(roundn(x)) # 2nd Pause (36)
+    stack.append(x)    # +         (75)
+    x = 9              # 9
+    y = stack.pop()    # =         (85)
+    x = y + x
+    regx.append(roundn(x)) # 2nd Pause (36)
+    raise Stop()       # R/S       (81)

@@ -1,0 +1,15 @@
+# Pause for a rest stop
+# Add the digits 1 through 9 and pause for each result before the next digit is added.
+# Note that a pause is simulated by storing the intermediate results in a registry.
+
+# Main program
+1 2nd Pause
++ 2 = 2nd Pause
++ 3 = 2nd Pause
++ 4 = 2nd Pause
++ 5 = 2nd Pause
++ 6 = 2nd Pause
++ 7 = 2nd Pause
++ 8 = 2nd Pause
++ 9 = 2nd Pause
+R/S
