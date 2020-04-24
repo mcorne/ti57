@@ -25,13 +25,20 @@ class Stop(Exception):
     pass
 
 
-ee = False  # Scientific notation (EE)
-mem = [0 for i in range(8)]  # Memories (STO)
-regx = []  # Intermediate values rounded and displayed after each pause (2nd Pause)
-stack = []  # Internal memory stack used for computing nested operations
-rounding = None  # Number of digit after the decimal point (2nd Fix)
-unit = "Deg"  # Angle unit (DEG, RAD, GRAD)
-x = 0  # Display
+# Scientific notation (EE)
+ee = False
+# Memories (STO)
+mem = [0 for i in range(8)]
+# Registers of intermediate values rounded and displayed after each pause (2nd Pause)
+regx = []
+# Internal memory stack used for computing nested operations
+stack = []
+# Number of digit after the decimal point (2nd Fix)
+rounding = None
+# Angle unit (DEG, RAD, GRAD)
+unit = "Deg"
+# Display
+x = 0
 
 
 def degrees2dms(degrees):

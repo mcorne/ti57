@@ -25,13 +25,20 @@ class Stop(Exception):
     pass
 
 
-ee = False  # Scientific notation (EE)
-mem = [0 for i in range(8)]  # Memories (STO)
-regx = []  # Intermediate values rounded and displayed after each pause (2nd Pause)
-stack = []  # Internal memory stack used for computing nested operations
-rounding = None  # Number of digit after the decimal point (2nd Fix)
-unit = "Deg"  # Angle unit (DEG, RAD, GRAD)
-x = 0  # Display
+# Scientific notation (EE)
+ee = False
+# Memories (STO)
+mem = [0 for i in range(8)]
+# Registers of intermediate values rounded and displayed after each pause (2nd Pause)
+regx = []
+# Internal memory stack used for computing nested operations
+stack = []
+# Number of digit after the decimal point (2nd Fix)
+rounding = None
+# Angle unit (DEG, RAD, GRAD)
+unit = "Deg"
+# Display
+x = 0
 
 
 def degrees2dms(degrees):
@@ -134,41 +141,39 @@ def unit2rad(number):
 def main():
     global ee, mem, rounding, stack, unit, x
     label.label_rst
-    # Area and circumference of a circle
+    # Volume of a cylinder
     
-    # We'll have for example a circumference of 31.42 and an area of 78.54 for a diameter of 10.
+    # Calculate the volume: π x radius² x height
+    # We'll have for example a volume of  of 314.16 for a diameterof 10 and a height of 4.
     
-    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-15
+    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-18
     # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
     
     # Input
     # Enter diameter
     x = 10             # 10
+    mem[1] = x         # STO 1     (32 0)
+    # Enter height
+    x = 4              # 4
+    mem[2] = x         # STO 2     (32 0)
     
     # Main program
     rounding = 2       # 2nd Fix 2 (48)
-    # Radius = diameter / 2πr
+    # Radius =  diameter / 2
+    x = mem[1]         # RCL 1     (33 0)
     stack.append(x)    # /         (45)
     x = 2              # 2
     y = stack.pop()    # =         (85)
     x = y / x
-    mem[1] = x         # STO 1     (32 0)
-    # Circumference = 2π x Radius
-    stack.append(x)    # X         (55)
-    x = 2              # 2
-    y = stack.pop()    # X         (55)
-    x = y * x
-    stack.append(x)
-    x = pi             # 2nd pi    (30)
-    y = stack.pop()    # =         (85)
-    x = y * x
-    # Stored in a register
-    regx.append(roundn(x)) # 2nd Pause (36)
-    # Area = π x Radius²
-    x = mem[1]         # RCL 1     (33 0)
+    # Area = π x radius²
     x *= x             # x2        (23)
     stack.append(x)    # X         (55)
     x = pi             # 2nd pi    (30)
+    # Volume = area X height
+    y = stack.pop()    # X         (55)
+    x = y * x
+    stack.append(x)
+    x = mem[2]         # RCL 2     (33 0)
     y = stack.pop()    # =         (85)
     x = y * x
     raise Stop()       # R/S       (81)

@@ -1,0 +1,18 @@
+# Volume of a cylinder
+
+# Calculate the volume: π x radius² x height
+# We'll have for example a volume of  of 314.16 for a diameterof 10 and a height of 4.
+
+# Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-18
+# https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
+
+# Input
+10 STO 1 # Enter diameter
+4  STO 2 # Enter height
+
+# Main program
+2nd Fix 2
+RCL 1 / 2 = # Radius =  diameter / 2
+x2 X 2nd pi # Area = π x radius²
+X RCL 2 =   # Volume = area X height
+R/S
