@@ -1,6 +1,7 @@
 - review/fix application css and js
 - replace "raise Stop()" with "return" in main function
 - fix line and column in case of syntax error in instructions
+- remove extra lines after a double blank line in python code
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!
