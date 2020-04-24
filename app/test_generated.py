@@ -134,53 +134,41 @@ def unit2rad(number):
 def main():
     global ee, mem, rounding, stack, unit, x
     label.label_rst
-    # Pause for a rest stop
-    # Add the digits 1 through 9 and pause for each result before the next digit is added.
-    # Note that a pause is simulated by storing the intermediate results in a registry.
-    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-13
+    # Area and circumference of a circle
+    
+    # We'll have for example a circumference of 31.42 and an area of 78.54 for a diameter of 10.
+    
+    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-15
     # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
     
+    # Input
+    # Enter diameter
+    x = 10             # 10
+    
     # Main program
-    x = 1              # 1
-    regx.append(roundn(x)) # 2nd Pause (36)
-    stack.append(x)    # +         (75)
+    rounding = 2       # 2nd Fix 2 (48)
+    # Radius = diameter / 2πr
+    stack.append(x)    # /         (45)
     x = 2              # 2
     y = stack.pop()    # =         (85)
-    x = y + x
-    regx.append(roundn(x)) # 2nd Pause (36)
-    stack.append(x)    # +         (75)
-    x = 3              # 3
+    x = y / x
+    mem[1] = x         # STO 1     (32 0)
+    # Circumference = 2π x Radius
+    stack.append(x)    # X         (55)
+    x = 2              # 2
+    y = stack.pop()    # X         (55)
+    x = y * x
+    stack.append(x)
+    x = pi             # 2nd pi    (30)
     y = stack.pop()    # =         (85)
-    x = y + x
+    x = y * x
+    # Stored in a register
     regx.append(roundn(x)) # 2nd Pause (36)
-    stack.append(x)    # +         (75)
-    x = 4              # 4
+    # Area = π x Radius²
+    x = mem[1]         # RCL 1     (33 0)
+    x *= x             # x2        (23)
+    stack.append(x)    # X         (55)
+    x = pi             # 2nd pi    (30)
     y = stack.pop()    # =         (85)
-    x = y + x
-    regx.append(roundn(x)) # 2nd Pause (36)
-    stack.append(x)    # +         (75)
-    x = 5              # 5
-    y = stack.pop()    # =         (85)
-    x = y + x
-    regx.append(roundn(x)) # 2nd Pause (36)
-    stack.append(x)    # +         (75)
-    x = 6              # 6
-    y = stack.pop()    # =         (85)
-    x = y + x
-    regx.append(roundn(x)) # 2nd Pause (36)
-    stack.append(x)    # +         (75)
-    x = 7              # 7
-    y = stack.pop()    # =         (85)
-    x = y + x
-    regx.append(roundn(x)) # 2nd Pause (36)
-    stack.append(x)    # +         (75)
-    x = 8              # 8
-    y = stack.pop()    # =         (85)
-    x = y + x
-    regx.append(roundn(x)) # 2nd Pause (36)
-    stack.append(x)    # +         (75)
-    x = 9              # 9
-    y = stack.pop()    # =         (85)
-    x = y + x
-    regx.append(roundn(x)) # 2nd Pause (36)
+    x = y * x
     raise Stop()       # R/S       (81)
