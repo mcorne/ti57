@@ -1,1 +1,22 @@
 - review/fix application css and js
+- replace "raise Stop()" with "return" in main function
+- fix line and column in case of syntax error in instructions
+
+- handle TI-57 II,  include ti codes that have changed
+2nd x!
+DRG
+2nd DRG
+2nd P<>R
+2nd DMS DD
+2nd Intg
+2nf Frac
+STO y^x n
+STO + n
+STO X n
+STO - n
+STO + n
+2nd CM
+EXC n
+CP
+Part
+Del

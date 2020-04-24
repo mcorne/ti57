@@ -50,7 +50,7 @@ class Parser:
 
     def move_inline_comments_up(self):
         self.ti_instructions = re.sub(
-            r"^(.*?[^ ] *)(#.*?)$", r"\g<2>\n\g<1>", self.ti_instructions, 0, re.M
+            r"^(.*?[^ \n] *)(#.*?)$", r"\g<2>\n\g<1>", self.ti_instructions, 0, re.M
         )
 
     # See https://docs.python.org/3.8/library/re.html#writing-a-tokenizer

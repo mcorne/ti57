@@ -58,7 +58,7 @@ instruction_set = """
 "("                : {"ti_code": "  43"  , "action": "open_parenthesis"      , "type": "("},
 ")"                : {"ti_code": "  44"  , "action": "closing_parenthesis"   , "type": ")"},
 "2nd Nop"          : {"ti_code": "  46"  , "action": "py_line"                , "py_line": ""},
-"2nd Fix"          : {"ti_code": "  48"  , "action": "py_line"                , "py_line": "rounding = x"},
+"2nd Fix NUMBER"   : {"ti_code": "  48"  , "action": "py_line"                , "py_line": "rounding = NUMBER"},
 "INV 2nd Fix"      : {"ti_code": "- 48"  , "action": "py_line"                , "py_line": "rounding = None"},
 "2nd Int"          : {"ti_code": "  49"  , "action": "py_line"                , "py_line": "x = int(x)"},
 "INV 2nd Int"      : {"ti_code": "- 49"  , "action": "py_line"                , "py_line": "x = x - int(x)"},
@@ -117,7 +117,7 @@ instruction_set = """
 "INV 2nd x"        : {"ti_code": "- 89"  , "action": "py_line"                , "py_line": "x = mem[3] / mem[0]"}, # avg(X) = sum(X) / N
 
 # Operators must be after the other instructions because some of them use them, ex. "+/-"
-"*"                : {"ti_code": "  55"  , "action": "multiplication"        , "type": "*"},
+"x"                : {"ti_code": "  55"  , "action": "multiplication"        , "type": "*"},
 "+"                : {"ti_code": "  75"  , "action": "addition"              , "type": "+"},
 "-"                : {"ti_code": "  65"  , "action": "addition"              , "type": "-"},
 "/"                : {"ti_code": "  45"  , "action": "multiplication"        , "type": "/"},

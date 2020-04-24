@@ -1,0 +1,14 @@
+# Take 25% off shoes selling for $14.95, $17.99 and $18.99.
+# Then mark 13% off books seling for $6.00, $7.99 and $12.50.
+# What are the new prices ?
+# For example, expecting $11.21 for $14.95 and $5.22 for $6.00.
+
+# Input
+0.25 STO 3 # Enter discount
+14.95      # Enter shoe price
+
+# Main program
+2nd Fix 2
+# New price = old price X (1 - old price)
+X ( 1 - RCL 3 ) =
+# R/S

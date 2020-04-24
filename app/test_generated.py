@@ -126,43 +126,28 @@ def unit2rad(number):
 def main():
     global ee, mem, rounding, stack, unit, x
     label.label_rst
-    # comment 1
-    x = 500            # 500
-    mem[1] = x         # STO 1     (32 0)
-    x = 0.015          # 0.015
-    mem[2] = x         # STO 2     (32 0)
+    # Take 25% off shoes selling for $14.95, $17.99 and $18.99.
+    # Then mark 13% off books seling for $6.00, $7.99 and $12.50.
+    # What are the new prices ?
+    # For example, expecting $11.21 for $14.95 and $5.22 for $6.00.
     
-    # comment 2
-    x = 3              # 3
+    # Input
+    # Enter discount
+    x = 0.25           # 0.25
     mem[3] = x         # STO 3     (32 0)
-    # comment 3
-    x = 1              # 1
-    mem[3] /= x        # INV 2nd Prod 3 (- 39 0)
-    x = mem[1]         # RCL 1     (33 0)
-    stack.append(x)    # *         (55)
-                       # (         (43)
-    x = mem[2]         # RCL 2     (33 0)
-    stack.append(x)    # /         (45)
+    # Enter shoe price
+    x = 14.95          # 14.95
+    
+    # Main program
+    rounding = 2       # 2nd Fix 2 (48)
+    # New price = old price X (1 - old price)
+    stack.append(x)    # X         (55)
                        # (         (43)
     x = 1              # 1
     stack.append(x)    # -         (65)
-                       # (         (43)
-    x = 1              # 1
-    stack.append(x)    # +         (75)
-    x = mem[2]         # RCL 2     (33 0)
-    y = stack.pop()    # )         (44)
-    x = y + x
-    stack.append(x)    # Y^X       (35)
     x = mem[3]         # RCL 3     (33 0)
-    x = -x             # +/-       (84)
     y = stack.pop()    # )         (44)
-    x = pow(y, x)
-    y = stack.pop()
     x = y - x
-    y = stack.pop()    # )         (44)
-    x = y / x
     y = stack.pop()    # =         (85)
     x = y * x
-    x = 45             # 45
-    x = sin(unit2rad(x)) # 2nd sin   (28)
-                       # =         (85)
+    # R/S
