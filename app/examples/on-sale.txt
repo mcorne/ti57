@@ -3,6 +3,8 @@
 # Then mark 13% off books selling for $6.00, $7.99 and $12.50.
 # What are the new prices ?
 # We'll have for example $11.21 for $14.95 and $5.22 for $6.00.
+# Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-11
+# https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
 
 # Input
 0.25 STO 3 # Enter discount

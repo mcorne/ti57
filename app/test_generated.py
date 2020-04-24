@@ -137,6 +137,8 @@ def main():
     # Pause for a rest stop
     # Add the digits 1 through 9 and pause for each result before the next digit is added.
     # Note that a pause is simulated by storing the intermediate results in a registry.
+    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-13
+    # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
     
     # Main program
     x = 1              # 1
