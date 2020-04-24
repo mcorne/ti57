@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template
 from flask_babel import _
+
 from app.models.generator import Generator
 
 bp = Blueprint("program", __name__)
@@ -156,9 +157,8 @@ def index():
         print(code)
         exec(code, globals())
         main()
-    except UserWarning as e:
-        if str(e) != "R/S":
-            raise
+    except Stop as e:
+        pass
 
     print(state())
     return render_template("program/index.html")

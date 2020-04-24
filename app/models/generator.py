@@ -99,6 +99,17 @@ class Generator:
             self.add_function(py_lines, subroutine_numbers, py_line, fixed)
         return fixed
 
+    def add_main_function(self, py_lines):
+        py_lines = [
+            "",
+            "",
+            "@with_goto",
+            "def main():",
+            "global ee, mem, rounding, stack, unit, x",
+            "label.label_rst",
+        ] + py_lines
+        return py_lines
+
     def add_operation(self):
         self.py_lines.append("stack.append(x)")
         self.operators.append(self.ti_instruction["type"])
@@ -144,6 +155,7 @@ class Generator:
 
     def generate_py_code(self, ti_instructions):
         py_lines = self.convert_ti_instructions_to_py_lines(ti_instructions)
+        py_lines = self.add_main_function(py_lines)
         self.indent_if_statement(py_lines)
         subroutine_numbers = self.extract_subroutine_numbers(py_lines)
         if subroutine_numbers:
@@ -153,7 +165,7 @@ class Generator:
         with open("app/models/calculator.py", "r") as file:
             calculator = file.read()
 
-        calculator += "\n".join(py_lines)
+        calculator += "\n".join(py_lines) + "\n"
 
         return calculator
 

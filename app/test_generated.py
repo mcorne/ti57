@@ -20,6 +20,11 @@ from math import (
 
 from goto import with_goto
 
+
+class Stop(Exception):
+    pass
+
+
 ee = False  # Disable scientific notation
 mem = [0 for i in range(8)]  # Reset memory
 stack = []  # Reset internal registers

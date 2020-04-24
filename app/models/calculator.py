@@ -20,6 +20,11 @@ from math import (
 
 from goto import with_goto
 
+
+class Stop(Exception):
+    pass
+
+
 ee = False  # Disable scientific notation
 mem = [0 for i in range(8)]  # Reset memory
 stack = []  # Reset internal registers
@@ -115,9 +120,3 @@ def unit2rad(number):
     elif unit == "Grd":
         number = grd2rad(number)
     return number
-
-
-@with_goto
-def main():
-    global ee, mem, rounding, stack, unit, x
-    label.label_rst
