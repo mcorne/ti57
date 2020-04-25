@@ -141,112 +141,42 @@ def unit2rad(number):
 def main():
     global ee, mem, rounding, stack, unit, x
     label.label_rst
-    # Sign posts
+    # Graph watch!
     
-    # Calculate the area of a square: side².
-    # Calculate the volume of a cube: side³.
-    # Calculate the area of a circle: π x radius².
-    # Calculate the volume of a sphere: 4/3π x radius³.
-    # For example, we'll have respectively 38.07, 234.89 for a side of 6.17, and 27.9, 110.85 and a radius of 2.98.
-    # Note that each pause is simulated by storing each intermediate result in a register.
+    # What is the distance in feet an object travels in free fall every second for 10 seconds?
+    # For example, we'll have 16 feet after 1 sec, 64 after 2, 144 after 3 etc.
+    # Note that the pauses are simulated by storing intermediate times and distances in registers.
     
-    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-23
+    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-11
     # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
     
     # Input
-    # Enter the side
-    x = 6.17           # 6.17
-    mem[0] = x         # STO 0     (32 0)
-    # Enter the radius
-    x = 2.98           # 2.98
-    mem[1] = x         # STO 1     (32 0)
+    # Enter the number of seconds
+    x = 10             # 10
+    mem[7] = x         # STO 7     (32 0)
     
     # Main program
-    rounding = 2       # 2nd Fix 2 (48)
-    x = mem[0]         # RCL 0     (33 0)
-    # Call subroutine 1 to calculate the area of a square
-    sbr_1()            # SBR 1     (61 0)
-    # Store the area in a register
-    regx.append(roundn(x)) # 2nd Pause (36)
-    x = mem[0]         # RCL 0     (33 0)
-    # Call subroutine 1 to calculate the volume of a cube
-    sbr_3()            # SBR 3     (61 0)
-    # Store the volume in a register
-    regx.append(roundn(x)) # 2nd Pause (36)
+    # Reset the display register
+    x = 0              # CE        (14)
+    # Add one second
+    x = 1              # 1
+    mem[1] += x        # SUM 1     (34 0)
+    # Recall the time
     x = mem[1]         # RCL 1     (33 0)
-    # Call subroutine 1 to calculate the area of a circle
-    sbr_2()            # SBR 2     (61 0)
-    # Store the area in a register
+    # Store the time in a register
     regx.append(roundn(x)) # 2nd Pause (36)
-    x = mem[1]         # RCL 1     (33 0)
-    # Call subroutine 1 to calculate the volume of a sphere
-    sbr_4()            # SBR 4     (61 0)
-    # Store the volume in a register
-    regx.append(roundn(x)) # 2nd Pause (36)
-    raise Stop()       # R/S       (81)
-    
-
-
-# Subroutine 1: area of a square
-@with_goto
-def sbr_1():
-    global ee, mem, rounding, stack, unit, x
-    label .label_1     # 2nd lbl 1 (86 0)
-    # side x2
-    x *= x             # x2        (23)
-    return             # INV SBR   (- 61)
-    
-
-
-# Subroutine 2: area of a circle
-@with_goto
-def sbr_2():
-    global ee, mem, rounding, stack, unit, x
-    label .label_2     # 2nd Lbl 2 (86 0)
-    # π x radius²
+    # Distance = time² X 16 feet
     x *= x             # x2        (23)
     stack.append(x)    # X         (55)
-    x = pi             # 2nd pi    (30)
+    x = 16             # 16
     y = stack.pop()    # =         (85)
     x = y * x
-    return             # INV SBR   (- 61)
-    
-
-
-# Subroutine 3: volume of a cube
-@with_goto
-def sbr_3():
-    global ee, mem, rounding, stack, unit, x
-    label .label_3     # 2nd Lbl 3 (86 0)
-    # side^3
-    stack.append(x)    # y^x       (35)
-    x = 3              # 3
-    y = stack.pop()    # =         (85)
-    x = pow(y, x)
-    return             # INV SBR   (- 61)
-    
-
-
-# Subroutine 4: volume of a sphere
-@with_goto
-def sbr_4():
-    global ee, mem, rounding, stack, unit, x
-    label .label_4     # 2nd Lbl 4 (86 0)
-    # 4/3π x radius^3
-    stack.append(x)    # y^x       (35)
-    x = 3              # 3
-    y = stack.pop()    # X         (55)
-    x = pow(y, x)
-    stack.append(x)
-    x = 4              # 4
-    y = stack.pop()    # /         (45)
-    x = y * x
-    stack.append(x)
-    x = 3              # 3
-    y = stack.pop()    # X         (55)
-    x = y / x
-    stack.append(x)
-    x = pi             # 2nd pi    (30)
-    y = stack.pop()    # =         (85)
-    x = y * x
-    return             # INV SBR   (- 61)
+    # Store the distance in a register
+    regx.append(roundn(x)) # 2nd Pause (36)
+    x = mem[1]         # RCL 1     (33 0)
+    # Is the time lower than the number of seconds?
+    if x < mem[7]:     # INV 2nd x>=t (- 76)
+        # Yes, go back to the begining
+        goto .label_rst# RST       (71)
+    # No, stop
+    raise Stop()       # R/S       (81)
