@@ -1,0 +1,30 @@
+# The same birthday
+
+# What is the probability that two or more people have the same birthday in a group of five?
+# Tip: this is actually 1 minus the probability that no one has the same birthday.
+# For example, we'll have 2.7% chance in a group of 5 people and 56.9% in a group of 25.
+# That is 1 - 364/365 X 363/365 X 362/365 X 361/365 for a group of 5 people.
+
+# Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 6-6
+# https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
+
+# Input
+5              # Enter the number of people
+
+# Main program
+2nd Fix 1
+- 1 =          # Max number of loops
+x<>t           # Store in memory 7
+365 STO 2
+1 STO 3        # Initial probability
+0 STO 4        # Number of loops
+2nd Lbl 1
+RCL 2 - 1 =    # Ex. 363
+STO 2 / 365 =  # Ex. 363/365
+2nd PRod 3     # Multiply to probability
+1 SUM 4 RCL 4  # Add one loop
+Inv 2nd x=t    # Is different from max loops ?
+GTO 1          # Yes, go for another loop
+1 - RCL 3 =    # 1 - probability
+X 100 =        # Convert to %
+R/S
