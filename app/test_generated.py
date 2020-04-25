@@ -143,40 +143,57 @@ def main():
     label.label_rst
     # Graph watch!
     
-    # What is the distance in feet an object travels in free fall every second for 10 seconds?
-    # For example, we'll have 16 feet after 1 sec, 64 after 2, 144 after 3 etc.
-    # Note that the pauses are simulated by storing intermediate times and distances in registers.
+    # How much your cash will grow each year for the next 10 years for a given interest rate?
+    # For example, we'll have $1060.0 after 1 year, 1123.6 after 2, 1191.02 after 3 etc.
+    # Note that the pauses are simulated by storing intermediate years and amounts in registers.
     
-    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-11
+    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 4-10
     # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
     
     # Input
-    # Enter the number of seconds
+    # Enter the initial amount
+    x = 1000           # 1000
+    mem[1] = x         # STO 1     (32 0)
+    # Enter the interest rate (i)
+    x = 0.06           # 0.06
+    mem[2] = x         # STO 2     (32 0)
+    # Enter the number of years
     x = 10             # 10
     mem[7] = x         # STO 7     (32 0)
     
     # Main program
+    rounding = 2       # 2nd Fix 2 (48)
+    label .label_1     # 2nd Lbl 1 (86 0)
     # Reset the display register
     x = 0              # CE        (14)
-    # Add one second
+    # Add one year
     x = 1              # 1
-    mem[1] += x        # SUM 1     (34 0)
-    # Recall the time
-    x = mem[1]         # RCL 1     (33 0)
-    # Store the time in a register
+    mem[3] += x        # SUM 3     (34 0)
+    # Recall the year
+    x = mem[3]         # RCL 3     (33 0)
+    # Store the year in a register
     regx.append(roundn(x)) # 2nd Pause (36)
-    # Distance = time² X 16 feet
-    x *= x             # x2        (23)
+    # Amount = previous amount X (1 + i)^year
+    x = mem[1]         # RCL 1     (33 0)
     stack.append(x)    # X         (55)
-    x = 16             # 16
+                       # (         (43)
+    x = 1              # 1
+    stack.append(x)    # +         (75)
+    x = mem[2]         # RCL 2     (33 0)
+    y = stack.pop()    # )         (44)
+    x = y + x
+    stack.append(x)    # y^x       (35)
+    x = mem[3]         # RCL 3     (33 0)
     y = stack.pop()    # =         (85)
+    x = pow(y, x)
+    y = stack.pop()
     x = y * x
-    # Store the distance in a register
+    # Store the amount in a register
     regx.append(roundn(x)) # 2nd Pause (36)
-    x = mem[1]         # RCL 1     (33 0)
-    # Is the time lower than the number of seconds?
+    x = mem[3]         # RCL 3     (33 0)
+    # Is the year lower than the number of years?
     if x < mem[7]:     # INV 2nd x>=t (- 76)
         # Yes, go back to the begining
-        goto .label_rst# RST       (71)
+        goto .label_1  # GTO 1     (51 0)
     # No, stop
     raise Stop()       # R/S       (81)

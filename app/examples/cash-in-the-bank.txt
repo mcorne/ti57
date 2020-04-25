@@ -1,0 +1,28 @@
+# Graph watch!
+
+# How much your cash will grow each year for the next 10 years for a given interest rate?
+# For example, we'll have $1060.0 after 1 year, $1123.6 after 2, $1191.02 after 3 etc.
+# Note that the pauses are simulated by storing intermediate years and amounts in registers.
+
+# Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 4-10
+# https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
+
+# Input
+1000 STO 1   # Enter the initial amount
+0.06 STO 2   # Enter the interest rate (i)
+10 STO 7     # Enter the number of years
+
+# Main program
+2nd Fix 2
+2nd Lbl 1
+CE           # Reset the display register
+1 SUM 3      # Add one year
+RCL 3        # Recall the year
+2nd Pause    # Store the year in a register
+# Amount = previous amount X (1 + i)^year
+RCL 1 X ( 1 + RCL 2 ) y^x RCL 3 =
+2nd Pause    # Store the amount in a register
+RCL 3
+INV 2nd x>=t # Is the year lower than the number of years?
+GTO 1        # Yes, go back to the begining
+R/S          # No, stop
