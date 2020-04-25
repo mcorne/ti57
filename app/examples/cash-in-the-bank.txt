@@ -8,9 +8,9 @@
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
 
 # Input
-1000 STO 1   # Enter the initial amount
-0.06 STO 2   # Enter the interest rate (i)
-10 STO 7     # Enter the number of years
+1000 STO 1   # Initial amount
+0.06 STO 2   # Interest rate (i)
+10 STO 7     # Number of years
 
 # Main program
 2nd Fix 2

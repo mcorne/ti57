@@ -8,7 +8,7 @@
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
 
 # Input
-10 STO 7     # Enter the number of seconds
+10 STO 7     # Number of seconds
 
 # Main program
 2nd Lbl 0

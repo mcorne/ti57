@@ -1,7 +1,7 @@
 # The same birthday
 
 # What is the probability that two or more people have the same birthday in a group of five?
-# Tip: this is actually 1 minus the probability that no one has the same birthday.
+# Tip! This is actually 1 minus the probability that no one has the same birthday.
 # For example, we'll have 2.7% chance in a group of 5 people and 56.9% in a group of 25.
 # That is 1 - 364/365 X 363/365 X 362/365 X 361/365 for a group of 5 people.
 
@@ -9,7 +9,7 @@
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
 
 # Input
-5              # Enter the number of people
+5              # Number of people
 
 # Main program
 2nd Fix 1

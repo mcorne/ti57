@@ -7,6 +7,7 @@
 - highlight generated code with https://pygments.org/
 - rename generator to translator
 - fix comments at the end of instructions as they don't get into the python code, see factorial.txt
+- move subroutine comments under "global..." instead of above "def..." just like for main
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!

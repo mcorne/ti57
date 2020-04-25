@@ -141,71 +141,83 @@ def unit2rad(number):
 def main():
     global ee, mem, rounding, stack, unit, x
     label.label_rst
-    # The same birthday
+    # Combinations
     
-    # What is the probability that two or more people have the same birthday in a group of five?
-    # Tip: this is actually 1 minus the probability that no one has the same birthday.
-    # For example, we'll have 2.7% chance in a group of 5 people and 56.9% in a group of 25.
-    # That is 1 - 364/365 X 363/365 X 362/365 X 361/365 for a group of 5 people.
+    # How many poker hands (5 cards) can be dealt from a deck of 52 cards?
+    # Tip! This is combination: C(n,r) = n! / (n! - r!) / r! where n=52 and r=5.
+    # There are 2598960 poker hands in a deck.
     
-    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 6-6
+    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 6-14
     # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
     
     # Input
-    # Enter the number of people
+    # Cards in the deck (n)
+    x = 52             # 52
+    mem[5] = x         # STO 5     (32 0)
+    # Cards in a hand (r)
     x = 5              # 5
+    mem[6] = x         # STO 6     (32 0)
     
     # Main program
-    rounding = 1       # 2nd Fix 1 (48)
-    # Max number of loops
+    rounding = 0       # 2nd Fix 0 (48)
+    x = mem[5]         # RCL 5     (33 0)
+    # n!
+    sbr_3()            # SBR 3     (61 0)
+    mem[1] = x         # STO 1     (32 0)
+    x = mem[6]         # RCL 6     (33 0)
+    # r!
+    sbr_3()            # SBR 3     (61 0)
+    mem[2] = x         # STO 2     (32 0)
+    x = mem[5]         # RCL 5     (33 0)
     stack.append(x)    # -         (65)
-    x = 1              # 1
+    x = mem[6]         # RCL 6     (33 0)
     y = stack.pop()    # =         (85)
     x = y - x
-    # Store in memory 7
-    y = mem[7]         # x<>t      (22)
-    mem[7] = x
-    x = y
-    x = 365            # 365
-    mem[2] = x         # STO 2     (32 0)
-    # Initial probability
-    x = 1              # 1
+    # n! - r!
+    sbr_3()            # SBR 3     (61 0)
     mem[3] = x         # STO 3     (32 0)
-    # Number of loops
-    x = 0              # 0
-    mem[4] = x         # STO 4     (32 0)
-    label .label_1     # 2nd Lbl 1 (86 0)
-    # Ex. 363
-    x = mem[2]         # RCL 2     (33 0)
-    stack.append(x)    # -         (65)
-    x = 1              # 1
-    y = stack.pop()    # =         (85)
-    x = y - x
-    # Ex. 363/365
-    mem[2] = x         # STO 2     (32 0)
+    # n! / (n! - r!) / r!
+    x = mem[1]         # RCL 1     (33 0)
     stack.append(x)    # /         (45)
-    x = 365            # 365
+                       # (         (43)
+    x = mem[3]         # RCL 3     (33 0)
+    stack.append(x)    # X         (55)
+    x = mem[2]         # RCL 2     (33 0)
+    y = stack.pop()    # )         (44)
+    x = y * x
     y = stack.pop()    # =         (85)
     x = y / x
-    # Multiply to probability
-    mem[3] *= x        # 2nd PRod 3 (39 0)
-    # Add one loop
-    x = 1              # 1
-    mem[4] += x        # SUM 4     (34 0)
-    x = mem[4]         # RCL 4     (33 0)
-    # Is different from max loops ?
-    if x != mem[7]:    # Inv 2nd x=t (- 66)
-        # Yes, go for another loop
-        goto .label_1  # GTO 1     (51 0)
-    # 1 - probability
-    x = 1              # 1
-    stack.append(x)    # -         (65)
-    x = mem[3]         # RCL 3     (33 0)
-    y = stack.pop()    # =         (85)
-    x = y - x
-    # Convert to %
+                       # =         (85)
+    raise Stop()       # R/S       (81)
+    
+
+
+# Factorial n
+@with_goto
+def sbr_3():
+    global ee, mem, rounding, stack, unit, x
+    label .label_3     # 2nd Lbl 3 (86 0)
+    mem[0] = x         # STO 0     (32 0)
+    x = mem[0]         # RCL 0     (33 0)
     stack.append(x)    # X         (55)
-    x = 100            # 100
+    label .label_1     # 2nd Lbl 1 (86 0)
+    # Decrease the number and test ?
+    mem[0] = floor(mem[0]) # INV 2nd Dsz (- 56)
+    if mem[0] > 0:
+        mem[0] -= 1
+    elif mem[0] < 0:
+        mem[0] += 1
+    if mem[0] == 0:
+        # If zero, go finish the multiplication
+        goto .label_2  # GTO 2     (51 0)
+    # If not zero, multiply with the number
+    x = mem[0]         # RCL 0     (33 0)
+    y = stack.pop()    # X         (55)
+    x = y * x
+    stack.append(x)
+    goto .label_1      # GTO 1     (51 0)
+    label .label_2     # 2nd Lbl 2 (86 0)
+    x = 1              # 1
     y = stack.pop()    # =         (85)
     x = y * x
-    raise Stop()       # R/S       (81)
+    return             # INV SBR   (- 61)

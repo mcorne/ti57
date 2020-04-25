@@ -7,7 +7,7 @@
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
 
 # Input
-5 STO 0     # Enter the number
+5 STO 0     # Number
 
 # Main program
 RCL 0 X

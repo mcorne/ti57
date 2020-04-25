@@ -9,8 +9,8 @@
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
 
 # Input
-0.25 STO 3 # Enter the discount
-14.95      # Enter the shoe price
+0.25 STO 3 # Discount
+14.95      # Shoe price
 
 # Main program
 2nd Fix 2

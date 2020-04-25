@@ -8,7 +8,7 @@
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
 
 # Input
-10                  # Enter the diameter
+10                  # Diameter
 
 # Main program
 2nd Fix 2
