@@ -141,59 +141,52 @@ def unit2rad(number):
 def main():
     global ee, mem, rounding, stack, unit, x
     label.label_rst
-    # Graph watch!
+    # Factorial!
     
-    # How much your cash will grow each year for the next 10 years for a given interest rate?
-    # For example, we'll have $1060.0 after 1 year, 1123.6 after 2, 1191.02 after 3 etc.
-    # Note that the pauses are simulated by storing intermediate years and amounts in registers.
+    # What is the factorial of a number?
+    # For example, we'll have 120 for 5 and 3628800 for 10.
     
-    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 4-10
+    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 4-17
     # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
     
     # Input
-    # Enter the initial amount
-    x = 1000           # 1000
-    mem[1] = x         # STO 1     (32 0)
-    # Enter the interest rate (i)
-    x = 0.06           # 0.06
-    mem[2] = x         # STO 2     (32 0)
-    # Enter the number of years
-    x = 10             # 10
-    mem[7] = x         # STO 7     (32 0)
+    # Enter the number
+    x = 5              # 5
+    mem[0] = x         # STO 0     (32 0)
     
     # Main program
-    rounding = 2       # 2nd Fix 2 (48)
-    label .label_1     # 2nd Lbl 1 (86 0)
-    # Reset the display register
-    x = 0              # CE        (14)
-    # Add one year
-    x = 1              # 1
-    mem[3] += x        # SUM 3     (34 0)
-    # Recall the year
-    x = mem[3]         # RCL 3     (33 0)
-    # Store the year in a register
-    regx.append(roundn(x)) # 2nd Pause (36)
-    # Amount = previous amount X (1 + i)^year
-    x = mem[1]         # RCL 1     (33 0)
+    x = mem[0]         # RCL 0     (33 0)
     stack.append(x)    # X         (55)
-                       # (         (43)
-    x = 1              # 1
-    stack.append(x)    # +         (75)
-    x = mem[2]         # RCL 2     (33 0)
-    y = stack.pop()    # )         (44)
-    x = y + x
-    stack.append(x)    # y^x       (35)
-    x = mem[3]         # RCL 3     (33 0)
-    y = stack.pop()    # =         (85)
-    x = pow(y, x)
-    y = stack.pop()
+    label .label_1     # 2nd Lbl 1 (86 0)
+    # Decrease the number and test ?
+    mem[0] = floor(mem[0]) # INV 2nd Dsz (- 56)
+    if mem[0] > 0:
+        mem[0] -= 1
+    elif mem[0] < 0:
+        mem[0] += 1
+    if mem[0] == 0:
+        # If zero, go finish the multiplication
+        goto .label_2  # GTO 2     (51 0)
+    # If not zero, multiply with the number
+    x = mem[0]         # RCL 0     (33 0)
+    y = stack.pop()    # X         (55)
     x = y * x
-    # Store the amount in a register
-    regx.append(roundn(x)) # 2nd Pause (36)
-    x = mem[3]         # RCL 3     (33 0)
-    # Is the year lower than the number of years?
-    if x < mem[7]:     # INV 2nd x>=t (- 76)
-        # Yes, go back to the begining
-        goto .label_1  # GTO 1     (51 0)
-    # No, stop
+    stack.append(x)
+    goto .label_1      # GTO 1     (51 0)
+    label .label_2     # 2nd Lbl 2 (86 0)
+    x = 1              # 1
+    y = stack.pop()    # =         (85)
+    x = y * x
+    
+    # Note that the following code is more efficient but does work after the translation into python .
+    # The decreased number is added to the stack after each loop instead of being multiplied.
+    # 2nd Lbl 1
+    # RCL 0 X
+    # Decrease the number and test ?
+    # 2nd Dsz
+    # If not zero, go back to the begining
+    # GTO 1
+    # If not zero, finish multiplication
+    # 1 =
+    
     raise Stop()       # R/S       (81)

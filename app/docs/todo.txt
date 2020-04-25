@@ -5,6 +5,8 @@
 - change "regx" to "prevx" to display history
 - move main function and subroutine up in generated python file, make one-liner imports
 - highlight generated code with https://pygments.org/
+- rename generator to translator
+- fix comments at the end of instructions as they don't get into the python code, see factorial.txt
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!
