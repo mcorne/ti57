@@ -147,6 +147,8 @@ def main():
     # How much your cash will grow every month (n) at a 0.7% interest rate (i)?
     # Answer: $110.38 including $0.38 of earned interest after a the first full month.
     # Then $166.16 including $1.16 etc., and finally $686.01 including $26.01 after a year.
+    # How much your cash will you have in 5 years (60 months)?
+    # Answer: 4083.64, 783.64
     # Tip! Amount = PMT X ((1+i)^n - 1) / i.
     
     # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 8-8
@@ -162,13 +164,25 @@ def main():
     # Number of months
     x = 12             # 12
     mem[7] = x         # STO 7     (32 0)
-    
-    # Main program
-    rounding = 2       # 2nd Fix 2 (48)
-    # Month (n)
+    # Month (n) from 1 to 12
     x = 0              # 0
     mem[3] = x         # STO 3     (32 0)
+    sbr_0()            # SBR 0     (61 0)
+    # 60th month
+    x = 59             # 59
+    mem[3] = x         # STO 3     (32 0)
+    sbr_0()            # SBR 0     (61 0)
+    
+    # Main program
+    raise Stop()       # R/S       (81)
+    
+
+
+@with_goto
+def sbr_0():
+    global ee, mem, rounding, stack, unit, x
     label .label_0     # 2nd Lbl 0 (86 0)
+    rounding = 2       # 2nd Fix 2 (48)
     # month + 1
     x = 1              # 1
     mem[3] += x        # SUM 3     (34 0)
@@ -214,4 +228,4 @@ def main():
         # Yes, go back to the begining
         goto .label_0  # GTO 0     (51 0)
     # No, stop
-    raise Stop()       # R/S       (81)
+    return             # INV SBR   (- 61)
