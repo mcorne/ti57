@@ -9,7 +9,7 @@ bp = Blueprint("program", __name__)
 
 @bp.route("/")
 def index():
-    with open("app/examples/combinations.txt", "r") as file:
+    with open("app/examples/building-a-savings-plan.txt", "r") as file:
         ti_instructions = file.read()
 
     try:

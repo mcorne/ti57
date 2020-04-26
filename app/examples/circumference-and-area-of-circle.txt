@@ -1,8 +1,7 @@
 # Circumference and area of a circle
 
-# What is the circumference and the area of a circle for a given the diameter?
-# For example, we'll have a circumference of 31.42 and an area of 78.54 for a diameter of 10.
-# Note that the pause is simulated by storing the circumference in a register.
+# What is the circumference and the area of a circle for a diameter of 10?
+# Answer: the circumference is 31.42 and the area 78.54.
 
 # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-15
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
@@ -15,6 +14,6 @@
 / 2 =               # Radius = diameter / 2
 STO 1
 X 2 X 2nd pi =      # Circumference = 2π x radius
-2nd Pause           # Store the circumference in a register
+2nd Pause
 RCL 1 x2 X 2nd pi = # Area = π x radius²
 R/S

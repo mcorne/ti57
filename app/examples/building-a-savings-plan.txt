@@ -1,0 +1,31 @@
+# Building a savings plan
+
+# Let's say you make a monthly deposit (PMT) of $55.
+# How much your cash will grow every month (n) at a 0.7% interest rate (i)?
+# Answer: $110.38 including $0.38 of earned interest after a the first full month.
+# Then $166.16 including $1.16 etc., and finally $686.01 including $26.01 after a year.
+# Tip! Amount = PMT X ((1+i)^n - 1) / i.
+
+# Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 8-8
+# https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
+
+# Input
+55    STO 1    # Monthly payment (PMT)
+0.007 STO 2    # Interest rate (i)
+12    STO 7    # Number of months
+
+# Main program
+2nd Fix 2
+0 STO 3        # Month (n)
+2nd Lbl 0
+1 SUM 3 RCL 3  # month + 1
+2nd Pause
+# PMT X ((1+i)^n - 1) / i
+RCL 1 X ( ( 1 + RCL 2 ) y^x RCL 3 - 1 ) / RCL 2 =
+2nd Pause
+- RCL 1 X RCL 3 =
+2nd Pause
+RCL 3
+INV 2nd x>=t   # Month lower than number of months?
+GTO 0          # Yes, go back to the begining
+R/S            # No, stop

@@ -1,9 +1,9 @@
 # On sale!
 
-# Take 25% off shoes selling for $14.95, $17.99 and $18.99.
-# Then mark 13% off books selling for $6.00, $7.99 and $12.50.
+# Take 25% off shoes selling for $14.95.
+# Then mark 13% off books selling for $6.00.
 # What are the new prices ?
-# For example, we'll have $11.21 for $14.95 and $5.22 for $6.00.
+# Answer: $11.21 for the shoes and $5.22 for the books.
 
 # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-11
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM

@@ -29,7 +29,7 @@ class Stop(Exception):
 ee = False
 # Memories (STO)
 mem = [0 for i in range(8)]
-# Registers of intermediate values rounded and displayed after each pause (2nd Pause)
+# History of values displayed before a pause (2nd pause)
 regx = []
 # Internal memory stack used for computing nested operations
 stack = []

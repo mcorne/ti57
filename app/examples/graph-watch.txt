@@ -1,8 +1,7 @@
 # Graph watch!
 
 # What is the distance in feet an object travels in free fall every second for 10 seconds?
-# For example, we'll have 16 feet after 1 sec, 64 after 2, 144 after 3 etc.
-# Note that the pauses are simulated by storing intermediate times and distances in registers.
+# Answer: 16 feet after 1 sec, 64 after 2, 144 after 3 etc.
 
 # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 4-4
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
@@ -15,10 +14,10 @@
 CE           # Reset the display register
 1 SUM 1      # Add one second
 RCL 1        # Recall the time
-2nd Pause    # Store the time in a register
+2nd Pause
 x2 X 16 =    # Distance = time² X 16 feet
-2nd Pause    # Store the distance in a register
+2nd Pause
 RCL 1
-INV 2nd x>=t # Is the time lower than the number of seconds?
+INV 2nd x>=t # Time lower than the number of seconds?
 GTO 0        # Yes, go back to the begining
 R/S          # No, stop

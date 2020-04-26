@@ -29,7 +29,7 @@ class Stop(Exception):
 ee = False
 # Memories (STO)
 mem = [0 for i in range(8)]
-# Registers of intermediate values rounded and displayed after each pause (2nd Pause)
+# History of values displayed before a pause (2nd pause)
 regx = []
 # Internal memory stack used for computing nested operations
 stack = []
@@ -141,83 +141,77 @@ def unit2rad(number):
 def main():
     global ee, mem, rounding, stack, unit, x
     label.label_rst
-    # Combinations
+    # Building a savings plan
     
-    # How many poker hands (5 cards) can be dealt from a deck of 52 cards?
-    # Tip! This is combination: C(n,r) = n! / (n! - r!) / r! where n=52 and r=5.
-    # There are 2598960 poker hands in a deck.
+    # Let's say you make a monthly deposit (PMT) of $55.
+    # How much your cash will grow every month (n) at a 0.7% interest rate (i)?
+    # Answer: $110.38 including $0.38 of earned interest after a the first full month.
+    # Then $166.16 including $1.16 etc., and finally $686.01 including $26.01 after a year.
+    # Tip! Amount = PMT X ((1+i)^n - 1) / i.
     
-    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 6-14
+    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 8-8
     # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
     
     # Input
-    # Cards in the deck (n)
-    x = 52             # 52
-    mem[5] = x         # STO 5     (32 0)
-    # Cards in a hand (r)
-    x = 5              # 5
-    mem[6] = x         # STO 6     (32 0)
+    # Monthly payment (PMT)
+    x = 55             # 55
+    mem[1] = x         # STO 1     (32 0)
+    # Interest rate (i)
+    x = 0.007          # 0.007
+    mem[2] = x         # STO 2     (32 0)
+    # Number of months
+    x = 12             # 12
+    mem[7] = x         # STO 7     (32 0)
     
     # Main program
-    rounding = 0       # 2nd Fix 0 (48)
-    x = mem[5]         # RCL 5     (33 0)
-    # n!
-    sbr_3()            # SBR 3     (61 0)
-    mem[1] = x         # STO 1     (32 0)
-    x = mem[6]         # RCL 6     (33 0)
-    # r!
-    sbr_3()            # SBR 3     (61 0)
-    mem[2] = x         # STO 2     (32 0)
-    x = mem[5]         # RCL 5     (33 0)
-    stack.append(x)    # -         (65)
-    x = mem[6]         # RCL 6     (33 0)
-    y = stack.pop()    # =         (85)
-    x = y - x
-    # n! - r!
-    sbr_3()            # SBR 3     (61 0)
+    rounding = 2       # 2nd Fix 2 (48)
+    # Month (n)
+    x = 0              # 0
     mem[3] = x         # STO 3     (32 0)
-    # n! / (n! - r!) / r!
-    x = mem[1]         # RCL 1     (33 0)
-    stack.append(x)    # /         (45)
-                       # (         (43)
+    label .label_0     # 2nd Lbl 0 (86 0)
+    # month + 1
+    x = 1              # 1
+    mem[3] += x        # SUM 3     (34 0)
     x = mem[3]         # RCL 3     (33 0)
+    regx.append(roundn(x)) # 2nd Pause (36)
+    # PMT X ((1+i)^n - 1) / i
+    x = mem[1]         # RCL 1     (33 0)
     stack.append(x)    # X         (55)
+                       # (         (43)
+                       # (         (43)
+    x = 1              # 1
+    stack.append(x)    # +         (75)
     x = mem[2]         # RCL 2     (33 0)
     y = stack.pop()    # )         (44)
-    x = y * x
-    y = stack.pop()    # =         (85)
-    x = y / x
-                       # =         (85)
-    raise Stop()       # R/S       (81)
-    
-
-
-# Factorial n
-@with_goto
-def sbr_3():
-    global ee, mem, rounding, stack, unit, x
-    label .label_3     # 2nd Lbl 3 (86 0)
-    mem[0] = x         # STO 0     (32 0)
-    x = mem[0]         # RCL 0     (33 0)
-    stack.append(x)    # X         (55)
-    label .label_1     # 2nd Lbl 1 (86 0)
-    # Decrease the number and test ?
-    mem[0] = floor(mem[0]) # INV 2nd Dsz (- 56)
-    if mem[0] > 0:
-        mem[0] -= 1
-    elif mem[0] < 0:
-        mem[0] += 1
-    if mem[0] == 0:
-        # If zero, go finish the multiplication
-        goto .label_2  # GTO 2     (51 0)
-    # If not zero, multiply with the number
-    x = mem[0]         # RCL 0     (33 0)
-    y = stack.pop()    # X         (55)
+    x = y + x
+    stack.append(x)    # y^x       (35)
+    x = mem[3]         # RCL 3     (33 0)
+    y = stack.pop()    # -         (65)
+    x = pow(y, x)
+    stack.append(x)
+    x = 1              # 1
+    y = stack.pop()    # )         (44)
+    x = y - x
+    y = stack.pop()    # /         (45)
     x = y * x
     stack.append(x)
-    goto .label_1      # GTO 1     (51 0)
-    label .label_2     # 2nd Lbl 2 (86 0)
-    x = 1              # 1
+    x = mem[2]         # RCL 2     (33 0)
+    y = stack.pop()    # =         (85)
+    x = y / x
+    regx.append(roundn(x)) # 2nd Pause (36)
+    stack.append(x)    # -         (65)
+    x = mem[1]         # RCL 1     (33 0)
+    stack.append(x)    # X         (55)
+    x = mem[3]         # RCL 3     (33 0)
     y = stack.pop()    # =         (85)
     x = y * x
-    return             # INV SBR   (- 61)
+    y = stack.pop()
+    x = y - x
+    regx.append(roundn(x)) # 2nd Pause (36)
+    x = mem[3]         # RCL 3     (33 0)
+    # Month lower than number of months?
+    if x < mem[7]:     # INV 2nd x>=t (- 76)
+        # Yes, go back to the begining
+        goto .label_0  # GTO 0     (51 0)
+    # No, stop
+    raise Stop()       # R/S       (81)
