@@ -15,5 +15,8 @@
     </form>
 </div>
 
-<script type="text/javascript">window.addEventListener("load", autofit_textarea_height("ti_instructions"));</script>
+<script type="text/javascript">
+    window.addEventListener("load", autofit_textarea_height);
+    window.addEventListener("resize", autofit_textarea_height);
+</script>
 {% endblock %}
