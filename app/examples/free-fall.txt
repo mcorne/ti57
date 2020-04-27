@@ -1,4 +1,4 @@
-# Graph watch!
+# Free fall (Graph watch)
 
 # What is the distance in feet an object travels in free fall every second for 10 seconds?
 # Answer: 16 feet after 1 sec, 64 after 2, 144 after 3 etc.

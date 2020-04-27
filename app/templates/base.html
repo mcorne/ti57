@@ -21,16 +21,21 @@
             <button class="w3-button" onclick="dropdown_click('examples')">{{ _('Examples') }} <i
                     class="fas fa-caret-down"></i></button>
             <div class="w3-dropdown-content w3-bar-block" id="examples">
+                {{ m.example_group_title('Basic') }}
+                {{ m.example_link('pause-for-a-rest-stop', 'Pause for a rest stop') }}
+
+                {{ m.example_group_title('Finance') }}
                 {{ m.example_link('building-a-savings-plan', 'Building a savings plan') }}
                 {{ m.example_link('cash-in-the-bank', 'Cash in the bank') }}
+                {{ m.example_link('on-sale', 'On sale') }}
+
+                {{ m.example_group_title('Maths') }}
+                {{ m.example_link('areas-and-volumes', 'Areas & volumes') }}
                 {{ m.example_link('circumference-and-area-of-circle', 'Circumference and area of a circle') }}
                 {{ m.example_link('combinations', 'Combinations') }}
                 {{ m.example_link('factorial', 'Factorial') }}
-                {{ m.example_link('graph-watch', 'Graph watch') }}
-                {{ m.example_link('on-sale', 'On sale') }}
-                {{ m.example_link('pause-for-a-rest-stop', 'Pause for a rest stop') }}
+                {{ m.example_link('free-fall', 'Free fall') }}
                 {{ m.example_link('same-birthday', 'Same birthday') }}
-                {{ m.example_link('sign-posts', 'Sign posts') }}
                 {{ m.example_link('volume-of-cylinder', 'Volume of a cylinder') }}
             </div>
         </div>

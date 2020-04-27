@@ -1,3 +1,8 @@
+{% macro example_group_title(title) -%}
+<div class="w3-small w3-text-gray w3-border-bottom w3-margin-top w3-margin-right w3-margin-left"><i>{{ title }}</i>
+</div>
+{%- endmacro %}
+
 {% macro example_link(example, link_text) -%}
 <a href="{{ url_for('program.index', example=example) }}" class="w3-bar-item w3-button">{{ link_text }}
     {% if request.args.get('example') == example %}<i class="fas fa-check"></i>{% endif %}</a>
