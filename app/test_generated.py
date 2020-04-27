@@ -141,41 +141,91 @@ def unit2rad(number):
 def main():
     global ee, mem, rounding, stack, unit, x
     label.label_rst
-    # Circumference and area of a circle
+    # Building a savings plan
     
-    # What is the circumference and the area of a circle for a diameter of 10?
-    # Answer: the circumference is 31.42 and the area 78.54.
+    # Let's say you make a monthly deposit (PMT) of $55.
+    # How much your cash will grow every month (n) at a 0.7% interest rate (i)?
+    # Answer: $110.38 including $0.38 of earned interest after a the first full month.
+    # Then $166.16 including $1.16 etc., and finally $686.01 including $26.01 after a year.
+    # How much cash will you have in 5 years (60 months)?
+    # Answer: 4083.64, 783.64
+    # Tip! Amount = PMT X ((1+i)^n - 1) / i.
     
-    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-15
+    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 8-8
     # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
     
     # Input
-    # Diameter
-    x = 10             # 10
+    # Monthly payment (PMT)
+    x = 55             # 55
+    mem[1] = x         # STO 1     (32 0)
+    # Interest rate (i)
+    x = 0.007          # 0.007
+    mem[2] = x         # STO 2     (32 0)
+    # Number of months
+    x = 12             # 12
+    mem[7] = x         # STO 7     (32 0)
+    # Month (n) from 1 to 12
+    x = 0              # 0
+    mem[3] = x         # STO 3     (32 0)
+    sbr_0()            # SBR 0     (61 0)
+    # 60th month
+    x = 59             # 59
+    mem[3] = x         # STO 3     (32 0)
+    sbr_0()            # SBR 0     (61 0)
     
     # Main program
+    raise Stop()       # R/S       (81)
+    
+
+
+@with_goto
+def sbr_0():
+    global ee, mem, rounding, stack, unit, x
+    label .label_0     # 2nd Lbl 0 (86 0)
     rounding = 2       # 2nd Fix 2 (48)
-    # Radius = diameter / 2
-    stack.append(x)    # /         (45)
-    x = 2              # 2
-    y = stack.pop()    # =         (85)
-    x = y / x
-    mem[1] = x         # STO 1     (32 0)
-    # Circumference = 2π x radius
+    # month + 1
+    x = 1              # 1
+    mem[3] += x        # SUM 3     (34 0)
+    x = mem[3]         # RCL 3     (33 0)
+    regx.append(roundn(x)) # 2nd Pause (36)
+    # PMT X ((1+i)^n - 1) / i
+    x = mem[1]         # RCL 1     (33 0)
     stack.append(x)    # X         (55)
-    x = 2              # 2
-    y = stack.pop()    # X         (55)
+                       # (         (43)
+                       # (         (43)
+    x = 1              # 1
+    stack.append(x)    # +         (75)
+    x = mem[2]         # RCL 2     (33 0)
+    y = stack.pop()    # )         (44)
+    x = y + x
+    stack.append(x)    # y^x       (35)
+    x = mem[3]         # RCL 3     (33 0)
+    y = stack.pop()    # -         (65)
+    x = pow(y, x)
+    stack.append(x)
+    x = 1              # 1
+    y = stack.pop()    # )         (44)
+    x = y - x
+    y = stack.pop()    # /         (45)
     x = y * x
     stack.append(x)
-    x = pi             # 2nd pi    (30)
+    x = mem[2]         # RCL 2     (33 0)
     y = stack.pop()    # =         (85)
-    x = y * x
+    x = y / x
     regx.append(roundn(x)) # 2nd Pause (36)
-    # Area = π x radius²
+    stack.append(x)    # -         (65)
     x = mem[1]         # RCL 1     (33 0)
-    x *= x             # x2        (23)
     stack.append(x)    # X         (55)
-    x = pi             # 2nd pi    (30)
+    x = mem[3]         # RCL 3     (33 0)
     y = stack.pop()    # =         (85)
     x = y * x
-    raise Stop()       # R/S       (81)
+    y = stack.pop()
+    x = y - x
+    regx.append(roundn(x)) # 2nd Pause (36)
+    x = mem[3]         # RCL 3     (33 0)
+    # Month lower than number of months?
+    if x < mem[7]:     # INV 2nd x>=t (- 76)
+        # Yes, go back to the begining
+        goto .label_0  # GTO 0     (51 0)
+    # No, stop
+    return             # INV SBR   (- 61)

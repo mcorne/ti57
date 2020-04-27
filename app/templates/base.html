@@ -43,6 +43,7 @@
 
     <div class="w3-overlay w3-animate-opacity" onclick="close_sidebar()" style="cursor:pointer" id="overlay"></div>
 
+    <script type="text/javascript" src="{{ url_for('static', filename='application.js') }}"></script>
 
     <div class="w3-panel">
         {% for category, message in get_flashed_messages(with_categories=true) %}
@@ -60,7 +61,6 @@
         {% block content %}{% endblock %}
     </div>
 
-    <script type="text/javascript" src="{{ url_for('static', filename='application.js') }}"></script>
 </body>
 
 </html>

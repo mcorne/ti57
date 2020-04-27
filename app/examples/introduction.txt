@@ -1,0 +1,7 @@
+# Introduction
+
+# Input
+0
+
+# Main program
+R/S

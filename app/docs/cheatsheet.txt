@@ -11,9 +11,7 @@ source envwslubuntu/bin/activate
 # import in project environment
 pip install black
 pip install flask
-pip install flask-babel
 pip install flask-wtf
-pip install flask-table
 pip install goto-statement
 pip install pylint
 
