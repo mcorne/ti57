@@ -7,10 +7,10 @@ function dropdown_click(name) {
     var x = document.getElementById(name);
     if (x.className.indexOf("w3-show") == -1) {
         x.className += " w3-show";
-        x.previousElementSibling.className += " w3-blue";
+        x.previousElementSibling.className += " w3-indigo";
     } else {
         x.className = x.className.replace(" w3-show", "");
-        x.previousElementSibling.className = x.previousElementSibling.className.replace(" w3-blue", "");
+        x.previousElementSibling.className = x.previousElementSibling.className.replace(" w3-indigo", "");
     }
 }
 

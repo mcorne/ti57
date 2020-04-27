@@ -1,5 +1,5 @@
 .link {
-    color: #2196F3; /* w3-blue */
+    color: #3f51b5; /* w3-indigo */
     text-decoration: none;
 }
 
@@ -12,13 +12,4 @@
     max-width: 400px;
     width: 80%;
     z-index: 4;
-}
-
-.w3-table-all a {
-    display: block;
-    text-decoration: none;
-}
-
-.w3-table-all tr:nth-child(2n) {
-    background-color: #ddffff; /* w3-pale-blue */
 }

@@ -1,0 +1,4 @@
+{% macro example_link(example, link_text) -%}
+<a href="{{ url_for('program.index', example=example) }}" class="w3-bar-item w3-button">{{ link_text }}
+    {% if request.args.get('example') == example %}<i class="fas fa-check"></i>{% endif %}</a>
+{%- endmacro %}
