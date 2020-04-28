@@ -25,22 +25,6 @@ class Stop(Exception):
     pass
 
 
-# Scientific notation (EE)
-ee = False
-# Memories (STO)
-mem = [0 for i in range(8)]
-# History of values displayed before a pause (2nd pause)
-regx = []
-# Internal memory stack used for computing nested operations
-stack = []
-# Number of digit after the decimal point (2nd Fix)
-rounding = None
-# Angle unit (DEG, RAD, GRAD)
-unit = "Deg"
-# Display
-x = 0
-
-
 def calculator_state():
     global ee, mem, regx, rounding, stack, unit, x
     state = {
@@ -104,6 +88,24 @@ def dms2degrees(dms):
 
 def grd2rad(number):
     return (number / 200) * pi
+
+
+def init_calculator():
+    global ee, mem, regx, rounding, stack, unit, x
+    # Scientific notation (EE)
+    ee = False
+    # Memories (STO)
+    mem = [0 for i in range(8)]
+    # History of values displayed before a pause (2nd pause)
+    regx = []
+    # Internal memory stack used for computing nested operations
+    stack = []
+    # Number of digit after the decimal point (2nd Fix)
+    rounding = None
+    # Angle unit (DEG, RAD, GRAD)
+    unit = "Deg"
+    # Display
+    x = 0
 
 
 def rad2grd(number):

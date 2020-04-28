@@ -24,6 +24,7 @@ def index():
             g = Generator()
             py_code = g.generate_py_code(ti_instructions)
             exec(py_code, globals())
+            init_calculator()
             main()
             calculator_state = calculator_state()
     except FileNotFoundError:
