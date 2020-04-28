@@ -41,6 +41,21 @@ unit = "Deg"
 x = 0
 
 
+def calculator_state():
+    global ee, mem, regx, rounding, stack, unit, x
+    state = {
+        "ee": ee,
+        "mem": mem,
+        "regx": regx,
+        "rounding": rounding,
+        "stack": stack,
+        "unit": unit,
+        "x": x,
+        "xrounded": roundn(x),
+    }
+    return state
+
+
 def degrees2dms(degrees):
     degrees = float(degrees)
     is_positive = degrees >= 0
@@ -110,21 +125,6 @@ def roundn(number):
     if rounding is not None:
         number = round(number, rounding)
     return number
-
-
-def state():
-    global ee, mem, regx, rounding, stack, unit, x
-    state = {
-        "ee": ee,
-        "mem": mem,
-        "regx": regx,
-        "rounding": rounding,
-        "stack": stack,
-        "unit": unit,
-        "x": x,
-        "xrounded": roundn(x),
-    }
-    return state
 
 
 def unit2rad(number):

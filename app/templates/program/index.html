@@ -15,8 +15,17 @@
     </form>
 </div>
 
+<div class="w3-container">
+    <h4>Python Code</h4>
+    <div class="w3-code pythonHigh notranslate w3-border w3-border-indigo">
+        {{ py_code|nl2br_and_nbsp }}
+    </div>
+</div>
+
+<script src="https://www.w3schools.com/lib/w3codecolor.js"></script>
 <script type="text/javascript">
     window.addEventListener("load", autofit_textarea_height);
     window.addEventListener("resize", autofit_textarea_height);
+    w3CodeColor();
 </script>
 {% endblock %}

@@ -18,7 +18,7 @@
 
     <div class="w3-sidebar w3-bar-block" id="sidebar">
         <div class="w3-dropdown-click">
-            <button class="w3-button" onclick="dropdown_click('examples')">{{ _('Examples') }} <i
+            <button class="w3-button" onclick="dropdown_click('examples')">{{ 'Examples' }} <i
                     class="fas fa-caret-down"></i></button>
             <div class="w3-dropdown-content w3-bar-block" id="examples">
                 {{ m.example_group_title('Basic') }}
@@ -61,6 +61,7 @@
         {% block content %}{% endblock %}
     </div>
 
+    <script type="text/javascript" src="{{ url_for('static', filename='w3codecolor.js') }}"></script>
 </body>
 
 </html>

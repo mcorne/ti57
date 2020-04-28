@@ -2,12 +2,13 @@
 - fix line and column in case of syntax error in instructions
 - remove extra lines after a double blank line in python code
 - move main function and subroutine up in generated python file, make one-liner imports
-- highlight generated code with https://pygments.org/
 - rename generator to translator
 - fix comments at the end of instructions as they don't get into the python code, see factorial.txt
 - move subroutine comments under "global..." instead of above "def..." just like for main
 - fix source URL to point to the local doc in examples
 - add intro (default) example with pseudo-random numbers program from https://en.wikipedia.org/wiki/TI-57
+- replace regx.append(roundn(x)) by a shorter function call
+- move TI code next to instruction in python code or reduce left padding
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!
