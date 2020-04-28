@@ -165,9 +165,10 @@ class Generator:
         with open("app/models/calculator.py", "r") as file:
             calculator = file.read()
 
-        calculator += "\n".join(py_lines) + "\n"
+        py_code_part = "\n".join(py_lines)
+        py_code = calculator + py_code_part + "\n"
 
-        return calculator
+        return [py_code, py_code_part.strip()]
 
     def get_label_number(self, py_line):
         match = re.match(r"label .label_(\d)", py_line)

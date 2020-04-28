@@ -10,7 +10,7 @@ bp = Blueprint("program", __name__)
 
 @bp.route("/", methods=("GET", "POST"))
 def index():
-    py_code = ""
+    py_code_part = ""
     calculator_state = []
     form = ProgramForm()
     try:
@@ -22,7 +22,7 @@ def index():
                 ti_instructions = file.read()
                 form.ti_instructions.data = ti_instructions
             g = Generator()
-            py_code = g.generate_py_code(ti_instructions)
+            py_code, py_code_part = g.generate_py_code(ti_instructions)
             exec(py_code, globals())
             init_calculator()
             main()
@@ -38,6 +38,6 @@ def index():
         "program/index.html",
         calculator_state=calculator_state,
         form=form,
-        py_code=py_code,
+        py_code_part=py_code_part,
         ti_instructions=ti_instructions,
     )
