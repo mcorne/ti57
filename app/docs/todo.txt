@@ -2,7 +2,6 @@
 - fix line and column in case of syntax error in instructions
 - remove extra lines after a double blank line in python code
 - move main function and subroutine up in generated python file, make one-liner imports
-- rename generator to translator
 - fix comments at the end of instructions as they don't get into the python code, see factorial.txt
 - move subroutine comments under "global..." instead of above "def..." just like for main
 - fix source URL to point to the local doc in examples

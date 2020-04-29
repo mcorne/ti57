@@ -19,7 +19,7 @@ GTO 1
 2nd Lbl 2
 1 =
 
-# Note that the following code is more efficient but does work after the translation into python .
+# Note that the following code is more efficient but does work after the translation into python.
 # The decreased number is added to the stack after each loop instead of being multiplied.
 # 2nd Lbl 1
 # RCL 0 X

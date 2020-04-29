@@ -1,7 +1,7 @@
 from flask import Blueprint, flash, render_template, request
 from flask_babel import _
 
-from app.models.generator import Generator
+from app.models.translator import Translator
 from app.models.calculator import get_calculator_state, Stop
 from app.forms import ProgramForm
 
@@ -23,9 +23,9 @@ def index():
             with open(f"app/examples/{example}.txt", "r") as file:
                 ti_instructions = file.read()
                 form.ti_instructions.data = ti_instructions
-        generator = Generator()
-        py_code, py_code_part = generator.generate_py_code(ti_instructions)
-        with open("app/test_generated.py", "w") as file:  # TODO: remove !!!
+        translator = Translator()
+        py_code, py_code_part = translator.generate_py_code(ti_instructions)
+        with open("app/.~test_generated.py", "w") as file:  # TODO: remove !!!
             file.write(py_code)
         if exec_code:
             exec(py_code, globals())

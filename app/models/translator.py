@@ -4,7 +4,7 @@ from app.models.parser import Parser
 from app.models.ti57 import instruction_set
 
 
-class Generator:
+class Translator:
     # Python line length:
     # Median = 14 (ex. "if mem[0] > 0:")
     # Q3     = 18 (ex. "x = degrees2dms(x)")
