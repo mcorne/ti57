@@ -1,4 +1,4 @@
-# Factorial!
+# Factorial
 
 # What is the factorial of 5? 10?
 # Answer: 120 for 5 and 3 628 800 for 10.

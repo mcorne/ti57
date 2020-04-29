@@ -1,4 +1,4 @@
-# The same birthday
+# Same birthday
 
 # What is the probability that two or more people have the same birthday in a group of five?
 # Answer: 2.7% chance in a group of 5 people and 56.9% in a group of 25.

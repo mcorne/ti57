@@ -1,4 +1,4 @@
-# Graph watch!
+# Cash in the bank (Graph watch)
 
 # How much a $1000 will grow each year for the next 10 years at a 6% interest rate?
 # Answer: $1060.0 after 1 year, $1123.6 after 2, $1191.02 after 3 etc.

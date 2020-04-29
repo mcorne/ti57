@@ -161,12 +161,12 @@ class Translator:
         if subroutine_numbers:
             py_lines = self.add_functions(py_lines, subroutine_numbers)
         self.indent_lines(py_lines)
+        py_code_part = "\n".join(py_lines)
+        py_code_part = self.remove_extra_lines(py_code_part)
+        # py_code_part = self.move_inline_instructions_up(py_code_part) # TODO: fix !!!
 
         with open("app/models/calculator.py", "r") as file:
             calculator = file.read()
-
-        py_code_part = "\n".join(py_lines)
-        py_code_part = self.remove_extra_lines(py_code_part)
         py_code = calculator + py_code_part
 
         return [py_code, py_code_part.strip()]
@@ -222,6 +222,13 @@ class Translator:
 
     def is_if_statement(self, py_line):
         return py_line and (py_line[0:2] == "if" or py_line[0:4] == "elif")
+
+    def move_inline_instructions_up(self, py_code):
+        py_code = re.sub(
+            r"^( +)(.*?[^ \n] *)(#.*?)$", r"\g<1>\g<3>\n\g<1>\g<2>", py_code, 0, re.M
+        )
+        py_code = re.sub(r"^ +(#.*?)$", r"    \g<1>", py_code, 0, re.M)
+        return py_code
 
     def process_prev_equality(self):
         self.process_prev_multiplication()
