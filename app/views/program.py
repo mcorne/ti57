@@ -15,23 +15,22 @@ def index():
     form = ProgramForm()
     try:
         if form.validate_on_submit():
-            exec_code = True
             ti_instructions = form.ti_instructions.data
+            translator = Translator()
+            py_code, py_code_part = translator.generate_py_code(
+                ti_instructions, form.split_instruction_from_py_lines.data
+            )
+            with open("app/.~test_generated.py", "w") as file:  # TODO: remove !!!
+                file.write(py_code)
+                exec(py_code, globals())
+                init_calculator()
+                main()
+                calculator_state = get_calculator_state()
         else:
-            exec_code = False
             example = request.args.get("example", "introduction")
             with open(f"app/examples/{example}.txt", "r") as file:
                 ti_instructions = file.read()
                 form.ti_instructions.data = ti_instructions
-        translator = Translator()
-        py_code, py_code_part = translator.generate_py_code(ti_instructions)
-        with open("app/.~test_generated.py", "w") as file:  # TODO: remove !!!
-            file.write(py_code)
-        if exec_code:
-            exec(py_code, globals())
-            init_calculator()
-            main()
-            calculator_state = get_calculator_state()
     except FileNotFoundError:
         flash("Invalid example", "error")
     except Stop:

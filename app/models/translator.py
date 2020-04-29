@@ -153,7 +153,7 @@ class Translator:
             fixed += f" ({ti_instruction['ti_code'].strip()})"
         return fixed
 
-    def generate_py_code(self, ti_instructions):
+    def generate_py_code(self, ti_instructions, split_instruction_from_py_lines):
         py_lines = self.convert_ti_instructions_to_py_lines(ti_instructions)
         py_lines = self.add_main_function(py_lines)
         self.indent_if_statement(py_lines)
@@ -163,7 +163,8 @@ class Translator:
         self.indent_lines(py_lines)
         py_code_part = "\n".join(py_lines)
         py_code_part = self.remove_extra_lines(py_code_part)
-        # py_code_part = self.move_inline_instructions_up(py_code_part) # TODO: fix !!!
+        if split_instruction_from_py_lines:
+            py_code_part = self.split_instruction_from_py_lines(py_code_part)
 
         with open("app/models/calculator.py", "r") as file:
             calculator = file.read()
@@ -223,13 +224,6 @@ class Translator:
     def is_if_statement(self, py_line):
         return py_line and (py_line[0:2] == "if" or py_line[0:4] == "elif")
 
-    def move_inline_instructions_up(self, py_code):
-        py_code = re.sub(
-            r"^( +)(.*?[^ \n] *)(#.*?)$", r"\g<1>\g<3>\n\g<1>\g<2>", py_code, 0, re.M
-        )
-        py_code = re.sub(r"^ +(#.*?)$", r"    \g<1>", py_code, 0, re.M)
-        return py_code
-
     def process_prev_equality(self):
         self.process_prev_multiplication()
 
@@ -269,6 +263,13 @@ class Translator:
 
     def remove_extra_lines(self, py_code):
         return re.sub(r"\n{3,}", r"\n\n", py_code)
+
+    def split_instruction_from_py_lines(self, py_code):
+        py_code = re.sub(
+            r"^( +)(.*?[^ \n] *)(#.*?)$", r"\g<1>\g<3>\n\g<1>\g<2>", py_code, 0, re.M
+        )
+        py_code = re.sub(r"^ +(#.*?)$", r"    \g<1>", py_code, 0, re.M)
+        return py_code
 
     def update_prev_operator(self):
         self.prev_operator = self.operators[-1] if self.operators else None
