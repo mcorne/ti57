@@ -74,17 +74,17 @@ class Parser:
 
         lower_case_key = value.lower()
         if not lower_case_key in self.lower_case_keys:
-            raise Exception(f"Invalid instruction key {value}")
+            raise Exception(f"Parsing error: invalid instruction key {value}")
 
         ti_instruction.update(
             self.ti_instruction_set[self.lower_case_keys[lower_case_key]]
         )
         if not "action" in ti_instruction:
-            raise Exception(f"Action not implemented for {value}")
+            raise Exception(f"Parsing error: action not implemented for {value}")
 
         if number is not None:
             if not "py_line" in ti_instruction:
-                raise Exception(f"Python line missing for {value}")
+                raise Exception(f"Parsing error: python line missing for {value}")
             ti_instruction["py_line"] = self.fix_number_in_py_lines(
                 number, ti_instruction["py_line"]
             )
@@ -104,7 +104,7 @@ class Parser:
             ti_instruction = self.process_key_type_instruction(ti_instruction, groups)
         elif type == "MISMATCH":
             raise Exception(
-                f"Instruction syntax error: unexpected character {value} on line {line} and column {column}"
+                f"Syntax error: unexpected character {value} on line {line} and column {column}"
             )
         elif type == "DOUBLE_NEWLINE":
             start = match.end()
@@ -119,7 +119,7 @@ class Parser:
         elif type == "SKIP":
             ti_instruction["action"] = "continue"
         else:
-            raise Exception(f"Unexpected instruction type {type}")
+            raise Exception(f"Parsing error: unexpected instruction type {type}")
 
         return [start, line, ti_instruction]
 

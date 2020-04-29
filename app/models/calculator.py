@@ -48,7 +48,7 @@ def dms2degrees(dms):
         str(dms),
     )
     if match is None:
-        raise Exception(f"Invalid DMS angle {dms}")
+        raise Exception(f"Calculator error: invalid DMS angle {dms}")
 
     angle = match.groupdict()
     degrees = float(angle["degrees"])

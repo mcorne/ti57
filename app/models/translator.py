@@ -42,7 +42,7 @@ class Translator:
         self.process_prev_equality()
 
         if self.prev_operator != "(":
-            raise Exception("Unexpected closing parenthesis")
+            raise Exception("Syntax error: unexpected closing parenthesis")
 
         self.operators.pop()
 
@@ -204,7 +204,9 @@ class Translator:
             if follows_if_statement:
                 # This is a line following an "if" statement
                 if self.is_if_statement(py_line):
-                    raise Exception('Nested "if" statements not allowed: {py_line}')
+                    raise Exception(
+                        'Translation error: nested "if" statements not allowed: {py_line}'
+                    )
                 # Ident the line and move the instruction part to the left
                 py_lines[number] = "    " + py_line.replace("    #", "#", 1)
                 if py_line[0] != "#":
