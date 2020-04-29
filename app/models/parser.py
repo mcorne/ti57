@@ -27,6 +27,9 @@ class Parser:
             )
         return pattern
 
+    def fix_newlines(self):
+        self.ti_instructions = re.sub(r"(\r\n|\r)", r"\n", self.ti_instructions)
+
     def fix_number_in_py_lines(self, number, py_lines):
         if type(py_lines) is not list:
             py_lines = [py_lines]
@@ -57,6 +60,7 @@ class Parser:
     def next_instruction(self):
         self.set_lower_case_keys()
         self.set_instruction_patterns()
+        self.fix_newlines()
         self.move_inline_comments_up()
         return self.tokenizer()
 
@@ -101,12 +105,18 @@ class Parser:
             raise Exception(
                 f"Invalid instruction {value} on line {line} and column {column}"
             )
+        elif type == "DOUBLE_NEWLINE":
+            start = match.end()
+            line += len(value)
+            ti_instruction["action"] = "comment"
         elif type == "NEWLINE":
             start = match.end()
             line += 1
-            ti_instruction["action"] = "comment"
+            ti_instruction["action"] = "continue"
         elif type == "NUMERIC":
             ti_instruction["action"] = "numeric"
+        elif type == "SKIP":
+            ti_instruction["action"] = "continue"
         else:
             raise Exception(f"Unexpected instruction type {type}")
 
@@ -119,8 +129,9 @@ class Parser:
         groups = [
             ("KEY", "|".join(patterns)),
             ("NUMERIC", Parser.DECIMAL + "|" + Parser.INTEGER),
-            ("COMMENT", r"#[^\n\r]*"),
-            ("NEWLINE", r"(?:\r\n|\n|\r){2,}"),
+            ("COMMENT", r"#[^\n]*"),
+            ("DOUBLE_NEWLINE", r"\n{2,}"),
+            ("NEWLINE", r"\n"),
             ("SKIP", r"[ \t]+"),
             ("MISMATCH", r"."),
         ]
@@ -136,6 +147,6 @@ class Parser:
         line = 1
         start = 0
         for match in re.finditer(self.patterns, self.ti_instructions, re.I):
-            if match.lastgroup != "SKIP":
-                ti_instruction, start, line = self.process_token(match, line, start)
+            ti_instruction, start, line = self.process_token(match, start, line)
+            if ti_instruction["action"] != "continue":
                 yield ti_instruction

@@ -136,3 +136,46 @@ def unit2rad(number):
     elif unit == "Grd":
         number = grd2rad(number)
     return number
+
+
+@with_goto
+def main():
+    global ee, mem, rounding, stack, unit, x
+    label.label_rst
+    # Free fall (Graph watch)
+    
+    # What is the distance in feet an object travels in free fall every second for 10 seconds?
+    # Answer: 16 feet after 1 sec, 64 after 2, 144 after 3 etc.
+    
+    # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 4-4
+    # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
+    
+    # Input
+    # Number of seconds
+    x = 10             # 10
+    mem[7] = x         # STO 7     (32 0)
+    
+    # Main program
+    label .label_0     # 2nd Lbl 0 (86 0)
+    # Reset the display register
+    x = 0              # CE        (14)
+    # Add one second
+    x = 1              # 1
+    mem[1] += x        # SUM 1     (34 0)
+    # Recall the time
+    x = mem[1]         # RCL 1     (33 0)
+    regx.append(roundn(x)) # 2nd Pause (36)
+    # Distance = time² X 16 feet
+    x *= x             # x2        (23)
+    stack.append(x)    # X         (55)
+    x = 16             # 16
+    y = stack.pop()    # =         (85)
+    x = y * x
+    regx.append(roundn(x)) # 2nd Pause (36)
+    x = mem[1]         # RCL 1     (33 0)
+    # Time lower than the number of seconds?
+    if x < mem[7]:     # INV 2nd x>=t (- 76)
+        # Yes, go back to the begining
+        goto .label_0  # GTO 0     (51 0)
+    # No, stop
+    raise Stop()       # R/S       (81)

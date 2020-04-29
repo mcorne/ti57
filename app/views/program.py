@@ -2,7 +2,7 @@ from flask import Blueprint, flash, render_template, request
 from flask_babel import _
 
 from app.models.generator import Generator
-from app.models.calculator import calculator_state, Stop
+from app.models.calculator import get_calculator_state, Stop
 from app.forms import ProgramForm
 
 bp = Blueprint("program", __name__)
@@ -15,22 +15,27 @@ def index():
     form = ProgramForm()
     try:
         if form.validate_on_submit():
+            exec_code = True
             ti_instructions = form.ti_instructions.data
         else:
+            exec_code = False
             example = request.args.get("example", "introduction")
             with open(f"app/examples/{example}.txt", "r") as file:
                 ti_instructions = file.read()
                 form.ti_instructions.data = ti_instructions
-            g = Generator()
-            py_code, py_code_part = g.generate_py_code(ti_instructions)
+        generator = Generator()
+        py_code, py_code_part = generator.generate_py_code(ti_instructions)
+        with open("app/test_generated.py", "w") as file:  # TODO: remove !!!
+            file.write(py_code)
+        if exec_code:
             exec(py_code, globals())
             init_calculator()
             main()
-            calculator_state = calculator_state()
+            calculator_state = get_calculator_state()
     except FileNotFoundError:
         flash("Invalid example", "error")
     except Stop:
-        pass
+        calculator_state = get_calculator_state()
     except Exception as e:
         flash(e, "error")
 

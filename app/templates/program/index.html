@@ -3,7 +3,11 @@
 {% block content %}
 <div class="w3-panel w3-card-4 w3-light-grey">
     <h4>Calculator Display</h4>
-    <div class="w3-panel w3-white">123465</div>
+    <div class="w3-panel w3-white">{{ calculator_state.x if calculator_state.x is defined else 0 }}</div>
+    {% if calculator_state.regx is defined and calculator_state.regx %}
+    <h4>History</h4>
+    {% for regx in calculator_state.regx %}<div class="w3-panel w3-white">{{ regx }}</div>{% endfor %}
+    {% endif %}
 </div>
 
 <form class="w3-panel w3-card-4 w3-light-grey" method="post">
@@ -13,6 +17,7 @@
     <p class="w3-center">{{ form.submit(class_='w3-btn w3-ripple w3-amber') }}</p>
 </form>
 
+{% if py_code_part %}
 <button class="w3-button w3-hover-amber w3-indigo"
     onclick="document.getElementById('python_code').style.display='block'">Python Code</button>
 
@@ -20,11 +25,12 @@
     <span onclick="this.parentElement.style.display='none'"
         class="w3-button w3-display-topright w3-text-indigo w3-hover-text-amber w3-hover-light-grey"><i
             class="fas fa-times"></i></span>
-    <h4>Instructions tanslated into Python</h4>
+    <h4>Instructions translated into Python</h4>
     <div class="w3-code w3-border-indigo pythonHigh notranslate">
         {{ py_code_part|nl2br_and_nbsp }}
     </div>
 </div>
+{% endif %}
 
 <script src="https://www.w3schools.com/lib/w3codecolor.js"></script>
 <script type="text/javascript">
