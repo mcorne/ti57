@@ -61,6 +61,7 @@ class Parser:
         self.set_lower_case_keys()
         self.set_instruction_patterns()
         self.fix_newlines()
+        self.validate_instructions()
         self.move_inline_comments_up()
         return self.tokenizer()
 
@@ -103,7 +104,7 @@ class Parser:
             ti_instruction = self.process_key_type_instruction(ti_instruction, groups)
         elif type == "MISMATCH":
             raise Exception(
-                f"Invalid instruction {value} on line {line} and column {column}"
+                f"Instruction syntax error: unexpected character {value} on line {line} and column {column}"
             )
         elif type == "DOUBLE_NEWLINE":
             start = match.end()
@@ -120,7 +121,7 @@ class Parser:
         else:
             raise Exception(f"Unexpected instruction type {type}")
 
-        return [ti_instruction, start, line]
+        return [start, line, ti_instruction]
 
     def set_instruction_patterns(self):
         patterns = [
@@ -147,6 +148,12 @@ class Parser:
         line = 1
         start = 0
         for match in re.finditer(self.patterns, self.ti_instructions, re.I):
-            ti_instruction, start, line = self.process_token(match, start, line)
+            start, line, ti_instruction = self.process_token(match, start, line)
             if ti_instruction["action"] != "continue":
                 yield ti_instruction
+
+    def validate_instructions(self):
+        line = 1
+        start = 0
+        for match in re.finditer(self.patterns, self.ti_instructions, re.I):
+            start, line, dummy = self.process_token(match, start, line)
