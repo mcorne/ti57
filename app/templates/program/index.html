@@ -7,8 +7,9 @@
 </div>
 
 {% if calculator_state.regx is defined and calculator_state.regx %}
-<button class="w3-button w3-hover-amber w3-indigo" onclick="toggle_show_hide('display_history')">Show/Hide
-    History</button>
+<p class="w3-center"><button class="w3-button w3-hover-amber w3-indigo"
+        onclick="toggle_show_hide('display_history')">Show/Hide
+        History</button></p>
 <div id="display_history" class="w3-panel w3-card-4 w3-light-grey" style="display: none">
     <h4>Display History</h4>
     <table class="w3-table w3-bordered w3-white w3-panel">
@@ -28,8 +29,9 @@
 </form>
 
 {% if py_code_part %}
-<button class="w3-button w3-hover-amber w3-indigo" onclick="toggle_show_hide('python_code')">Show/Hide Python
-    Code</button>
+<p class="w3-center"><button class="w3-button w3-hover-amber w3-indigo"
+        onclick="toggle_show_hide('python_code')">Show/Hide Python
+        Code</button></p>
 <div id="python_code" class="w3-panel w3-card w3-light-grey" style="display: none">
     <h4>Instructions part only</h4>
     <div class="w3-code w3-border-indigo pythonHigh notranslate">
