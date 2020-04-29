@@ -166,7 +166,8 @@ class Translator:
             calculator = file.read()
 
         py_code_part = "\n".join(py_lines)
-        py_code = calculator + py_code_part + "\n"
+        py_code_part = self.remove_extra_lines(py_code_part)
+        py_code = calculator + py_code_part
 
         return [py_code, py_code_part.strip()]
 
@@ -258,6 +259,9 @@ class Translator:
             self.py_lines.append("y = stack.pop()")
             self.py_lines.append("x = y * pow(10, x)")
             self.update_prev_operator()
+
+    def remove_extra_lines(self, py_code):
+        return re.sub(r"\n{3,}", r"\n\n", py_code)
 
     def update_prev_operator(self):
         self.prev_operator = self.operators[-1] if self.operators else None
