@@ -37,3 +37,12 @@ function open_sidebar() {
     document.getElementById("overlay").style.display = "block";
     document.getElementById("sidebar").style.display = "block";
 }
+
+function toggle_show_hide(name) {
+    var x = document.getElementById(name);
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
