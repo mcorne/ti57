@@ -3,8 +3,8 @@ from wtforms import BooleanField, HiddenField, SubmitField, TextAreaField
 
 
 class ProgramForm(FlaskForm):
-    split_instructions_from_py_lines = BooleanField(
-        "Split Instructions from Python lines of code"
+    instruction_with_python = BooleanField(
+        "Display the instructions on the same line as the Python code (recommended on large screens)"
     )
     submit = SubmitField("Run")
     ti_instructions = TextAreaField("Instructions")

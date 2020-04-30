@@ -4,7 +4,10 @@
 <div class="w3-panel w3-card-4 w3-light-grey">
     {{ m.section_title(
         'Calculator Display',
-        'The display of the TI-57 is an 8-digit LED display also called the X register. It is referred to as the x variable in the Python code.') }}
+        '''This is where the result is displayed after the execution of a program just like on the real calculator.
+        It is called the display register or X register.
+        It is referred to as the x variable in the Python code.
+        ''') }}
     <div class="w3-panel w3-white">{{ calculator_state.x if calculator_state.x is defined else 0 }}</div>
 </div>
 
@@ -13,7 +16,12 @@
         onclick="toggle_show_hide('display_history')">Show/Hide
         History</button></p>
 <div id="display_history" class="w3-panel w3-card-4 w3-light-grey" style="display: none">
-    <h4>Display History</h4>
+    {{ m.section_title(
+        'Display History',
+        '''This shows the values of the display register each time the program encountered the "2nd Pause" key.
+        The real calculator would freeze the display for a second or two then resume the program.
+        The emulator simply stores the current value of the X register in the regx list in the Python code.
+        ''') }}
     <table class="w3-table w3-bordered w3-white w3-panel">
         {% for regx in calculator_state.regx %}<tr>
             <td>{{ loop.index }}.</td>
@@ -24,12 +32,16 @@
 {% endif %}
 
 <form class="w3-panel w3-card-4 w3-light-grey" method="post">
-    <h4>Instructions</h4>
+    {{ m.section_title(
+        'Instructions',
+        '''This is the set of instructions just as they would be entered on a real calculator with the addition of comments starting with a #.
+        The emulator translates the instructions into Python code then execute the code and display the result.
+        ''') }}
     {{ form.hidden_tag() }}
     {{ form.ti_instructions(class_='w3-input w3-panel', style='font-family: Consolas,"courier new";') }}
     <p>
-        {{ form.split_instructions_from_py_lines(class_="w3-check") }}
-        {{ form.split_instructions_from_py_lines.label }}
+        {{ form.instruction_with_python(class_="w3-check") }}
+        {{ form.instruction_with_python.label }}
     </p>
     <p class="w3-center">{{ form.submit(class_='w3-btn w3-ripple w3-amber') }}</p>
 </form>
@@ -39,7 +51,7 @@
         onclick="toggle_show_hide('python_code')">Show/Hide Python
         Code</button></p>
 <div id="python_code" class="w3-panel w3-card w3-light-grey" style="display: none">
-    <h4>Instructions part only</h4>
+    <h4>Excerpts - Instructions only</h4>
     <div class="w3-code w3-border-indigo pythonHigh notranslate">
         {{ py_code_part|nl2br_and_nbsp }}
     </div>
