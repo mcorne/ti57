@@ -2,7 +2,9 @@
 
 {% block content %}
 <div class="w3-panel w3-card-4 w3-light-grey">
-    <h4>Calculator Display</h4>
+    {{ m.section_title(
+        'Calculator Display',
+        'The display of the TI-57 is an 8-digit LED display also called the X register. It is referred to as the x variable in the Python code.') }}
     <div class="w3-panel w3-white">{{ calculator_state.x if calculator_state.x is defined else 0 }}</div>
 </div>
 

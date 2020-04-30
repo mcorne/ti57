@@ -7,3 +7,16 @@
 <a href="{{ url_for('program.index', example=example) }}" class="w3-bar-item w3-button">{{ link_text }}
     {% if request.args.get('example') == example %}<i class="fas fa-check"></i>{% endif %}</a>
 {%- endmacro %}
+
+{% macro section_title(title, tooltip_text) -%}
+<h4>{{ title }}
+    <i class="fas fa-question-circle w3-large"
+        onmouseover="document.getElementById('{{ title|e }}').style.display='block'"></i>
+</h4>
+<div id="{{ title|e }}" class="w3-modal">
+    <div class="w3-modal-content w3-panel w3-round-xxlarge w3-card-4 w3-indigo"
+        onmouseout="document.getElementById('{{ title|e }}').style.display='none'">
+        <p>{{ tooltip_text }}</p>
+    </div>
+</div>
+{%- endmacro %}
