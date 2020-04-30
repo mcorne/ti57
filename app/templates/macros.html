@@ -8,8 +8,23 @@
     {% if request.args.get('example') == example %}<i class="fas fa-check"></i>{% endif %}</a>
 {%- endmacro %}
 
-{% macro section_title(title, tooltip_text, button="") -%}
-<h4><span onclick="toggle_highlight_edit()">{{ title }} {{ button }}</span>
+{% macro instructions_title(title, tooltip_text) -%}
+<h4><span>{{ title }}</span>
+    <i class="fas fa-question-circle w3-large"
+        onmouseover="document.getElementById('{{ title|e }}').style.display='block'"></i>
+    <span id="edit" class="w3-tag w3-amber w3-right" onclick="toggle_highlight_edit()" style="display: none">Edit</span>
+    <span id="highlight" class="w3-tag w3-amber w3-right" onclick="toggle_highlight_edit()">Highlight</span>
+</h4>
+<div id="{{ title|e }}" class="w3-modal">
+    <div class="w3-modal-content w3-panel w3-round-xxlarge w3-card-4 w3-indigo"
+        onmouseout="document.getElementById('{{ title|e }}').style.display='none'">
+        <p>{{ tooltip_text }}</p>
+    </div>
+</div>
+{%- endmacro %}
+
+{% macro section_title(title, tooltip_text) -%}
+<h4>{{ title }}
     <i class="fas fa-question-circle w3-large"
         onmouseover="document.getElementById('{{ title|e }}').style.display='block'"></i>
 </h4>

@@ -41,16 +41,25 @@ function open_sidebar() {
 
 function toggle_highlight_edit() {
     var highlighted = document.getElementById("highlighted");
+    var edit = document.getElementById("edit");
+    var highlight = document.getElementById("highlight");
+    var highlighted = document.getElementById("highlighted");
     var ti_instructions = document.getElementById("ti_instructions");
     var value;
 
     if (highlighted.style.display === "none") {
+        edit.style.display = "inline";
+        highlight.style.display = "none";
+
         ti_instructions.style.display = "none";
         // Keep in sync with filter.py/nl2br_and_nbsp()
         value = ti_instructions.value.replace(/\n/g, "<br>").replace(/ /g, "&nbsp;")
         highlighted.innerHTML = w3CodeColorize(value, "python");
         highlighted.style.display = "block";
     } else {
+        edit.style.display = "none";
+        highlight.style.display = "inline";
+
         ti_instructions.style.display = "block";
         highlighted.style.display = "none";
         autofit_textarea_height();

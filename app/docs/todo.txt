@@ -3,13 +3,12 @@
 - move subroutine comments under "global..." instead of above "def..." just like for main
 - fix source URL to point to the local doc in examples
 - add intro (default) example with pseudo-random numbers program from https://en.wikipedia.org/wiki/TI-57
-- replace regx.append(roundn(x)) by a shorter function call
-- add instruction code highligh
 - add download of python code including try/catch exec etc.
 - display full highlighted python file vs instruction portion
 - move source and link to the end of file
 - add a link to source file along with download link
-- add tooltip to explain calculator display, history etc.
+- move display value to the right, same for display history
+- refactor title section and instructions section
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!

@@ -32,12 +32,11 @@
 {% endif %}
 
 <div class="w3-panel w3-card-4 w3-light-grey">
-    {{ m.section_title(
+    {{ m.instructions_title(
     'Instructions',
     '''This is the set of instructions just as they would be entered on a real calculator with the addition of comments starting with a #.
     The emulator translates the instructions into Python code then execute the code and display the result.
-    ''',
-    'EDIT/HIGHLIGHT') }}
+    ''') }}
     <form method="post">
         {{ form.hidden_tag() }}
         {{ form.ti_instructions(class_='w3-input w3-panel', style='font-family: Consolas,"courier new";') }}
