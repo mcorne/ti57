@@ -12,7 +12,7 @@
 </div>
 
 {% if calculator_state.regx is defined and calculator_state.regx %}
-<p class="w3-center"><button class="w3-button w3-hover-amber w3-indigo"
+<p class="w3-center"><button class="w3-button w3-hover-amber w3-indigo w3-small"
         onclick="toggle_show_hide('display_history')">Show/Hide
         History</button></p>
 <div id="display_history" class="w3-panel w3-card-4 w3-light-grey" style="display: none">
@@ -44,15 +44,15 @@
             {{ form.ti_instructions.data|nl2br_and_nbsp }}
         </div>
         <p>
-            {{ form.instruction_with_python(class_="w3-check") }}
-            {{ form.instruction_with_python.label }}
+            {{ form.instruction_not_with_python(class_="w3-check") }}
+            {{ form.instruction_not_with_python.label }}
         </p>
         <p class="w3-center">{{ form.submit(class_='w3-btn w3-ripple w3-amber') }}</p>
     </form>
 </div>
 
 {% if py_code_part %}
-<p class="w3-center"><button class="w3-button w3-hover-amber w3-indigo"
+<p class="w3-center"><button class="w3-button w3-hover-amber w3-indigo w3-small"
         onclick="toggle_show_hide('python_code')">Show/Hide Python
         Code</button></p>
 <div id="python_code" class="w3-panel w3-card w3-light-grey" style="display: none">

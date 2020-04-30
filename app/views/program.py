@@ -18,7 +18,7 @@ def index():
             ti_instructions = form.ti_instructions.data
             translator = Translator()
             py_code, py_code_part = translator.generate_py_code(
-                ti_instructions, form.instruction_with_python.data
+                ti_instructions, form.instruction_not_with_python.data
             )
             with open("app/.~test_generated.py", "w") as file:  # TODO: remove !!!
                 file.write(py_code)
@@ -31,8 +31,8 @@ def index():
             with open(f"app/examples/{example}.txt", "r") as file:
                 ti_instructions = file.read()
                 form.ti_instructions.data = ti_instructions
-                form.instruction_with_python.data = request.cookies.get(
-                    "instruction_with_python", True
+                form.instruction_not_with_python.data = request.cookies.get(
+                    "instruction_not_with_python", False
                 )
     except FileNotFoundError:
         flash("Invalid example", "error")
@@ -52,6 +52,8 @@ def index():
     response = make_response(template)
     max_age = 3600 * 24 * 30  # 30 days
     response.set_cookie(
-        "instruction_with_python", str(form.instruction_with_python.data), max_age,
+        "instruction_not_with_python",
+        str(form.instruction_not_with_python.data),
+        max_age,
     )
     return response

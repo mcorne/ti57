@@ -153,7 +153,7 @@ class Translator:
             fixed += f" ({ti_instruction['ti_code'].strip()})"
         return fixed
 
-    def generate_py_code(self, ti_instructions, instruction_with_python):
+    def generate_py_code(self, ti_instructions, instruction_not_with_python):
         py_lines = self.convert_ti_instructions_to_py_lines(ti_instructions)
         py_lines = self.add_main_function(py_lines)
         self.indent_if_statement(py_lines)
@@ -163,7 +163,7 @@ class Translator:
         self.indent_lines(py_lines)
         py_code_part = "\n".join(py_lines)
         py_code_part = self.remove_extra_lines(py_code_part)
-        if not instruction_with_python:
+        if instruction_not_with_python:
             py_code_part = self.split_instructions_from_py_lines(py_code_part)
 
         with open("app/models/calculator.py", "r") as file:
