@@ -11,6 +11,7 @@ bp = Blueprint("filters", __name__)
 @bp.app_template_filter()
 def nl2br_and_nbsp(context, string):
     escaped = escape(string)
+    # Keep in sync with application.js/toggle_highlight_edit()
     fixed = re.sub(r"(\r\n|\r|\n)", "<br>", escaped)
     fixed = fixed.replace(" ", "&nbsp;")
     if context.eval_ctx.autoescape:

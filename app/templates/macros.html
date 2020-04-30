@@ -8,8 +8,8 @@
     {% if request.args.get('example') == example %}<i class="fas fa-check"></i>{% endif %}</a>
 {%- endmacro %}
 
-{% macro section_title(title, tooltip_text) -%}
-<h4>{{ title }}
+{% macro section_title(title, tooltip_text, button="") -%}
+<h4><span onclick="toggle_highlight_edit()">{{ title }} {{ button }}</span>
     <i class="fas fa-question-circle w3-large"
         onmouseover="document.getElementById('{{ title|e }}').style.display='block'"></i>
 </h4>

@@ -24,6 +24,7 @@ function close_sidebar() {
 
 function dropdown_click(name) {
     var x = document.getElementById(name);
+
     if (x.className.indexOf("w3-show") == -1) {
         x.className += " w3-show";
         x.previousElementSibling.className += " w3-indigo";
@@ -38,8 +39,27 @@ function open_sidebar() {
     document.getElementById("sidebar").style.display = "block";
 }
 
+function toggle_highlight_edit() {
+    var highlighted = document.getElementById("highlighted");
+    var ti_instructions = document.getElementById("ti_instructions");
+    var value;
+
+    if (highlighted.style.display === "none") {
+        ti_instructions.style.display = "none";
+        // Keep in sync with filter.py/nl2br_and_nbsp()
+        value = ti_instructions.value.replace(/\n/g, "<br>").replace(/ /g, "&nbsp;")
+        highlighted.innerHTML = w3CodeColorize(value, "python");
+        highlighted.style.display = "block";
+    } else {
+        ti_instructions.style.display = "block";
+        highlighted.style.display = "none";
+        autofit_textarea_height();
+    }
+}
+
 function toggle_show_hide(name) {
     var x = document.getElementById(name);
+
     if (x.style.display === "none") {
         x.style.display = "block";
     } else {

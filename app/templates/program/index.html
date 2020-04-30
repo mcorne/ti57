@@ -31,20 +31,26 @@
 </div>
 {% endif %}
 
-<form class="w3-panel w3-card-4 w3-light-grey" method="post">
+<div class="w3-panel w3-card-4 w3-light-grey">
     {{ m.section_title(
-        'Instructions',
-        '''This is the set of instructions just as they would be entered on a real calculator with the addition of comments starting with a #.
-        The emulator translates the instructions into Python code then execute the code and display the result.
-        ''') }}
-    {{ form.hidden_tag() }}
-    {{ form.ti_instructions(class_='w3-input w3-panel', style='font-family: Consolas,"courier new";') }}
-    <p>
-        {{ form.instruction_with_python(class_="w3-check") }}
-        {{ form.instruction_with_python.label }}
-    </p>
-    <p class="w3-center">{{ form.submit(class_='w3-btn w3-ripple w3-amber') }}</p>
-</form>
+    'Instructions',
+    '''This is the set of instructions just as they would be entered on a real calculator with the addition of comments starting with a #.
+    The emulator translates the instructions into Python code then execute the code and display the result.
+    ''',
+    'EDIT/HIGHLIGHT') }}
+    <form method="post">
+        {{ form.hidden_tag() }}
+        {{ form.ti_instructions(class_='w3-input w3-panel', style='font-family: Consolas,"courier new";') }}
+        <div id="highlighted" class="w3-code w3-border-indigo pythonHigh notranslate" style="display: none">
+            {{ form.ti_instructions.data|nl2br_and_nbsp }}
+        </div>
+        <p>
+            {{ form.instruction_with_python(class_="w3-check") }}
+            {{ form.instruction_with_python.label }}
+        </p>
+        <p class="w3-center">{{ form.submit(class_='w3-btn w3-ripple w3-amber') }}</p>
+    </form>
+</div>
 
 {% if py_code_part %}
 <p class="w3-center"><button class="w3-button w3-hover-amber w3-indigo"
