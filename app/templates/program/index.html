@@ -2,30 +2,29 @@
 
 {% block content %}
 <div class="w3-panel w3-card-4 w3-light-grey">
-    {{ m.section_title(
+    {{ m.section_title_bloc(
         'Calculator Display',
         '''This is where the result is displayed after the execution of a program just like on a real calculator.
         It is also called the display register or X register.
         It is referred to as the x variable in the Python code.
         ''') }}
+
     <div class="w3-panel w3-white">
         <span class="w3-right">{{ calculator_state.x if calculator_state.x is defined else 0 }}</span>
     </div>
 </div>
 
 {% if calculator_state.regx is defined and calculator_state.regx %}
-<div class="w3-center">
-    <button class="w3-button w3-indigo w3-hover-amber w3-small" onclick="toggle_show_hide('display_history')">
-        Show/Hide History
-    </button>
-</div>
+{{ m.toggle_show_hide('display_history', 'Show/Hide History') }}
+
 <div id="display_history" class="w3-panel w3-card-4 w3-light-grey" style="display: none">
-    {{ m.section_title(
+    {{ m.section_title_bloc(
         'Display History',
         '''This shows the values of the display register each time the program encountered the "2nd Pause" key.
         The real calculator would freeze the display for a second or two then resume the program.
         The emulator simply stores the current value of the X register in the regx list in the Python code.
         ''') }}
+
     <table class="w3-white w3-panel w3-table-all">
         <tr class="w3-text-gray">
             <th>#</th>
@@ -40,17 +39,16 @@
 {% endif %}
 
 <div class="w3-panel w3-card-4 w3-light-grey">
-    {{ m.instructions_title(
+    {{ m.section_instructions_title_bloc(
     'Instructions',
     '''This is the set of instructions just as they would be entered on a real calculator with the addition of comments starting with a #.
     The emulator translates the instructions into Python code then executes the code and displays the result.
     ''') }}
+
     <form method="post">
         {{ form.hidden_tag() }}
         {{ form.ti_instructions(class_='w3-input w3-panel', style='font-family: Consolas,"courier new";') }}
-        <div id="highlighted" class="w3-code w3-border-indigo pythonHigh notranslate" style="display: none">
-            {{ form.ti_instructions.data|nl2br_and_nbsp }}
-        </div>
+        {{ m.highlight_code(form.ti_instructions.data, 'highlighted', True) }}
         <p>
             {{ form.instruction_not_with_python(class_="w3-check") }}
             {{ form.instruction_not_with_python.label }}
@@ -60,16 +58,11 @@
 </div>
 
 {% if py_code_part %}
-<div class="w3-center">
-    <button class="w3-button w3-indigo w3-hover-amber w3-small" onclick="toggle_show_hide('python_code')">
-        Show/Hide Python Code
-    </button>
-</div>
+{{ m.toggle_show_hide('python_code', 'Show/Hide Python Code') }}
+
 <div id="python_code" class="w3-panel w3-card w3-light-grey" style="display: none">
-    <h4>Excerpts - Instructions only</h4>
-    <div class="w3-code w3-border-indigo pythonHigh notranslate">
-        {{ py_code_part|nl2br_and_nbsp }}
-    </div>
+    {{ m.section_title_bloc('Excerpts - Instructions only') }}
+    {{ m.highlight_code(py_code_part) }}
 </div>
 {% endif %}
 

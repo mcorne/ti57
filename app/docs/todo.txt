@@ -7,7 +7,6 @@
 - display full highlighted python file vs instruction portion
 - move source and link to the end of file
 - add a link to source file along with download link
-- refactor title section and instructions section
 - default to highlighted if instructions else plain
 - remove comment above "input" from python code
 

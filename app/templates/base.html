@@ -56,13 +56,10 @@
     </div>
 
     <div class="w3-panel">
-        Manuals
-        <a class="w3-button w3-indigo w3-hover-amber w3-circle"
-            href="{{ url_for('static', filename='ti/TI-57II Owner\'s manual.pdf') }}">EN</a>
-        <a class="w3-button w3-indigo w3-hover-amber w3-circle"
-            href="{{ url_for('static', filename='ti/TI-57 Introduction à la programmation.pdf') }}">FR</a>
-        <a class="w3-button w3-indigo w3-hover-amber w3-circle"
-            href="{{ url_for('static', filename='ti/TI-57 Der Weg zum Programmieren') }}">DE</a>
+        TI-57 Manuals
+        {{ m.round_button('ti/TI-57II Owner\'s manual.pdf', 'EN') }}
+        {{ m.round_button('ti/TI-57 Introduction à la programmation.pdf', 'FR') }}
+        {{ m.round_button('ti/TI-57 Der Weg zum Programmieren', 'DE') }}
     </div>
 
     <script type="text/javascript" src="{{ url_for('static', filename='w3codecolor.js') }}"></script>

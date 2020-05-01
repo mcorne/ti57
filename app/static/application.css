@@ -4,7 +4,7 @@
 }
 
 .link:hover {
-    color: black;
+    color: #ffc107; /* w3-amber */
 }
 
 #sidebar {

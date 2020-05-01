@@ -8,30 +8,58 @@
     {% if request.args.get('example') == example %}<i class="fas fa-check"></i>{% endif %}</a>
 {%- endmacro %}
 
-{% macro instructions_title(title, tooltip_text) -%}
-<h4><span>{{ title }}</span>
-    <i class="fas fa-question-circle w3-large"
-        onmouseover="document.getElementById('{{ title|e }}').style.display='block'"></i>
-    <button id="edit" class="w3-button w3-amber w3-hover-indigo w3-ripple w3-right w3-small"
-        onclick="toggle_highlight_edit()" style="display: none">Edit</button>
-    <button id="highlight" class="w3-button w3-amber w3-hover-indigo w3-ripple w3-right w3-small"
-        onclick="toggle_highlight_edit()">Highlight</button>
-</h4>
-<div id="{{ title|e }}" class="w3-modal">
-    <div class="w3-modal-content w3-panel w3-round-xxlarge w3-card-4 w3-indigo"
-        onmouseout="document.getElementById('{{ title|e }}').style.display='none'">
-        <p>{{ tooltip_text }}</p>
-    </div>
+{% macro highlight_code(code, id=None, display_none=False) -%}
+<div class="w3-code w3-border-indigo pythonHigh notranslate" {% if id %}id="{{ id }}" {% endif %}
+    {% if display_none %}style="display: none" {% endif %}>
+    {{ code|nl2br_and_nbsp }}
 </div>
 {%- endmacro %}
 
-{% macro section_title(title, tooltip_text) -%}
-<h4>{{ title }}
-    <i class="fas fa-question-circle w3-large"
-        onmouseover="document.getElementById('{{ title|e }}').style.display='block'"></i>
-</h4>
+{% macro question_mark(title) -%}
+<i class="fas fa-question-circle" onmouseover="document.getElementById('{{ title|e }}').style.display='block'"></i>
+{%- endmacro %}
+
+{% macro round_button(filename, text) -%}
+<a class="w3-button w3-indigo w3-hover-amber w3-circle w3-small w3-padding-small"
+    href="{{ url_for('static', filename=filename) }}">{{ text }}</a>
+{%- endmacro %}
+
+{% macro section_instructions_title_bloc(title, tooltip_text) -%}
+<div class="w3-margin-top">
+    {{ section_title(title) }}
+    {{ question_mark(title) }}
+    <button id="edit" class="w3-button w3-amber w3-hover-indigo w3-right w3-small" onclick="toggle_highlight_edit()"
+        style="display: none">Edit</button>
+    <button id="highlight" class="w3-button w3-amber w3-hover-indigo w3-right w3-small"
+        onclick="toggle_highlight_edit()">Highlight</button>
+    {{ tooltip(title, tooltip_text) }}
+</div>
+{%- endmacro %}
+
+{% macro section_title(title) -%}
+<span class="w3-large">{{ title }}</span>
+{%- endmacro %}
+
+{% macro section_title_bloc(title, tooltip_text=None) -%}
+<div class="w3-margin-top">
+    {{ section_title(title) }}
+    {% if tooltip_text %}
+    {{ question_mark(title) }}
+    {{ tooltip(title, tooltip_text) }}
+    {% endif %}
+</div>
+{%- endmacro %}
+
+{% macro toggle_show_hide(id, text) -%}
+<div class="w3-center">
+    <button class="w3-button w3-indigo w3-hover-amber w3-small"
+        onclick="toggle_show_hide('{{ id }}')">{{ text }}</button>
+</div>
+{%- endmacro %}
+
+{% macro tooltip(title, tooltip_text) -%}
 <div id="{{ title|e }}" class="w3-modal">
-    <div class="w3-modal-content w3-panel w3-round-xxlarge w3-card-4 w3-indigo"
+    <div class="w3-modal-content w3-panel w3-round-xxlarge w3-indigo"
         onmouseout="document.getElementById('{{ title|e }}').style.display='none'">
         <p>{{ tooltip_text }}</p>
     </div>
