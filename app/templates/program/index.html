@@ -4,11 +4,13 @@
 <div class="w3-panel w3-card-4 w3-light-grey">
     {{ m.section_title(
         'Calculator Display',
-        '''This is where the result is displayed after the execution of a program just like on the real calculator.
-        It is called the display register or X register.
+        '''This is where the result is displayed after the execution of a program just like on a real calculator.
+        It is also called the display register or X register.
         It is referred to as the x variable in the Python code.
         ''') }}
-    <div class="w3-panel w3-white">{{ calculator_state.x if calculator_state.x is defined else 0 }}</div>
+    <div class="w3-panel w3-white">
+        <span class="w3-right">{{ calculator_state.x if calculator_state.x is defined else 0 }}</span>
+    </div>
 </div>
 
 {% if calculator_state.regx is defined and calculator_state.regx %}
@@ -22,10 +24,14 @@
         The real calculator would freeze the display for a second or two then resume the program.
         The emulator simply stores the current value of the X register in the regx list in the Python code.
         ''') }}
-    <table class="w3-table w3-bordered w3-white w3-panel">
+    <table class="w3-white w3-panel w3-table-all">
+        <tr class="w3-text-gray">
+            <th>#</th>
+            <th class="w3-right">X</th>
+        </tr>
         {% for regx in calculator_state.regx %}<tr>
             <td>{{ loop.index }}.</td>
-            <td>{{ regx }}</td>
+            <td class="w3-right">{{ regx }}</td>
         </tr>{% endfor %}
     </table>
 </div>
@@ -35,7 +41,7 @@
     {{ m.instructions_title(
     'Instructions',
     '''This is the set of instructions just as they would be entered on a real calculator with the addition of comments starting with a #.
-    The emulator translates the instructions into Python code then execute the code and display the result.
+    The emulator translates the instructions into Python code then executes the code and displays the result.
     ''') }}
     <form method="post">
         {{ form.hidden_tag() }}

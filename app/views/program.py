@@ -10,8 +10,9 @@ bp = Blueprint("program", __name__)
 
 @bp.route("/", methods=("GET", "POST"))
 def index():
-    py_code_part = ""
     calculator_state = []
+    py_code_part = ""
+    ti_instructions = ""
     form = ProgramForm()
     try:
         if form.validate_on_submit():
