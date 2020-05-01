@@ -28,10 +28,13 @@
 <div class="w3-margin-top">
     {{ section_title(title) }}
     {{ question_mark(title) }}
-    <button id="edit" class="w3-button w3-amber w3-hover-indigo w3-right w3-small" onclick="toggle_highlight_edit()"
-        style="display: none">Edit</button>
+    <button id="edit" class="w3-button w3-amber w3-hover-indigo w3-right w3-small" onclick="toggle_highlight_edit()">
+        Edit
+    </button>
     <button id="highlight" class="w3-button w3-amber w3-hover-indigo w3-right w3-small"
-        onclick="toggle_highlight_edit()">Highlight</button>
+        onclick="toggle_highlight_edit()">
+        Highlight
+    </button>
     {{ tooltip(title, tooltip_text) }}
 </div>
 {%- endmacro %}

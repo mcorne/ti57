@@ -34,9 +34,47 @@ function dropdown_click(name) {
     }
 }
 
+// https://www.w3schools.com/js/js_cookies.asp
+function get_cookie(name) {
+    var name = name + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
 function open_sidebar() {
     document.getElementById("overlay").style.display = "block";
     document.getElementById("sidebar").style.display = "block";
+}
+
+// https://www.w3schools.com/js/js_cookies.asp
+function set_cookie(name, value, exdays = 30) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
+
+function set_highlight_edit() {
+    var edit = document.getElementById("edit");
+    var highlight = document.getElementById("highlight");
+
+    if (get_cookie('instructions_display') == 'highlighted') {
+        edit.style.display = 'block';
+        highlight.style.display = 'none';
+    } else {
+        edit.style.display = 'none';
+        highlight.style.display = 'block';
+    }
 }
 
 function toggle_highlight_edit() {
@@ -56,6 +94,8 @@ function toggle_highlight_edit() {
         value = ti_instructions.value.replace(/\n/g, "<br>").replace(/ /g, "&nbsp;")
         highlighted.innerHTML = w3CodeColorize(value, "python");
         highlighted.style.display = "block";
+
+        set_cookie("instructions_display", "highlighted")
     } else {
         edit.style.display = "none";
         highlight.style.display = "inline";
@@ -63,6 +103,8 @@ function toggle_highlight_edit() {
         ti_instructions.style.display = "block";
         highlighted.style.display = "none";
         autofit_textarea_height();
+
+        set_cookie("instructions_display", "edit")
     }
 }
 
