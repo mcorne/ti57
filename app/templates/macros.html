@@ -12,10 +12,10 @@
 <h4><span>{{ title }}</span>
     <i class="fas fa-question-circle w3-large"
         onmouseover="document.getElementById('{{ title|e }}').style.display='block'"></i>
-    <span id="edit" class="w3-btn w3-ripple w3-amber w3-right w3-small" onclick="toggle_highlight_edit()"
-        style="display: none">Edit</span>
-    <span id="highlight" class="w3-btn w3-ripple w3-amber w3-right w3-small"
-        onclick="toggle_highlight_edit()">Highlight</span>
+    <button id="edit" class="w3-button w3-amber w3-hover-indigo w3-ripple w3-right w3-small"
+        onclick="toggle_highlight_edit()" style="display: none">Edit</button>
+    <button id="highlight" class="w3-button w3-amber w3-hover-indigo w3-ripple w3-right w3-small"
+        onclick="toggle_highlight_edit()">Highlight</button>
 </h4>
 <div id="{{ title|e }}" class="w3-modal">
     <div class="w3-modal-content w3-panel w3-round-xxlarge w3-card-4 w3-indigo"
