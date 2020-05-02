@@ -3,12 +3,12 @@
 {% block content %}
 <div class="w3-panel w3-card-4 w3-light-grey">
     <div class="w3-margin-top w3-margin-bottom">
-        {{ m.section_title('Calculator Display') }}
+        {{ m.section_title('Display') }}
         {{ m.question_mark('display_tooltip') }}
         {{ m.tooltip('display_tooltip', '''
             The display or X register shows the result after the execution of a program.
             The display history shows the values of the display register each time the program encounters the "2nd Pause" key.
-            The real calculator would pause for a second whereas the emulator keeps track of the X value.
+            The real calculator would pause for a second whereas the emulator keeps track of the X register.
             In the Python code, the X register corresponds to the variable "x", and the display history is stored in the "regx" list.
             ''') }}
 
@@ -46,11 +46,23 @@
 </div>
 
 <div class="w3-panel w3-card-4 w3-light-grey">
-    {{ m.section_instructions_title_bloc(
-    'Instructions',
-    '''This is the set of instructions just as they would be entered on a real calculator with the addition of comments starting with a #.
-    The emulator translates the instructions into Python code then executes the code and displays the result.
-    ''') }}
+    <div class="w3-margin-top w3-margin-bottom">
+        {{ m.section_title('Program') }}
+        {{ m.question_mark('instructions_display_tooltip') }}
+        {{ m.tooltip('instructions_display_tooltip', '''
+            The program is a set of instructions just as they would be entered on a real calculator with the addition of comments starting with a #.
+            The emulator translates the instructions into Python code then executes the code and displays the result.
+            ''') }}
+
+        <button id="edit" class="w3-button w3-amber w3-hover-indigo w3-right w3-small"
+            onclick="toggle_highlight_edit()">
+            Edit
+        </button>
+        <button id="highlight" class="w3-button w3-amber w3-hover-indigo w3-right w3-small"
+            onclick="toggle_highlight_edit()">
+            Highlight
+        </button>
+    </div>
 
     <form method="post">
         {{ form.hidden_tag() }}
@@ -75,8 +87,6 @@
 <div class="w3-panel w3-card w3-light-grey">
     <div class="w3-margin-top w3-margin-bottom">
         {{ m.section_title('Python Code') }}
-        {{ m.question_mark('python_tooltip') }}
-        {{ m.tooltip('python_tooltip', 'This is the Python Code TODO: finish !!!') }}
 
         <button id="python_show" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
             onclick="toggle_x_y('python_show', 'python_hide', 'python_code')">

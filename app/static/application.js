@@ -78,32 +78,20 @@ function set_highlight_edit() {
 }
 
 function toggle_highlight_edit() {
-    var edit = document.getElementById("edit");
-    var highlight = document.getElementById("highlight");
     var highlighted = document.getElementById("highlighted");
     var ti_instructions = document.getElementById("ti_instructions");
     var value;
 
-    if (highlighted.style.display == "none") {
-        edit.style.display = "inline";
-        highlight.style.display = "none";
+    toggle_x_y('edit', 'highlight', 'ti_instructions', 'highlighted');
 
-        ti_instructions.style.display = "none";
+    if (highlighted.style.display == "none") {
+        autofit_textarea_height();
+        set_cookie("instructions_display", "edit")
+    } else {
         // Keep in sync with filter.py/nl2br_and_nbsp()
         value = ti_instructions.value.replace(/\n/g, "<br>").replace(/ /g, "&nbsp;")
         highlighted.innerHTML = w3CodeColorize(value, "python");
-        highlighted.style.display = "block";
-
         set_cookie("instructions_display", "highlighted")
-    } else {
-        edit.style.display = "none";
-        highlight.style.display = "inline";
-
-        ti_instructions.style.display = "block";
-        highlighted.style.display = "none";
-        autofit_textarea_height();
-
-        set_cookie("instructions_display", "edit")
     }
 }
 

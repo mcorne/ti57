@@ -12,8 +12,6 @@
 - move nl2br_and_nbsp into w3CodeColorize()
 - rename examples to programs
 - add intruction reset and refresh icons
-- add current vs history buttons in calculator display if there is some history
-- fix tooltip to display closer to question mark
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!
