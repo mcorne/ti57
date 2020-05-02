@@ -8,15 +8,15 @@
     {% if request.args.get('example') == example %}<i class="fas fa-check"></i>{% endif %}</a>
 {%- endmacro %}
 
-{% macro highlight_code(code, id=None, display_none=False) -%}
-<div class="w3-code w3-border-indigo pythonHigh notranslate" {% if id %}id="{{ id }}" {% endif %}
-    {% if display_none %}style="display: none" {% endif %}>
+{% macro highlight_code(id, code, display) -%}
+<div {% if id %}id="{{ id }}" {% endif %} class="w3-code w3-border-indigo pythonHigh notranslate"
+    {% if not display %}style="display: none" {% endif %}>
     {{ code|nl2br_and_nbsp }}
 </div>
 {%- endmacro %}
 
-{% macro question_mark(title) -%}
-<i class="fas fa-question-circle" onmouseover="document.getElementById('{{ title|e }}').style.display='block'"></i>
+{% macro question_mark(tooltip_id) -%}
+<i class="fas fa-question-circle" onmouseover="document.getElementById('{{ tooltip_id }}').style.display='block'"></i>
 {%- endmacro %}
 
 {% macro round_button(filename, text) -%}
@@ -43,12 +43,24 @@
 <span class="w3-large">{{ title }}</span>
 {%- endmacro %}
 
-{% macro section_title_bloc(title, tooltip_text=None) -%}
+{% macro section_title_bloc(title, tooltip_text=None, id=None) -%}
 <div class="w3-margin-top">
     {{ section_title(title) }}
+
     {% if tooltip_text %}
     {{ question_mark(title) }}
     {{ tooltip(title, tooltip_text) }}
+    {% endif %}
+
+    {% if id %}
+    <button id="{{ title|e }}_hide" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
+        onclick="toggle_show_hide('{{ title|e }}')" style="display: none">
+        Hide
+    </button>
+    <button id="{{ title|e }}_show" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
+        onclick="toggle_show_hide('{{ title|e }}')">
+        Show
+    </button>
     {% endif %}
 </div>
 {%- endmacro %}
@@ -60,11 +72,11 @@
 </div>
 {%- endmacro %}
 
-{% macro tooltip(title, tooltip_text) -%}
-<div id="{{ title|e }}" class="w3-modal">
+{% macro tooltip(id, text) -%}
+<div id="{{ id }}" class="w3-modal">
     <div class="w3-modal-content w3-panel w3-round-xxlarge w3-indigo"
-        onmouseout="document.getElementById('{{ title|e }}').style.display='none'">
-        <p>{{ tooltip_text }}</p>
+        onmouseout="document.getElementById('{{ id }}').style.display='none'">
+        <p>{{ text }}</p>
     </div>
 </div>
 {%- endmacro %}

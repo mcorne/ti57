@@ -85,7 +85,7 @@ function toggle_highlight_edit() {
     var ti_instructions = document.getElementById("ti_instructions");
     var value;
 
-    if (highlighted.style.display === "none") {
+    if (highlighted.style.display == "none") {
         edit.style.display = "inline";
         highlight.style.display = "none";
 
@@ -108,12 +108,18 @@ function toggle_highlight_edit() {
     }
 }
 
-function toggle_show_hide(name) {
-    var x = document.getElementById(name);
+function toggle_on_off(on, off, target) {
+    var off = document.getElementById(off);
+    var on = document.getElementById(on);
+    var target = document.getElementById(target);
 
-    if (x.style.display === "none") {
-        x.style.display = "block";
+    if (on.style.display == "none") {
+        off.style.display = "none";
+        on.style.display = "block";
+        target.style.display = "none";
     } else {
-        x.style.display = "none";
+        off.style.display = "block";
+        on.style.display = "none";
+        target.style.display = "block";
     }
 }

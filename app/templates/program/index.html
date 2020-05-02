@@ -15,9 +15,7 @@
 </div>
 
 {% if calculator_state.regx is defined and calculator_state.regx %}
-{{ m.toggle_show_hide('display_history', 'Show/Hide History') }}
-
-<div id="display_history" class="w3-panel w3-card-4 w3-light-grey" style="display: none">
+<div id="display_history" class="w3-panel w3-card-4 w3-light-grey">
     {{ m.section_title_bloc(
         'Display History',
         '''This shows the values of the display register each time the program encountered the "2nd Pause" key.
@@ -34,6 +32,10 @@
             <td>{{ loop.index }}.</td>
             <td class="w3-right">{{ regx }}</td>
         </tr>{% endfor %}
+        <tr>
+            <td>X.</td>
+            <td class="w3-right">{{ calculator_state.x if calculator_state.x is defined else 0 }}</td>
+        </tr>
     </table>
 </div>
 {% endif %}
@@ -50,10 +52,10 @@
 
         {% if request.cookies.get('instructions_display', 'highlighted') == 'highlighted' %}
         {{ form.ti_instructions(class_='w3-input w3-panel', style='font-family: Consolas,"courier new";display: none;') }}
-        {{ m.highlight_code(form.ti_instructions.data, 'highlighted', False) }}
+        {{ m.highlight_code('highlighted', form.ti_instructions.data, display=True) }}
         {% else %}
         {{ form.ti_instructions(class_='w3-input w3-panel', style='font-family: Consolas,"courier new";') }}
-        {{ m.highlight_code(form.ti_instructions.data, 'highlighted', True) }}
+        {{ m.highlight_code('highlighted', form.ti_instructions.data, display=False) }}
         {% endif %}
 
         <p>
@@ -64,14 +66,23 @@
     </form>
 </div>
 
-{% if py_code_part %}
-{{ m.toggle_show_hide('python_code', 'Show/Hide Python Code') }}
+<div class="w3-panel w3-card w3-light-grey">
+    <div class="w3-margin-top w3-margin-bottom">
+        {{ m.section_title('Python Code') }}
+        {{ m.question_mark('python_tooltip') }}
+        {{ m.tooltip('python_tooltip', 'This is the Python Code TODO: finish !!!') }}
 
-<div id="python_code" class="w3-panel w3-card w3-light-grey" style="display: none">
-    {{ m.section_title_bloc('Excerpts - Instructions only') }}
-    {{ m.highlight_code(py_code_part) }}
+        <button id="python_hide" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
+            onclick="toggle_on_off('python_show', 'python_hide', 'python_code')" style="display: none">
+            Hide
+        </button>
+        <button id="python_show" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
+            onclick="toggle_on_off('python_show', 'python_hide', 'python_code')">
+            Show
+        </button>
+    </div>
+    {{ m.highlight_code('python_code', py_code_part, display=False) }}
 </div>
-{% endif %}
 
 <script src="https://www.w3schools.com/lib/w3codecolor.js"></script>
 <script type="text/javascript">

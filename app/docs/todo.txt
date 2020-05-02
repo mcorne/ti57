@@ -8,6 +8,12 @@
 - move source and link to the end of file
 - add a link to source file along with download link
 - remove comment above "input" from python code
+- fix w3CodeColorize() to change set first line to <hx>, change # to light gray in program description, make link/anchor with http://...
+- move nl2br_and_nbsp into w3CodeColorize()
+- rename examples to programs
+- add intruction reset and refresh icons
+- add current vs history buttons in calculator display if there is some history
+- fix tooltip to display closer to question mark
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!
