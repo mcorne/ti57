@@ -43,35 +43,6 @@
 <span class="w3-large">{{ title }}</span>
 {%- endmacro %}
 
-{% macro section_title_bloc(title, tooltip_text=None, id=None) -%}
-<div class="w3-margin-top">
-    {{ section_title(title) }}
-
-    {% if tooltip_text %}
-    {{ question_mark(title) }}
-    {{ tooltip(title, tooltip_text) }}
-    {% endif %}
-
-    {% if id %}
-    <button id="{{ title|e }}_hide" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
-        onclick="toggle_show_hide('{{ title|e }}')" style="display: none">
-        Hide
-    </button>
-    <button id="{{ title|e }}_show" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
-        onclick="toggle_show_hide('{{ title|e }}')">
-        Show
-    </button>
-    {% endif %}
-</div>
-{%- endmacro %}
-
-{% macro toggle_show_hide(id, text) -%}
-<div class="w3-center">
-    <button class="w3-button w3-indigo w3-hover-amber w3-small"
-        onclick="toggle_show_hide('{{ id }}')">{{ text }}</button>
-</div>
-{%- endmacro %}
-
 {% macro tooltip(id, text) -%}
 <div id="{{ id }}" class="w3-modal">
     <div class="w3-modal-content w3-panel w3-round-xxlarge w3-indigo"

@@ -78,7 +78,6 @@ function set_highlight_edit() {
 }
 
 function toggle_highlight_edit() {
-    var highlighted = document.getElementById("highlighted");
     var edit = document.getElementById("edit");
     var highlight = document.getElementById("highlight");
     var highlighted = document.getElementById("highlighted");
@@ -108,18 +107,27 @@ function toggle_highlight_edit() {
     }
 }
 
-function toggle_on_off(on, off, target) {
-    var off = document.getElementById(off);
-    var on = document.getElementById(on);
-    var target = document.getElementById(target);
+function toggle_x_y(button_x_id, button_y_id, target_x_id, target_y_id = null) {
+    var button_x = document.getElementById(button_x_id);
+    var button_y = document.getElementById(button_y_id);
+    var target_x = document.getElementById(target_x_id);
+    if (target_y_id) {
+        var target_y = document.getElementById(target_y_id);
+    }
 
-    if (on.style.display == "none") {
-        off.style.display = "none";
-        on.style.display = "block";
-        target.style.display = "none";
+    if (button_x.style.display == "none") {
+        button_x.style.display = "block";
+        button_y.style.display = "none";
+        target_x.style.display = "none";
+        if (target_y_id) {
+            target_y.style.display = target_y instanceof HTMLTableElement ? "table" : "block";
+        }
     } else {
-        off.style.display = "block";
-        on.style.display = "none";
-        target.style.display = "block";
+        button_x.style.display = "none";
+        button_y.style.display = "block";
+        target_x.style.display = "block";
+        if (target_y_id) {
+            target_y.style.display = "none";
+        }
     }
 }
