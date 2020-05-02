@@ -32,9 +32,10 @@ def index():
             with open(f"app/examples/{example}.txt", "r") as file:
                 ti_instructions = file.read()
                 form.ti_instructions.data = ti_instructions
-                form.instruction_not_with_python.data = request.cookies.get(
-                    "instruction_not_with_python", False
-                )
+                if request.cookies.get("instruction_not_with_python", "0") == "1":
+                    form.instruction_not_with_python.data = True
+                else:
+                    form.instruction_not_with_python.data = False
     except FileNotFoundError:
         flash("Invalid example", "error")
     except Stop:
@@ -54,7 +55,7 @@ def index():
     max_age = 3600 * 24 * 30  # 30 days
     response.set_cookie(
         "instruction_not_with_python",
-        str(form.instruction_not_with_python.data),
+        str(int(form.instruction_not_with_python.data)),
         max_age,
     )
     return response
