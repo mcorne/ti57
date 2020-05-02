@@ -20,7 +20,7 @@
         <button id="display_history_show" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
             onclick="toggle_x_y('display_history_show', 'display_register_show', 'display_register', 'display_history')"
             style="display: none">
-            X Register
+            Current
         </button>
         {% endif %}
     </div>
@@ -99,6 +99,33 @@
     </div>
     {{ m.highlight_code('python_code', py_code_part, display=False) }}
 </div>
+
+{% if calculator_state %}
+<div class="w3-panel w3-card w3-light-grey">
+    <div class="w3-margin-top w3-margin-bottom">
+        {{ m.section_title('State') }}
+
+        <button id="state_show" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
+            onclick="toggle_x_y('state_show', 'state_hide', 'state_code')">
+            Show
+        </button>
+        <button id="state_hide" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
+            onclick="toggle_x_y('state_show', 'state_hide', 'state_code')" style="display: none">
+            Hide
+        </button>
+    </div>
+
+    <div id="state_code" style="display: none">
+        {{ m.section_value('Angle Unit (2nd Deg, Rad, Grad)', calculator_state.unit) }}
+        {{ m.section_value('Rounding to n digits (2nd Fix)', calculator_state.rounding) }}
+        {{ m.section_value('Scientific Notation (EE)', calculator_state.ee) }}
+        {{ m.section_value('X Register (x)', calculator_state.x) }}
+        {{ m.section_values('X Register History (regx)', calculator_state.regx) }}
+        {{ m.section_values('Memories (mem)', calculator_state.mem) }}
+        {{ m.section_values('Nested Operations Stack (stack)', calculator_state.stack) }}
+    </div>
+</div>
+{% endif %}
 {% endif %}
 
 <script src="https://www.w3schools.com/lib/w3codecolor.js"></script>

@@ -12,6 +12,9 @@
 - move nl2br_and_nbsp into w3CodeColorize()
 - rename examples to programs
 - add intruction reset and refresh icons
+- add tooltip to state elements
+- fix 1X2X3= that returns 3 whereas 1 X 2 X 3= returns 6, it is because of square: x2
+- refactor history table with macro in display section
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!

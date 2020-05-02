@@ -85,7 +85,7 @@ instruction_set = """
 "INV SBR"          : {"ti_code": "- 61"  , "action": "py_line"            , "py_line": "return"},
 "2nd x=t"          : {"ti_code": "  66"  , "action": "py_line"            , "py_line": "if x == mem[7]:"},
 "INV 2nd x=t"      : {"ti_code": "- 66"  , "action": "py_line"            , "py_line": "if x != mem[7]:"},
-"2nd Grd"          : {"ti_code": "  70"  , "action": "py_line"            , "py_line": "unit = 'Grd'"},
+"2nd Grad"         : {"ti_code": "  70"  , "action": "py_line"            , "py_line": "unit = 'Grd'"},
 "RST"              : {"ti_code": "  71"  , "action": "py_line"            , "py_line": "goto .label_rst"},
 "2nd x>=t"         : {"ti_code": "  76"  , "action": "py_line"            , "py_line": "if x >= mem[7]:"},
 "INV 2nd x>=t"     : {"ti_code": "- 76"  , "action": "py_line"            , "py_line": "if x < mem[7]:"},

@@ -101,7 +101,7 @@ def init_calculator():
     stack = []
     # Number of digit after the decimal point (2nd Fix)
     rounding = None
-    # Angle unit (DEG, RAD, GRAD)
+    # Angle unit (2nd Deg, 2nd Rad, 2nd Grad)
     unit = "Deg"
     # Display
     x = 0
