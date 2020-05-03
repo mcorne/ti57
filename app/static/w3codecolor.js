@@ -1,4 +1,5 @@
 /* w3codecolor ver 1.32 by w3schools.com */
+// Look for CUSTOMIZATION's before changing version
 function w3CodeColor() {
   var x, i, j, k, l, modes = ["html", "js", "java", "css", "sql", "python", "kotlin"];
   if (!document.getElementsByClassName) { return; }
@@ -16,7 +17,7 @@ function w3CodeColorize(x, lang) {
   var tagnamecolor = "brown";
   var attributecolor = "red";
   var attributevaluecolor = "mediumblue";
-  var commentcolor = "green";
+  var commentcolor = "#3f51b5"; // CUSTOMIZATION to w3-indigo
   var cssselectorcolor = "brown";
   var csspropertycolor = "red";
   var csspropertyvaluecolor = "mediumblue";
@@ -490,7 +491,13 @@ function w3CodeColorize(x, lang) {
     }
   }
   function pythonMode(txt) {
+    // CUSTOMIZATION
     txt = txt.trim();
+    // capture page title
+    txt = txt.replace(/^(# +.+)$/m, '_TITLE_BEGIN_$1_TITLE_END_');
+    // capture section titles
+    txt = txt.replace(/^(# +(?:Input Data|Entry Point|Subroutine).*)$/gm, '_SECTION_BEGIN_$1_SECTION_END_');
+    // replace spaces to fixed size spaces and newlines to line breaks
     txt = txt.replace(/\n/g, "<br>\n").replace(/ /g, "&nbsp;");
 
     var rest = txt, done = "", sfnuttpos, dfnuttpos, compos, comlinepos, comhashpos, keywordpos, mypos, y;
@@ -512,6 +519,13 @@ function w3CodeColorize(x, lang) {
       }
     }
     rest = done + rest;
+
+    // CUSTOMIZATION: make page and section titles bold and page title larger
+    rest = rest.replace(/_TITLE_BEGIN_/, '<span class="w3-large"><b>');
+    rest = rest.replace(/_TITLE_END_/, '</b></span>');
+    rest = rest.replace(/_SECTION_BEGIN_/g, '<b>');
+    rest = rest.replace(/_SECTION_END_/g, '</b>');
+
     return "<span class='pythoncolor' style=color:" + pythoncolor + ">" + rest + "</span>";
   }
   function pythonStringMode(txt) {
