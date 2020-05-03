@@ -56,8 +56,14 @@
 
 
         <div class="w3-right">
-            <a class="w3-text-indigo w3-hover-text-amber w3-margin-right" href="{{ request.url }}"><i
-                    class="fas fa-redo"></i></a>
+            <span class="w3-margin-right">
+                <a class="link" href="{{ request.url }}" title="Refresh Program Instructions">
+                    <i class="fas fa-redo"></i>
+                </a>
+                <a class="link" href="javascript: erase_instructions()" title="Erase Program Instructions">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </span>
             <button id="edit" class="w3-button w3-amber w3-hover-indigo w3-small" onclick="toggle_highlight_edit()">
                 Edit
             </button>
@@ -135,9 +141,9 @@
 
 <script src="https://www.w3schools.com/lib/w3codecolor.js"></script>
 <script type="text/javascript">
-    window.addEventListener("load", autofit_textarea_height);
+    window.addEventListener("load", autofit_instructions_height);
     window.addEventListener("load", set_highlight_edit);
-    window.addEventListener("resize", autofit_textarea_height);
+    window.addEventListener("resize", autofit_instructions_height);
     w3CodeColor();
 </script>
 {% endblock %}

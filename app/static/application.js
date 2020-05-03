@@ -1,19 +1,19 @@
 
 // https://stackoverflow.com/questions/23451611/is-there-anyway-to-have-a-textarea-autofit-height-based-on-the-content-at-page
-function autofit_textarea_height() {
-    var addon;
-    var textarea = document.getElementById("ti_instructions");
+function autofit_instructions_height() {
+    var padding;
+    var ti_instructions = document.getElementById("ti_instructions");
 
-    if (textarea.clientHeight < textarea.scrollHeight) {
+    if (ti_instructions.clientHeight < ti_instructions.scrollHeight) {
         if (screen.width < 601) { // w3-hide-small
-            addon = 10
+            padding = 10
         } else if (screen.width < 992) { // w3-hide-medium
-            addon = 7
+            padding = 7
         } else { // w3-hide-large
-            addon = 5
+            padding = 5
         }
 
-        textarea.style.height = textarea.scrollHeight + addon + "px";
+        ti_instructions.style.height = (ti_instructions.scrollHeight + padding) + "px";
     }
 }
 
@@ -32,6 +32,27 @@ function dropdown_click(name) {
         x.className = x.className.replace(" w3-show", "");
         x.previousElementSibling.className = x.previousElementSibling.className.replace(" w3-indigo", "");
     }
+}
+
+function erase_instructions() {
+    var ti_instructions = document.getElementById("ti_instructions");
+
+    if (ti_instructions.style.display == "none") {
+        toggle_x_y('edit', 'highlight', 'ti_instructions', 'highlighted');
+        set_cookie("instructions_display", "edit")
+    }
+
+    ti_instructions.value = "";
+
+    if (screen.width < 601) { // w3-hide-small
+        ratio = 0.4
+    } else if (screen.width < 992) { // w3-hide-medium
+        ratio = 0.3
+    } else { // w3-hide-large
+        ratio = 0.2
+    }
+
+    ti_instructions.style.height = (screen.width * ratio) + "px";
 }
 
 // https://www.w3schools.com/js/js_cookies.asp
@@ -85,7 +106,7 @@ function toggle_highlight_edit() {
     toggle_x_y('edit', 'highlight', 'ti_instructions', 'highlighted');
 
     if (highlighted.style.display == "none") {
-        autofit_textarea_height();
+        autofit_instructions_height();
         set_cookie("instructions_display", "edit")
     } else {
         // Keep in sync with filter.py/nl2br_and_nbsp()
