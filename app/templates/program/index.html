@@ -13,15 +13,8 @@
             ''') }}
 
         {% if calculator_state.regx is defined and calculator_state.regx %}
-        <button id="display_register_show" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
-            onclick="toggle_x_y('display_history_show', 'display_register_show', 'display_register', 'display_history')">
-            History
-        </button>
-        <button id="display_history_show" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
-            onclick="toggle_x_y('display_history_show', 'display_register_show', 'display_register', 'display_history')"
-            style="display: none">
-            Current
-        </button>
+        {{ m.toggle_buttons('display_register_show', 'display_history_show', 'History', 'Current',
+            "toggle_x_y('display_history_show', 'display_register_show', 'display_register', 'display_history')") }}
         {% endif %}
     </div>
 
@@ -54,16 +47,15 @@
             The emulator translates the instructions into Python code then executes the code and displays the result.
             ''') }}
 
-
-        <div class="w3-right">
-            <span class="w3-margin-right">
-                <a class="link" href="{{ request.url }}" title="Refresh Program Instructions">
-                    <i class="fas fa-redo"></i>
-                </a>
-                <a class="link" href="javascript: erase_instructions()" title="Erase Program Instructions">
-                    <i class="fas fa-trash"></i>
-                </a>
-            </span>
+        <span class="w3-right">
+            <a class="link" href="{{ request.url }}" title="Refresh Program Instructions">
+                <i class="fas fa-redo"></i>
+            </a>
+            &nbsp;
+            <a class="link" href="javascript: erase_instructions()" title="Erase Program Instructions">
+                <i class="fas fa-trash"></i>
+            </a>
+            &nbsp;
             <button id="edit" class="w3-button w3-amber w3-hover-indigo w3-small" onclick="toggle_highlight_edit()">
                 Edit
             </button>
@@ -71,7 +63,7 @@
                 onclick="toggle_highlight_edit()">
                 Highlight
             </button>
-        </div>
+        </span>
     </div>
 
     <form method="post">
@@ -97,15 +89,8 @@
 <div class="w3-panel w3-card w3-light-grey">
     <div class="w3-margin-top w3-margin-bottom">
         {{ m.section_title('Python Code') }}
-
-        <button id="python_show" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
-            onclick="toggle_x_y('python_show', 'python_hide', 'python_code')">
-            Show
-        </button>
-        <button id="python_hide" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
-            onclick="toggle_x_y('python_show', 'python_hide', 'python_code')" style="display: none">
-            Hide
-        </button>
+        {{ m.toggle_buttons('python_show', 'python_hide', 'Show', 'Hide',
+            "toggle_x_y('python_show', 'python_hide', 'python_code')") }}
     </div>
     {{ m.highlight_code('python_code', py_code_part, display=False) }}
 </div>
@@ -114,15 +99,8 @@
 <div class="w3-panel w3-card w3-light-grey">
     <div class="w3-margin-top w3-margin-bottom">
         {{ m.section_title('Internal State') }}
-
-        <button id="state_show" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
-            onclick="toggle_x_y('state_show', 'state_hide', 'state_code')">
-            Show
-        </button>
-        <button id="state_hide" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
-            onclick="toggle_x_y('state_show', 'state_hide', 'state_code')" style="display: none">
-            Hide
-        </button>
+        {{ m.toggle_buttons('state_show', 'state_hide', 'Show', 'Hide',
+            "toggle_x_y('state_show', 'state_hide', 'state_code')") }}
     </div>
 
     <div id="state_code" style="display: none">

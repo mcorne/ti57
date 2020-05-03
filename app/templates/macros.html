@@ -53,6 +53,15 @@
 {% endif %}
 {%- endmacro %}
 
+{% macro toggle_buttons(button_x_id, button_y_id, target_x_id, target_y_id, onclick) -%}
+<span class="w3-small w3-right">
+    <button id="{{ button_x_id }}" class="w3-button w3-indigo w3-hover-amber"
+        onclick="{{ onclick }}">{{ target_x_id}}</button>
+    <button id="{{ button_y_id }}" class="w3-button w3-indigo w3-hover-amber" onclick="{{ onclick }}"
+        style="display: none">{{ target_y_id }}</button>
+</span>
+{%- endmacro %}
+
 {% macro tooltip(id, text) -%}
 <div id="{{ id }}" class="w3-modal">
     <div class="w3-modal-content w3-panel w3-round-xxlarge w3-indigo"
