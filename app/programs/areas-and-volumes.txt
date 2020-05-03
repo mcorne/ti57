@@ -1,4 +1,4 @@
-# Areas & volumes (Sign posts)
+# Areas & Volumes (Sign Posts)
 
 # What is the area of a square and the volume of a cube with a side of 6.17?
 # What is the area of a circle and the volume of a sphere with radius of 2.98?
@@ -8,11 +8,11 @@
 # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-23
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
 
-# Input
+# Input Data
 6.17 STO 0    # Side
 2.98 STO 1    # Radius
 
-# Main program
+# Entry Point
 2nd Fix 2
 RCL 0
 SBR 1          # Call the calculation of the area of a square

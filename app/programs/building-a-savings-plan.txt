@@ -1,4 +1,4 @@
-# Building a savings plan
+# Building a Savings Plan
 
 # Let's say you make a monthly deposit (PMT) of $55.
 # How much your cash will grow every month (n) at a 0.7% interest rate (i)?
@@ -11,7 +11,7 @@
 # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 8-8
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
 
-# Input
+# Input Data
 55    STO 1    # Monthly payment (PMT)
 0.007 STO 2    # Interest rate (i)
 12    STO 7    # Number of months
@@ -20,7 +20,7 @@ SBR 0
 59    STO 3    # 60th month
 SBR 0
 
-# Main program
+# Entry Point
 R/S
 
 2nd Lbl 0

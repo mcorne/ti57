@@ -1,4 +1,4 @@
-# Same birthday
+# Same Birthday
 
 # What is the probability that two or more people have the same birthday in a group of five?
 # Answer: 2.7% chance in a group of 5 people and 56.9% in a group of 25.
@@ -8,10 +8,10 @@
 # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 6-6
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
 
-# Input
+# Input Data
 5              # Number of people
 
-# Main program
+# Entry Point
 2nd Fix 1
 - 1 =          # Max number of loops
 x<>t           # Store in memory 7

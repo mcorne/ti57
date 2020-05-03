@@ -490,6 +490,9 @@ function w3CodeColorize(x, lang) {
     }
   }
   function pythonMode(txt) {
+    txt = txt.trim();
+    txt = txt.replace(/\n/g, "<br>\n").replace(/ /g, "&nbsp;");
+
     var rest = txt, done = "", sfnuttpos, dfnuttpos, compos, comlinepos, comhashpos, keywordpos, mypos, y;
     y = 1;
     while (y == 1) {

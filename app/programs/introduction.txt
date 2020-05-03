@@ -1,7 +1,7 @@
 # Introduction
 
-# Input
+# Input Data
 0
 
-# Main program
+# Entry Point
 R/S

@@ -109,9 +109,7 @@ function toggle_highlight_edit() {
         autofit_instructions_height();
         set_cookie("instructions_display", "edit")
     } else {
-        // Keep in sync with filter.py/nl2br_and_nbsp()
-        value = ti_instructions.value.replace(/\n/g, "<br>").replace(/ /g, "&nbsp;")
-        highlighted.innerHTML = w3CodeColorize(value, "python");
+        highlighted.innerHTML = w3CodeColorize(ti_instructions.value, "python");
         set_cookie("instructions_display", "highlighted")
     }
 }

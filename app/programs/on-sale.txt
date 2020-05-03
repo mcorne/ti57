@@ -1,4 +1,4 @@
-# On sale
+# On Sale
 
 # Take 25% off shoes selling for $14.95.
 # Then mark 13% off books selling for $6.00.
@@ -8,11 +8,11 @@
 # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-11
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
 
-# Input
+# Input Data
 0.25 STO 3 # Discount
 14.95      # Shoe price
 
-# Main program
+# Entry Point
 2nd Fix 2
 # New price = old price X (1 - old price)
 X ( 1 - RCL 3 ) =

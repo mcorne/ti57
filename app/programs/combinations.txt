@@ -7,11 +7,11 @@
 # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 6-14
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
 
-# Input
+# Input Data
 52 STO 5    # Cards in the deck (n)
 5  STO 6    # Cards in a hand (r)
 
-# Main program
+# Entry Point
 2nd Fix 0
 RCL 5
 SBR 3       # n!

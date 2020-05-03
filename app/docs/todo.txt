@@ -8,7 +8,6 @@
 - add a link to source file along with download link
 - remove comment above "input" from python code
 - fix w3CodeColorize() to change set first line to <hx>, change # to light gray in program description, make link/anchor with http://...
-- move nl2br_and_nbsp into w3CodeColorize()
 
 - fix ( 2 X 3 )) that raises "pop from empty list", capture exception and display proper message ex. "unbalanced or misused parentheses"
 - find case of "unbalanced or misused parentheses" caught in program in case non empty stack

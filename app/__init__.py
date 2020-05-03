@@ -13,10 +13,8 @@ def create_app(test_config=None):
         # Load the test config if passed in
         app.config.from_mapping(test_config)
 
-    from . import filters
     from .views import program
 
-    app.register_blueprint(filters.bp)
     app.register_blueprint(program.bp)
     app.add_url_rule("/", endpoint="index")
 

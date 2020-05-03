@@ -1,7 +1,7 @@
 {% macro highlight_code(id, code, display) -%}
 <div {% if id %}id="{{ id }}" {% endif %} class="w3-code w3-border-indigo pythonHigh notranslate"
     {% if not display %}style="display: none" {% endif %}>
-    {{ code|nl2br_and_nbsp }}
+    {{ code }}
 </div>
 {%- endmacro %}
 

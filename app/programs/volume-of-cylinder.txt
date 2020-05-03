@@ -1,4 +1,4 @@
-# Volume of a cylinder
+# Volume of a Cylinder
 
 # What is the volume of a cylinder for a diameter and height of 10 and 4?
 # Answer: 314.16.
@@ -6,11 +6,11 @@
 # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-18
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
 
-# Input
+# Input Data
 10 STO 1    # Diameter
 4  STO 2    # Height
 
-# Main program
+# Entry Point
 2nd Fix 2
 RCL 1 / 2 = # Radius =  diameter / 2
 x^2 X 2nd pi # Area = π x radius²
