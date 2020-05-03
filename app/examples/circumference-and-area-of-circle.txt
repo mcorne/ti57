@@ -7,13 +7,13 @@
 # https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
 
 # Input
-10                  # Diameter
+10                   # Diameter
 
 # Main program
 2nd Fix 2
-/ 2 =               # Radius = diameter / 2
+/ 2 =                # Radius = diameter / 2
 STO 1
-X 2 X 2nd pi =      # Circumference = 2π x radius
+X 2 X 2nd pi =       # Circumference = 2π x radius
 2nd Pause
-RCL 1 x2 X 2nd pi = # Area = π x radius²
+RCL 1 x^2 X 2nd pi = # Area = π x radius²
 R/S

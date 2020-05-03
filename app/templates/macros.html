@@ -41,7 +41,7 @@
 <table id="display_history" class="w3-panel w3-white w3-table w3-striped w3-bordered">
     {% for value in values %}
     <tr>
-        <td>{{ loop.index }}.</td>
+        <td>{{ loop.index-1 }}.</td>
         <td class="w3-right">{{ value }}</td>
     </tr>
     {% endfor %}

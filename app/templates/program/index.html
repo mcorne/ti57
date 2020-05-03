@@ -26,7 +26,7 @@
     </div>
 
     <div id="display_register" class="w3-panel w3-white">
-        <span class="w3-right">{{ calculator_state.x if calculator_state.x is defined else 0 }}</span>
+        <span class="w3-right">{{ calculator_state.xrounded if calculator_state.xrounded is defined else 0 }}</span>
     </div>
 
     <table id="display_history" class="w3-panel w3-white w3-table w3-striped w3-bordered" style="display: none">
@@ -40,7 +40,7 @@
         </tr>{% endfor %}
         <tr>
             <td>Current.</td>
-            <td class="w3-right">{{ calculator_state.x if calculator_state.x is defined else 0 }}</td>
+            <td class="w3-right">{{ calculator_state.xrounded if calculator_state.xrounded is defined else 0 }}</td>
         </tr>
     </table>
 </div>
@@ -103,7 +103,7 @@
 {% if calculator_state %}
 <div class="w3-panel w3-card w3-light-grey">
     <div class="w3-margin-top w3-margin-bottom">
-        {{ m.section_title('State') }}
+        {{ m.section_title('Internal State') }}
 
         <button id="state_show" class="w3-button w3-indigo w3-hover-amber w3-right w3-small"
             onclick="toggle_x_y('state_show', 'state_hide', 'state_code')">
@@ -117,12 +117,13 @@
 
     <div id="state_code" style="display: none">
         {{ m.section_value('Angle Unit (2nd Deg, Rad, Grad)', calculator_state.unit) }}
-        {{ m.section_value('Rounding to n digits (2nd Fix)', calculator_state.rounding) }}
         {{ m.section_value('Scientific Notation (EE)', calculator_state.ee) }}
-        {{ m.section_value('X Register (x)', calculator_state.x) }}
-        {{ m.section_values('X Register History (regx)', calculator_state.regx) }}
-        {{ m.section_values('Memories (mem)', calculator_state.mem) }}
-        {{ m.section_values('Nested Operations Stack (stack)', calculator_state.stack) }}
+        {{ m.section_value('Rounding to n digits (2nd Fix)', calculator_state.rounding) }}
+        {{ m.section_value('X Register (Display)', calculator_state.x) }}
+        {{ m.section_value('Rounded X Register', calculator_state.xrounded) }}
+        {{ m.section_values('X Register History (2nd Pause)', calculator_state.regx) }}
+        {{ m.section_values('Memories (STO, RCL, 2nd Prod)', calculator_state.mem) }}
+        {{ m.section_values('Nested Operations Stack', calculator_state.stack) }}
     </div>
 </div>
 {% endif %}

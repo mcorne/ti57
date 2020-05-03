@@ -2,7 +2,7 @@
 
 # What is the area of a square and the volume of a cube with a side of 6.17?
 # What is the area of a circle and the volume of a sphere with radius of 2.98?
-# Answer: we'll have respectively 38.07, 234.89, 6.17, 27.9 and 110.85.
+# Answer: we'll have respectively 38.07, 234.89, 27.9 and 110.85.
 # Tip! Write and call four subroutines, one for each calculation.
 
 # Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-23
@@ -15,31 +15,31 @@
 # Main program
 2nd Fix 2
 RCL 0
-SBR 1         # Call the calculation of the area of a square
+SBR 1          # Call the calculation of the area of a square
 2nd Pause
 RCL 0
-SBR 3         # Call the calculation of the volume of a cube
+SBR 3          # Call the calculation of the volume of a cube
 2nd Pause
 RCL 1
-SBR 2         # Call the calculation of the area of a circle
+SBR 2          # Call the calculation of the area of a circle
 2nd Pause
 RCL 1
-SBR 4         # Call the calculation of the volume of a sphere
+SBR 4          # Call the calculation of the volume of a sphere
 R/S
 
 # Subroutine 1: area of a square
 2nd lbl 1
-x2            # side²
+x^2            # side²
 INV SBR
 
 # Subroutine 2: area of a circle
 2nd Lbl 2
-x2 X 2nd pi = # radius² X π
+x^2 X 2nd pi = # radius² X π
 INV SBR
 
 # Subroutine 3: volume of a cube
 2nd Lbl 3
-y^x 3 =       # side³
+y^x 3 =        # side³
 INV SBR
 
 # Subroutine 4: volume of a sphere

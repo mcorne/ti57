@@ -17,7 +17,7 @@ instruction_set = """
                                                                                 "mem[7] = x",
                                                                                 "x = y",
                                                                             ]},
-"x2"               : {"ti_code": "  23"  , "action": "py_line"            , "py_line": "x *= x"},
+"x^2"              : {"ti_code": "  23"  , "action": "py_line"            , "py_line": "x *= x"}, # x2 (times 2) cannot be used
 "V2"               : {"ti_code": "  24"  , "action": "py_line"            , "py_line": "x = sqrt(x)"},
 "1/x"              : {"ti_code": "  25"  , "action": "py_line"            , "py_line": "x = 1 / x"},
 "2nd D.MS"         : {"ti_code": "  26"  , "action": "py_line"            , "py_line": "x = dms2degrees(x)"},

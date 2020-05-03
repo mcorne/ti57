@@ -15,7 +15,7 @@ CE           # Reset the display register
 1 SUM 1      # Add one second
 RCL 1        # Recall the time
 2nd Pause
-x2 X 16 =    # Distance = time² X 16 feet
+x^2 X 16 =   # Distance = time² X 16 feet
 2nd Pause
 RCL 1
 INV 2nd x>=t # Time lower than the number of seconds?
