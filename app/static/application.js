@@ -69,11 +69,11 @@ function set_highlight_edit() {
     var highlight = document.getElementById("highlight");
 
     if (get_cookie('instructions_display') == 'highlighted') {
-        edit.style.display = 'block';
+        edit.style.display = 'inline-block';
         highlight.style.display = 'none';
     } else {
         edit.style.display = 'none';
-        highlight.style.display = 'block';
+        highlight.style.display = 'inline-block';
     }
 }
 
@@ -104,7 +104,7 @@ function toggle_x_y(button_x_id, button_y_id, target_x_id, target_y_id = null) {
     }
 
     if (button_x.style.display == "none") {
-        button_x.style.display = "block";
+        button_x.style.display = "inline-block";
         button_y.style.display = "none";
         target_x.style.display = "none";
         if (target_y_id) {
@@ -112,7 +112,7 @@ function toggle_x_y(button_x_id, button_y_id, target_x_id, target_y_id = null) {
         }
     } else {
         button_x.style.display = "none";
-        button_y.style.display = "block";
+        button_y.style.display = "inline-block";
         target_x.style.display = "block";
         if (target_y_id) {
             target_y.style.display = "none";

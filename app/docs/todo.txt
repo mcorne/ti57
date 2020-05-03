@@ -11,9 +11,10 @@
 - fix w3CodeColorize() to change set first line to <hx>, change # to light gray in program description, make link/anchor with http://...
 - move nl2br_and_nbsp into w3CodeColorize()
 - rename examples to programs
-- add intruction reset and refresh icons
-- refactor history table with macro in display section
-- return error if stack not empty
+- add intruction reset fresh icons
+- fix ( 2 X 3 )) that raises "pop from empty list", capture exception and display proper message ex. "unbalanced or misused parentheses"
+- find case of "unbalanced or misused parentheses" caught in program in case non empty stack
+- raise exception for leftover self.operators
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!

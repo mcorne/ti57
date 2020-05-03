@@ -10,7 +10,7 @@ bp = Blueprint("program", __name__)
 
 @bp.route("/", methods=("GET", "POST"))
 def index():
-    calculator_state = []
+    calculator_state = {}
     py_code_part = ""
     ti_instructions = ""
     form = ProgramForm()
@@ -23,10 +23,10 @@ def index():
             )
             with open("app/.~test_generated.py", "w") as file:  # TODO: remove !!!
                 file.write(py_code)
-                exec(py_code, globals())
-                init_calculator()
-                main()
-                calculator_state = get_calculator_state()
+            exec(py_code, globals())
+            init_calculator()
+            main()
+            calculator_state = get_calculator_state()
         else:
             example = request.args.get("example", "introduction")
             with open(f"app/examples/{example}.txt", "r") as file:
@@ -42,6 +42,9 @@ def index():
         calculator_state = get_calculator_state()
     except Exception as e:
         flash(e, "error")
+
+    if "stack" in calculator_state and calculator_state["stack"]:
+        flash("Syntax Error: unbalanced or misused parentheses", "error")
 
     template = render_template(
         "program/index.html",

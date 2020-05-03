@@ -54,14 +54,18 @@
             The emulator translates the instructions into Python code then executes the code and displays the result.
             ''') }}
 
-        <button id="edit" class="w3-button w3-amber w3-hover-indigo w3-right w3-small"
-            onclick="toggle_highlight_edit()">
-            Edit
-        </button>
-        <button id="highlight" class="w3-button w3-amber w3-hover-indigo w3-right w3-small"
-            onclick="toggle_highlight_edit()">
-            Highlight
-        </button>
+
+        <div class="w3-right">
+            <a class="w3-text-indigo w3-hover-text-amber w3-margin-right" href="{{ request.url }}"><i
+                    class="fas fa-redo"></i></a>
+            <button id="edit" class="w3-button w3-amber w3-hover-indigo w3-small" onclick="toggle_highlight_edit()">
+                Edit
+            </button>
+            <button id="highlight" class="w3-button w3-amber w3-hover-indigo w3-small"
+                onclick="toggle_highlight_edit()">
+                Highlight
+            </button>
+        </div>
     </div>
 
     <form method="post">
