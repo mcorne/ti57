@@ -109,7 +109,7 @@ function toggle_highlight_edit() {
         autofit_instructions_height();
         set_cookie("instructions_display", "edit")
     } else {
-        highlighted.innerHTML = w3CodeColorize(ti_instructions.value, "python");
+        highlighted.innerHTML = w3CodeColorize(ti_instructions.value, "tiinstruction");
         set_cookie("instructions_display", "highlighted")
     }
 }

@@ -1,7 +1,7 @@
 /* w3codecolor ver 1.32 by w3schools.com */
 // Look for CUSTOMIZATION's before changing version
 function w3CodeColor() {
-  var x, i, j, k, l, modes = ["html", "js", "java", "css", "sql", "python", "kotlin"];
+  var x, i, j, k, l, modes = ["html", "js", "java", "css", "sql", "python", "kotlin", "tiinstruction"]; // CUSTOMIZATION: added tiinstruction
   if (!document.getElementsByClassName) { return; }
   k = modes.length;
   for (j = 0; j < k; j++) {
@@ -17,7 +17,7 @@ function w3CodeColorize(x, lang) {
   var tagnamecolor = "brown";
   var attributecolor = "red";
   var attributevaluecolor = "mediumblue";
-  var commentcolor = "#3f51b5"; // CUSTOMIZATION to w3-indigo
+  var commentcolor = "green";
   var cssselectorcolor = "brown";
   var csspropertycolor = "red";
   var csspropertyvaluecolor = "mediumblue";
@@ -61,7 +61,29 @@ function w3CodeColorize(x, lang) {
   if (lang == "kotlin") { return kotlinMode(x); }
   if (lang == "php") { return phpMode(x); }
   if (lang == "sql") { return sqlMode(x); }
-  if (lang == "python") { return pythonMode(x); }
+  if (lang == "python") {
+    // CUSTOMIZATION: replace spaces to fixed size spaces and newlines to line breaks
+    x = x.trim().replace(/\n/g, "<br>\n").replace(/ /g, "&nbsp;");
+    return pythonMode(x);
+  }
+  if (lang == "tiinstruction") {
+    // CUSTOMIZATION
+    commentcolor = "#3f51b5"; // w3-indigo
+    x = x.trim();
+    // capture page title
+    x = x.replace(/^(# +.+)$/m, '_TITLE_BEGIN_$1_TITLE_END_');
+    // capture section titles
+    x = x.replace(/^(# +(?:Input Data|Entry Point|Subroutine).*)$/gm, '_SECTION_BEGIN_$1_SECTION_END_');
+    // replace spaces to fixed size spaces and newlines to line breaks
+    x = x.replace(/\n/g, "<br>\n").replace(/ /g, "&nbsp;");
+    highlighted = pythonMode(x);
+    // make page and section titles bold and page title larger
+    highlighted = highlighted.replace(/_TITLE_BEGIN_/, '<span class="w3-large"><b>');
+    highlighted = highlighted.replace(/_TITLE_END_/, '</b></span>');
+    highlighted = highlighted.replace(/_SECTION_BEGIN_/g, '<b>');
+    highlighted = highlighted.replace(/_SECTION_END_/g, '</b>');
+    return highlighted;
+  }
   return x;
   function extract(str, start, end, func, repl) {
     var s, e, d = "", a = [];
@@ -491,15 +513,6 @@ function w3CodeColorize(x, lang) {
     }
   }
   function pythonMode(txt) {
-    // CUSTOMIZATION
-    txt = txt.trim();
-    // capture page title
-    txt = txt.replace(/^(# +.+)$/m, '_TITLE_BEGIN_$1_TITLE_END_');
-    // capture section titles
-    txt = txt.replace(/^(# +(?:Input Data|Entry Point|Subroutine).*)$/gm, '_SECTION_BEGIN_$1_SECTION_END_');
-    // replace spaces to fixed size spaces and newlines to line breaks
-    txt = txt.replace(/\n/g, "<br>\n").replace(/ /g, "&nbsp;");
-
     var rest = txt, done = "", sfnuttpos, dfnuttpos, compos, comlinepos, comhashpos, keywordpos, mypos, y;
     y = 1;
     while (y == 1) {
@@ -519,13 +532,6 @@ function w3CodeColorize(x, lang) {
       }
     }
     rest = done + rest;
-
-    // CUSTOMIZATION: make page and section titles bold and page title larger
-    rest = rest.replace(/_TITLE_BEGIN_/, '<span class="w3-large"><b>');
-    rest = rest.replace(/_TITLE_END_/, '</b></span>');
-    rest = rest.replace(/_SECTION_BEGIN_/g, '<b>');
-    rest = rest.replace(/_SECTION_END_/g, '</b>');
-
     return "<span class='pythoncolor' style=color:" + pythoncolor + ">" + rest + "</span>";
   }
   function pythonStringMode(txt) {

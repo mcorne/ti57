@@ -1,5 +1,5 @@
-{% macro highlight_code(id, code, display) -%}
-<div {% if id %}id="{{ id }}" {% endif %} class="w3-code w3-border-indigo pythonHigh notranslate"
+{% macro highlight_code(language, id, code, display) -%}
+<div {% if id %}id="{{ id }}" {% endif %} class="w3-code w3-border-indigo {{ language }}High notranslate"
     {% if not display %}style="display: none" {% endif %}>
     {{ code }}
 </div>

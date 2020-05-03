@@ -71,10 +71,10 @@
 
         {% if request.cookies.get('instructions_display', 'highlighted') == 'highlighted' %}
         {{ form.ti_instructions(class_='w3-input w3-panel', style='font-family: Consolas,"courier new";display: none;') }}
-        {{ m.highlight_code('highlighted', form.ti_instructions.data, display=True) }}
+        {{ m.highlight_code('tiinstruction', 'highlighted', form.ti_instructions.data, display=True) }}
         {% else %}
         {{ form.ti_instructions(class_='w3-input w3-panel', style='font-family: Consolas,"courier new";') }}
-        {{ m.highlight_code('highlighted', form.ti_instructions.data, display=False) }}
+        {{ m.highlight_code('tiinstruction', 'highlighted', form.ti_instructions.data, display=False) }}
         {% endif %}
 
         <p>
@@ -92,7 +92,7 @@
         {{ m.toggle_buttons('python_show', 'python_hide', 'Show', 'Hide',
             "toggle_x_y('python_show', 'python_hide', 'python_code')") }}
     </div>
-    {{ m.highlight_code('python_code', py_code_part, display=False) }}
+    {{ m.highlight_code('python', 'python_code', py_code_part, display=False) }}
 </div>
 
 {% if calculator_state %}
