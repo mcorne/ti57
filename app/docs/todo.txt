@@ -1,15 +1,15 @@
 - replace "raise Stop()" with "return" in main function
 - fix comments at the end of instructions as they don't get into the python code, see factorial.txt
 - move subroutine comments under "global..." instead of above "def..." just like for main
-- fix source URL to point to the local doc in examples
-- add intro (default) example with pseudo-random numbers program from https://en.wikipedia.org/wiki/TI-57
+- fix source URL to point to the local doc in programs
+- add intro (default) program with pseudo-random numbers program from https://en.wikipedia.org/wiki/TI-57
 - add download of python code including try/catch exec etc.
 - display full highlighted python file vs instruction portion
 - add a link to source file along with download link
 - remove comment above "input" from python code
 - fix w3CodeColorize() to change set first line to <hx>, change # to light gray in program description, make link/anchor with http://...
 - move nl2br_and_nbsp into w3CodeColorize()
-- rename examples to programs
+
 - fix ( 2 X 3 )) that raises "pop from empty list", capture exception and display proper message ex. "unbalanced or misused parentheses"
 - find case of "unbalanced or misused parentheses" caught in program in case non empty stack
 - raise exception for leftover self.operators

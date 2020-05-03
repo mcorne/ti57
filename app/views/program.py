@@ -28,8 +28,8 @@ def index():
             main()
             calculator_state = get_calculator_state()
         else:
-            example = request.args.get("example", "introduction")
-            with open(f"app/examples/{example}.txt", "r") as file:
+            program = request.args.get("program", "introduction")
+            with open(f"app/programs/{program}.txt", "r") as file:
                 ti_instructions = file.read()
                 form.ti_instructions.data = ti_instructions
                 if request.cookies.get("instruction_not_with_python", "0") == "1":
@@ -37,7 +37,7 @@ def index():
                 else:
                     form.instruction_not_with_python.data = False
     except FileNotFoundError:
-        flash("Invalid example", "error")
+        flash("Invalid program name", "error")
     except Stop:
         calculator_state = get_calculator_state()
     except Exception as e:
