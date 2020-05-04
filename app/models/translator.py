@@ -99,15 +99,6 @@ class Translator:
             self.add_function(py_lines, subroutine_numbers, py_line, fixed)
         return fixed
 
-    def add_main_function(self, py_lines):
-        py_lines = [
-            "@with_goto",
-            "def main():",
-            "global ee, mem, rounding, stack, unit, x",
-            "label.label_rst",
-        ] + py_lines
-        return py_lines
-
     def add_operation(self):
         self.py_lines.append("stack.append(x)")
         self.operators.append(self.ti_instruction["type"])
@@ -163,22 +154,21 @@ class Translator:
     def generate_py_code(self, ti_instructions, instruction_not_with_python):
         description, ti_instructions = self.extract_description(ti_instructions)
         py_lines = self.convert_ti_instructions_to_py_lines(ti_instructions)
-        py_lines = self.add_main_function(py_lines)
         self.indent_if_statement(py_lines)
         subroutine_numbers = self.extract_subroutine_numbers(py_lines)
         if subroutine_numbers:
             py_lines = self.add_functions(py_lines, subroutine_numbers)
         self.indent_lines(py_lines)
         py_code = "\n".join(py_lines)
-        if description:
-            py_code = description + "\n" + py_code
         py_code = self.remove_extra_lines(py_code)
         if instruction_not_with_python:
             py_code = self.split_instructions_from_py_lines(py_code)
 
         with open("app/models/calculator.py", "r") as file:
             calculator = file.read()
-        py_code = calculator.replace("# _PROGRAM_PLACEHOLDER_", py_code)
+        py_code = calculator.replace("label.label_rst", "label.label_rst\n    " + py_code.lstrip(), 1)
+        if description:
+            py_code = py_code.replace("@with_goto", description + "\n" + "@with_goto", 1)
 
         return py_code.strip()
 

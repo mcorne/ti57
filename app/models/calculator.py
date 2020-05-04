@@ -7,7 +7,13 @@ class Stop(Exception):
     pass
 
 
-# _PROGRAM_PLACEHOLDER_
+@with_goto
+def main():
+    global ee, mem, rounding, stack, unit, x
+    label.label_rst
+
+
+# Internal functions
 
 
 def degrees2dms(degrees):
