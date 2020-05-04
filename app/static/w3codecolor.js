@@ -1,5 +1,5 @@
 /* w3codecolor ver 1.32 by w3schools.com */
-// Look for CUSTOMIZATION's before changing version
+// Apply CUSTOMIZATION's when upgrading
 function w3CodeColor() {
   var x, i, j, k, l, modes = ["html", "js", "java", "css", "sql", "python", "kotlin", "tiinstruction"]; // CUSTOMIZATION: added tiinstruction
   if (!document.getElementsByClassName) { return; }
@@ -70,18 +70,22 @@ function w3CodeColorize(x, lang) {
     // CUSTOMIZATION
     commentcolor = "#3f51b5"; // w3-indigo
     x = x.trim();
-    // capture page title
+    // Capture page title
     x = x.replace(/^(# +.+)$/m, '_TITLE_BEGIN_$1_TITLE_END_');
-    // capture section titles
+    // Capture section titles
     x = x.replace(/^(# +(?:Input Data|Entry Point|Subroutine).*)$/gm, '_SECTION_BEGIN_$1_SECTION_END_');
-    // replace spaces to fixed size spaces and newlines to line breaks
+    // Replace spaces with "&nbsp;" and newlines with "<br>"
     x = x.replace(/\n/g, "<br>\n").replace(/ /g, "&nbsp;");
-    highlighted = pythonMode(x);
-    // make page and section titles bold and page title larger
+    var highlighted = pythonMode(x);
+    // Make page and section titles bold and page title larger
     highlighted = highlighted.replace(/_TITLE_BEGIN_/, '<span class="w3-large"><b>');
     highlighted = highlighted.replace(/_TITLE_END_/, '</b></span>');
     highlighted = highlighted.replace(/_SECTION_BEGIN_/g, '<b>');
     highlighted = highlighted.replace(/_SECTION_END_/g, '</b>');
+    // Make links to docs and replace "&nbsp;" with spaces
+    highlighted = highlighted.replace(/"(.+?)(\.pdf)"/g, function replacer(match, p1, p2) {
+      return '<a href="' + "/static/docs/" + p1.replace(/&nbsp;/g, " ") + p2 + '">' + p1 + "</a>";
+    });
     return highlighted;
   }
   return x;

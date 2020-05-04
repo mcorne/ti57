@@ -6,7 +6,6 @@
 - add download of python code including try/catch exec etc.
 - display full highlighted python file vs instruction portion
 - remove comment above "input" from python code
-- make link/anchor with http://...
 
 - fix ( 2 X 3 )) that raises "pop from empty list", capture exception and display proper message ex. "unbalanced or misused parentheses"
 - find case of "unbalanced or misused parentheses" caught in program in case non empty stack

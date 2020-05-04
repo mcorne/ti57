@@ -5,8 +5,7 @@
 # Tip! This is actually 1 minus the probability that no one has the same birthday.
 # For example: 1 - 364/365 X 363/365 X 362/365 X 361/365 for a group of 5 people.
 
-# Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 6-6
-# https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
+# Source: "Training with your EC-4000 Programmable Calculator.pdf", p. 6-6
 
 # Input Data
 5              # Number of people

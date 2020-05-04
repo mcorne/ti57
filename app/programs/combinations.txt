@@ -4,8 +4,7 @@
 # Answer: there are 2 598 960 poker hands in a 52-card deck.
 # Tip! This is a combination: C(n,r) = n! / (n! - r!) / r! where n=52 and r=5.
 
-# Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 6-14
-# https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
+# Source: "Training with your EC-4000 Programmable Calculator.pdf", p. 6-14
 
 # Input Data
 52 STO 5    # Cards in the deck (n)

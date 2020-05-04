@@ -3,8 +3,7 @@
 # How much a $1000 will grow each year for the next 10 years at a 6% interest rate?
 # Answer: $1060.0 after 1 year, $1123.6 after 2, $1191.02 after 3 etc.
 
-# Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 4-10
-# https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
+# Source: "Training with your EC-4000 Programmable Calculator.pdf", p. 4-10
 
 # Input Data
 1000 STO 1   # Initial amount

@@ -3,8 +3,7 @@
 # What is the circumference and the area of a circle for a diameter of 10?
 # Answer: the circumference is 31.42 and the area 78.54.
 
-# Source: Training with your EC-4000 Programmable Calculator by Texas Instruments, 1977, page 3-15
-# https://1drv.ms/b/s!ArcO_mFRe1Z9yia_fdpsnBaOeEXc?e=uCJpdM
+# Source: "Training with your EC-4000 Programmable Calculator.pdf", p. 3-15
 
 # Input Data
 10                   # Diameter
