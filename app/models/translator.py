@@ -86,10 +86,10 @@ class Translator:
             fixed += [
                 "",
                 "",
-                *comments,
                 "@with_goto",
                 f"def sbr_{label_number}():",
                 "global ee, mem, rounding, stack, unit, x",
+                *comments,
                 py_line,
             ]
 
