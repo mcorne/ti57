@@ -2,7 +2,7 @@ from flask import Blueprint, flash, make_response, render_template, request
 from flask_babel import _
 
 from app.forms import ProgramForm
-from app.models.calculator import Stop, get_calculator_state
+from app.models.calculator import get_calculator_state
 from app.models.translator import Translator
 
 bp = Blueprint("program", __name__)
@@ -24,9 +24,11 @@ def index():
             with open("app/.~test_generated.py", "w") as file:  # TODO: remove !!!
                 file.write(py_code)
             exec(py_code, globals())
-            init_calculator()
-            main()
             calculator_state = get_calculator_state()
+            if "stack" in calculator_state and calculator_state["stack"]:
+                flash("Syntax Error: unbalanced or misused parentheses", "error")
+            if "error" in calculator_state and calculator_state["error"]:
+                flash(calculator_state["error"], "error")
         else:
             program = request.args.get("program", "introduction")
             with open(f"app/programs/{program}.txt", "r") as file:
@@ -38,13 +40,8 @@ def index():
                     form.instruction_not_with_python.data = False
     except FileNotFoundError:
         flash("Invalid program name", "error")
-    except Stop:
-        calculator_state = get_calculator_state()
     except Exception as e:
         flash(e, "error")
-
-    if "stack" in calculator_state and calculator_state["stack"]:
-        flash("Syntax Error: unbalanced or misused parentheses", "error")
 
     template = render_template(
         "program/index.html",

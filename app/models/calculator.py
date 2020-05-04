@@ -3,10 +3,6 @@ from math import *
 from goto import with_goto
 
 
-class Stop(Exception):
-    pass
-
-
 @with_goto
 def main():
     global ee, mem, rounding, stack, unit, x
@@ -67,7 +63,7 @@ def grd2rad(number):
 
 
 def get_calculator_state():
-    global ee, mem, regx, rounding, stack, unit, x
+    global ee, error, mem, regx, rounding, stack, unit, x
     return {
         "ee": ee,
         "mem": mem,
@@ -81,9 +77,11 @@ def get_calculator_state():
 
 
 def init_calculator():
-    global ee, mem, regx, rounding, stack, unit, x
+    global ee, error, mem, regx, rounding, stack, unit, x
     # Scientific notation (EE)
     ee = False
+    # Syntax error etc.
+    error = None
     # Memories (STO)
     mem = [0 for i in range(8)]
     # History of values displayed before a pause (2nd pause)
@@ -127,3 +125,16 @@ def unit2rad(number):
     elif unit == "Grd":
         number = grd2rad(number)
     return number
+
+
+# Program execution
+
+try:
+    init_calculator()
+    main()
+except UserWarning:  # R/S
+    pass
+except Exception as e:
+    error = str(e)
+
+# print(get_calculator_state())
