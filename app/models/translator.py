@@ -86,10 +86,10 @@ class Translator:
             fixed += [
                 "",
                 "",
+                *comments,
                 "@with_goto",
                 f"def sbr_{label_number}():",
                 "global ee, mem, rounding, stack, unit, x",
-                *comments,
                 py_line,
             ]
 
@@ -101,8 +101,6 @@ class Translator:
 
     def add_main_function(self, py_lines):
         py_lines = [
-            "",
-            "",
             "@with_goto",
             "def main():",
             "global ee, mem, rounding, stack, unit, x",
@@ -130,6 +128,15 @@ class Translator:
 
         return self.py_lines
 
+    def extract_description(self, ti_instructions):
+        pieces = ti_instructions.split("# Input Data", 1)
+        if len(pieces) == 1:
+            description = ""
+        else:
+            description, ti_instructions = pieces
+            ti_instructions = "# Input Data" + ti_instructions
+        return [description.strip(), ti_instructions.strip()]
+
     def extract_last_comments(self, py_lines):
         comments = []
         for py_line in reversed(py_lines):
@@ -154,6 +161,7 @@ class Translator:
         return fixed
 
     def generate_py_code(self, ti_instructions, instruction_not_with_python):
+        description, ti_instructions = self.extract_description(ti_instructions)
         py_lines = self.convert_ti_instructions_to_py_lines(ti_instructions)
         py_lines = self.add_main_function(py_lines)
         self.indent_if_statement(py_lines)
@@ -161,16 +169,18 @@ class Translator:
         if subroutine_numbers:
             py_lines = self.add_functions(py_lines, subroutine_numbers)
         self.indent_lines(py_lines)
-        py_code_part = "\n".join(py_lines)
-        py_code_part = self.remove_extra_lines(py_code_part)
+        py_code = "\n".join(py_lines)
+        if description:
+            py_code = description + "\n" + py_code
+        py_code = self.remove_extra_lines(py_code)
         if instruction_not_with_python:
-            py_code_part = self.split_instructions_from_py_lines(py_code_part)
+            py_code = self.split_instructions_from_py_lines(py_code)
 
         with open("app/models/calculator.py", "r") as file:
             calculator = file.read()
-        py_code = calculator + py_code_part
+        py_code = calculator.replace("# _PROGRAM_PLACEHOLDER_", py_code)
 
-        return [py_code, py_code_part.strip()]
+        return py_code.strip()
 
     def get_label_number(self, py_line):
         match = re.match(r"label .label_(\d)", py_line)
@@ -262,7 +272,7 @@ class Translator:
             self.update_prev_operator()
 
     def remove_extra_lines(self, py_code):
-        return re.sub(r"\n{3,}", r"\n\n", py_code)
+        return re.sub(r"\n{2,}", r"\n\n", py_code)
 
     def split_instructions_from_py_lines(self, py_code):
         py_code = re.sub(

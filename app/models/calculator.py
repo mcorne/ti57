@@ -1,28 +1,13 @@
 import re
-from math import (
-    acos,
-    asin,
-    atan,
-    atan2,
-    cos,
-    degrees,
-    exp,
-    floor,
-    log,
-    log10,
-    pi,
-    pow,
-    radians,
-    sin,
-    sqrt,
-    tan,
-)
-
+from math import *
 from goto import with_goto
 
 
 class Stop(Exception):
     pass
+
+
+# _PROGRAM_PLACEHOLDER_
 
 
 def degrees2dms(degrees):

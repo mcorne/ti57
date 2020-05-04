@@ -85,14 +85,14 @@
     </form>
 </div>
 
-{% if py_code_part %}
+{% if py_code %}
 <div class="w3-panel w3-card w3-light-grey">
     <div class="w3-margin-top w3-margin-bottom">
         {{ m.section_title('Python Code') }}
         {{ m.toggle_buttons('python_show', 'python_hide', 'Show', 'Hide',
             "toggle_x_y('python_show', 'python_hide', 'python_code')") }}
     </div>
-    {{ m.highlight_code('python', 'python_code', py_code_part, display=False) }}
+    {{ m.highlight_code('python', 'python_code', py_code, display=False) }}
 </div>
 
 {% if calculator_state %}

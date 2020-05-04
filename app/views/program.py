@@ -11,14 +11,14 @@ bp = Blueprint("program", __name__)
 @bp.route("/", methods=("GET", "POST"))
 def index():
     calculator_state = {}
-    py_code_part = ""
+    py_code = ""
     ti_instructions = ""
     form = ProgramForm()
     try:
         if form.validate_on_submit():
             ti_instructions = form.ti_instructions.data
             translator = Translator()
-            py_code, py_code_part = translator.generate_py_code(
+            py_code = translator.generate_py_code(
                 ti_instructions, form.instruction_not_with_python.data
             )
             with open("app/.~test_generated.py", "w") as file:  # TODO: remove !!!
@@ -50,7 +50,7 @@ def index():
         "program/index.html",
         calculator_state=calculator_state,
         form=form,
-        py_code_part=py_code_part,
+        py_code=py_code,
         ti_instructions=ti_instructions,
     )
 
