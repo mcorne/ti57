@@ -5,7 +5,6 @@
 - add intro (default) program with pseudo-random numbers program from https://en.wikipedia.org/wiki/TI-57
 - add download of python code including try/catch exec etc.
 - display full highlighted python file vs instruction portion
-- add a link to source file along with download link
 - remove comment above "input" from python code
 - make link/anchor with http://...
 
