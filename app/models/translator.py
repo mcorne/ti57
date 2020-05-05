@@ -120,12 +120,29 @@ class Translator:
         return self.py_lines
 
     def extract_description(self, ti_instructions):
-        pieces = ti_instructions.split("# Input Data", 1)
-        if len(pieces) == 1:
-            description = ""
-        else:
-            description, ti_instructions = pieces
+        description = ""
+        input_data_pieces = ti_instructions.split("# Input Data", 1)
+        entry_point_pieces = ti_instructions.split("# Entry Point", 1)
+
+        if len(input_data_pieces) != 1:
+            # There is input data, assuming this is a description above
+            description, ti_instructions = input_data_pieces
             ti_instructions = "# Input Data" + ti_instructions
+
+        if len(entry_point_pieces) != 1 and (
+            not description or len(entry_point_pieces[0]) < len(description)
+        ):
+            # There is the entry point and before the input data if any, assuming this is a description above
+            description, ti_instructions = entry_point_pieces
+            ti_instructions = "# Entry Point" + ti_instructions
+
+        if description and re.search(
+            r"^ *[^#].*?$", re.sub(r"[\r\n]+", r"\n", description), re.M
+        ):
+            # There is an instruction inside the description, assuming this is not a description
+            ti_instructions = description + ti_instructions
+            description = ""
+
         return [description.strip(), ti_instructions.strip()]
 
     def extract_last_comments(self, py_lines):
@@ -166,9 +183,13 @@ class Translator:
 
         with open("app/models/calculator.py", "r") as file:
             calculator = file.read()
-        py_code = calculator.replace("label.label_rst", "label.label_rst\n    " + py_code.lstrip(), 1)
+        py_code = calculator.replace(
+            "label.label_rst", "label.label_rst\n    " + py_code.lstrip(), 1
+        )
         if description:
-            py_code = py_code.replace("@with_goto", description + "\n" + "@with_goto", 1)
+            py_code = py_code.replace(
+                "@with_goto", description + "\n" + "@with_goto", 1
+            )
 
         return py_code.strip()
 

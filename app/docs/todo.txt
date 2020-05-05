@@ -4,7 +4,7 @@
 - add right margin after manuals
 - rename programs to programs and games, move to the right
 - add error in calculator state section
-- fix description extraction, there is a python if code entered before "input data"
+- fix button on highlight with hightlighted instructions after reboot/restarting vscode
 
 - fix ( 2 X 3 )) that raises "pop from empty list", capture exception and display proper message ex. "unbalanced or misused parentheses"
 - find case of "unbalanced or misused parentheses" caught in program in case non empty stack
