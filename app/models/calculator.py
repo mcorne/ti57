@@ -66,6 +66,7 @@ def get_calculator_state():
     global ee, error, mem, regx, rounding, stack, unit, x
     return {
         "ee": ee,
+        "error": error,
         "mem": mem,
         "regx": regx,
         "rounding": rounding,
