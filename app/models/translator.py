@@ -49,6 +49,7 @@ class Translator:
         if self.prev_operator != "(":
             raise Exception("Syntax error: unexpected closing parenthesis")
         self.operators.pop()
+        self.update_prev_operator()
 
     def action_comment(self):
         """Process a comment line (starting with #)."""
@@ -304,7 +305,6 @@ class Translator:
             self.update_prev_operator()
 
     def process_prev_scientific_notation(self):
-        """Process a scientific notation number."""
         """Process the numbers around the EE operator."""
         self.update_prev_operator() if self.operators else None
         if self.prev_operator == "EE":

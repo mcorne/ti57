@@ -25,8 +25,6 @@ def index():
                 file.write(py_code)
             exec(py_code, globals())
             calculator_state = get_calculator_state()
-            if "stack" in calculator_state and calculator_state["stack"]:
-                flash("Syntax Error: unbalanced or misused parentheses", "error")
             if "error" in calculator_state and calculator_state["error"]:
                 flash(calculator_state["error"], "error")
         else:
