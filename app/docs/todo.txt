@@ -5,6 +5,7 @@
 - fix ( 2 X 3 )) that raises "pop from empty list", capture exception and display proper message ex. "unbalanced or misused parentheses"
 - find case of "unbalanced or misused parentheses" caught in program in case non empty stack
 - raise exception for leftover self.operators
+- raise exception when no more operator to pop, or pop from empty stack
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!

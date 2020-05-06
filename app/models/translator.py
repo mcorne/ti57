@@ -5,6 +5,7 @@ from app.models.ti57 import instruction_set
 
 
 class Translator:
+    """Translation of TI instructions into Python code."""
     # Python line length:
     # Median = 14 (ex. "if mem[0] > 0:")
     # Q3     = 18 (ex. "x = degrees2dms(x)")
@@ -23,10 +24,12 @@ class Translator:
         self.ti_instruction = {}
 
     def action_addition(self):
+        """Process the + operator."""
         self.process_prev_equality()
         self.add_operation()
 
     def action_clear(self):
+        """Process the CLR key."""
         self.py_lines.append("x = 0")
         self.py_lines.append("ee = False")
         self.py_lines.append("stack = []")
@@ -35,49 +38,63 @@ class Translator:
         self.prev_operator = None
 
     def action_clear_all(self):
+        """Process the INV 2nd Ct key."""
         self.action_clear()
         self.py_lines.append("mem = [0 for i in range(8)]")
 
     def action_closing_parenthesis(self):
+        """Process the ) character."""
         self.process_prev_equality()
-
         if self.prev_operator != "(":
             raise Exception("Syntax error: unexpected closing parenthesis")
-
         self.operators.pop()
 
     def action_comment(self):
+        """Process a comment line (starting with #)."""
         self.py_lines.append(self.ti_instruction["value"])
 
     def action_equality(self):
+        """Process the = sign."""
         self.process_prev_equality()
 
     def action_multiplication(self):
+        """Process the X operator."""
         self.process_prev_multiplication()
         self.add_operation()
 
     def action_numeric(self):
+        """Process a number."""
         self.py_lines.append(f"x = {self.ti_instruction['value']}")
 
-    def action_open_parenthesis(self):
+    def action_opening_parenthesis(self):
+        """Process the ( character."""
         self.py_lines.append("")
         self.operators.append(self.ti_instruction["type"])
 
     def action_power(self):
+        """Process the y^x key."""
         self.process_prev_power()
         self.add_operation()
 
     def action_py_line(self):
+        """Adds one or more Python lines of code corresponding to a key."""
         if type(self.ti_instruction["py_line"]) is list:
             self.py_lines += self.ti_instruction["py_line"]
         else:
             self.py_lines.append(self.ti_instruction["py_line"])
 
     def action_scientific_notation(self):
+        """Process the EE key (within a number)."""
         self.py_lines.append("ee = True")
         self.add_operation()
 
+    def add_description_above_main_function(self, description, py_code):
+        """Add the program description before the decorator of the main function."""
+        replacement = description + "\n" + "@with_goto"
+        return py_code.replace("@with_goto", replacement, 1)
+
     def add_function(self, py_lines, subroutine_numbers, py_line, fixed):
+        """Add the function definition of a subroutine."""
         label_number = self.get_label_number(py_line)
         if label_number not in subroutine_numbers:
             fixed.append(py_line)
@@ -94,32 +111,27 @@ class Translator:
             ]
 
     def add_functions(self, py_lines, subroutine_numbers):
+        """Process subroutines."""
         fixed = []
         for py_line in py_lines:
             self.add_function(py_lines, subroutine_numbers, py_line, fixed)
         return fixed
 
     def add_operation(self):
+        """Add an operation to the stack of operations."""
         self.py_lines.append("stack.append(x)")
         self.operators.append(self.ti_instruction["type"])
 
-    def convert_ti_instructions_to_py_lines(self, ti_instructions):
-        parser = Parser(ti_instructions, instruction_set)
-        for self.ti_instruction in parser.next_instruction():
-            number = len(self.py_lines)
-            if self.ti_instruction["action"]:
-                action = getattr(self, "action_" + self.ti_instruction["action"])
-                action()
-            if len(self.py_lines) == number:  # No python line added, ex. "INV SBR"
-                self.py_lines.append("")
-            if self.ti_instruction["action"] != "comment":
-                self.py_lines[number] = self.format_py_line(
-                    self.py_lines[number], self.ti_instruction
-                )
-
-        return self.py_lines
+    def add_py_code_to_main_function(self, py_code):
+        """Add the Python code translated from the TI instructions to the main function."""
+        with open("app/models/calculator.py", "r") as file:
+            calculator = file.read()
+        replacement = "label.label_rst\n    " + py_code
+        py_code = calculator.replace("label.label_rst", replacement, 1)
+        return py_code
 
     def extract_description(self, ti_instructions):
+        """Extract the description at the begining of the program."""
         description = ""
         input_data_pieces = ti_instructions.split("# Input Data", 1)
         entry_point_pieces = ti_instructions.split("# Entry Point", 1)
@@ -146,6 +158,7 @@ class Translator:
         return [description.strip(), ti_instructions.strip()]
 
     def extract_last_comments(self, py_lines):
+        """Extract the comments of a subroutine."""
         comments = []
         for py_line in reversed(py_lines):
             if py_line and py_line[0] != "#":
@@ -155,6 +168,7 @@ class Translator:
         return comments
 
     def extract_subroutine_numbers(self, py_lines):
+        """Extract subroutine numbers."""
         subroutine_numbers = []
         for py_line in py_lines:
             subroutine_number = self.get_subroutine_number(py_line)
@@ -163,47 +177,50 @@ class Translator:
         return subroutine_numbers
 
     def format_py_line(self, py_line, ti_instruction):
+        """Format a Python line of code: Python code # TI instruction (TI code)."""
         fixed = f"{py_line: <{self.PY_LINE_LENGTH}} # {ti_instruction['value']: <{self.TI_INSTRUCTION_LENGTH}}"
         if "ti_code" in ti_instruction:
             fixed += f" ({ti_instruction['ti_code'].strip()})"
         return fixed
 
     def generate_py_code(self, ti_instructions, instruction_not_with_python):
+        """Generate the Python code from the TI instructions (the class entry point)."""
         description, ti_instructions = self.extract_description(ti_instructions)
-        py_lines = self.convert_ti_instructions_to_py_lines(ti_instructions)
+        py_lines = self.translate_ti_instructions_to_py_lines(ti_instructions)
         self.indent_if_statement(py_lines)
+
         subroutine_numbers = self.extract_subroutine_numbers(py_lines)
         if subroutine_numbers:
             py_lines = self.add_functions(py_lines, subroutine_numbers)
+
         self.indent_lines(py_lines)
         py_code = "\n".join(py_lines)
         py_code = self.remove_extra_lines(py_code)
+        py_code = py_code.lstrip()
+
         if instruction_not_with_python:
             py_code = self.split_instructions_from_py_lines(py_code)
 
-        with open("app/models/calculator.py", "r") as file:
-            calculator = file.read()
-        py_code = calculator.replace(
-            "label.label_rst", "label.label_rst\n    " + py_code.lstrip(), 1
-        )
+        py_code = self.add_py_code_to_main_function(py_code)
         if description:
-            py_code = py_code.replace(
-                "@with_goto", description + "\n" + "@with_goto", 1
-            )
+            py_code = self.add_description_above_main_function(description, py_code)
 
         return py_code.strip()
 
     def get_label_number(self, py_line):
+        """Extract label numbers to be matched against subroutine calls."""
         match = re.match(r"label .label_(\d)", py_line)
         if match:
             return match.group(1)
 
     def get_subroutine_number(self, py_line):
+        """Extract the subroutine number."""
         match = re.match(r"sbr_(\d)", py_line)
         if match:
             return match.group(1)
 
     def indent_lines(self, py_lines):
+        """Indent the Python lines of code."""
         preceedes_def = False
         last = len(py_lines) - 1
         for number, py_line in enumerate(reversed(py_lines)):
@@ -219,6 +236,7 @@ class Translator:
             # Else this is a comment or the "with_goto" decorator preceeding the function definition
 
     def indent_if_statement(self, py_lines):
+        """Ident the Python code following an if statement."""
         follows_if_statement = False
         for number, py_line in enumerate(py_lines):
             if not py_line:
@@ -239,15 +257,13 @@ class Translator:
             elif self.is_if_statement(py_line):
                 follows_if_statement = True
 
-    def is_end_subroutine(self, py_line):
-        return bool(re.match(r" +# INV +SBR", py_line, re.I))
-
     def is_if_statement(self, py_line):
+        """Test if the line of code is an if statement."""
         return py_line and (py_line[0:2] == "if" or py_line[0:4] == "elif")
 
     def process_prev_equality(self):
+        """Process the multiplication stacked before an addition."""
         self.process_prev_multiplication()
-
         if self.prev_operator == "+" or self.prev_operator == "-":
             self.operators.pop()
             self.py_lines.append("y = stack.pop()")
@@ -255,8 +271,8 @@ class Translator:
             self.update_prev_operator()
 
     def process_prev_multiplication(self):
+        """Process the power operation stacked before a multiplication."""
         self.process_prev_power()
-
         if self.prev_operator == "*" or self.prev_operator == "/":
             self.operators.pop()
             self.py_lines.append("y = stack.pop()")
@@ -264,8 +280,8 @@ class Translator:
             self.update_prev_operator()
 
     def process_prev_power(self):
+        """Process the scientific notation number before a power operator."""
         self.process_prev_scientific_notation()
-
         if self.prev_operator == "power" or self.prev_operator == "root":
             self.operators.pop()
             self.py_lines.append("y = stack.pop()")
@@ -274,8 +290,9 @@ class Translator:
             self.update_prev_operator()
 
     def process_prev_scientific_notation(self):
+        """Process a scientific notation number."""
+        """Process the numbers around the EE operator."""
         self.update_prev_operator() if self.operators else None
-
         if self.prev_operator == "EE":
             self.operators.pop()
             self.py_lines.append("y = stack.pop()")
@@ -283,14 +300,33 @@ class Translator:
             self.update_prev_operator()
 
     def remove_extra_lines(self, py_code):
+        """Remove extra blank lines (2 following blank lines max)."""
         return re.sub(r"\n{2,}", r"\n\n", py_code)
 
     def split_instructions_from_py_lines(self, py_code):
+        """Split/move the TI instruction comment from/above the Python line of code (uses for small screens)."""
         py_code = re.sub(
             r"^( +)(.*?[^ \n] *)(#.*?)$", r"\g<1>\g<3>\n\g<1>\g<2>", py_code, 0, re.M
         )
         py_code = re.sub(r"^ +(#.*?)$", r"    \g<1>", py_code, 0, re.M)
         return py_code
+
+    def translate_ti_instructions_to_py_lines(self, ti_instructions):
+        """Translate the TI instructions into Python code."""
+        parser = Parser(ti_instructions, instruction_set)
+        for self.ti_instruction in parser.next_instruction():
+            number = len(self.py_lines)
+            if self.ti_instruction["action"]:
+                action = getattr(self, "action_" + self.ti_instruction["action"])
+                action()
+            if len(self.py_lines) == number:  # No python line added, ex. "INV SBR"
+                self.py_lines.append("")
+            if self.ti_instruction["action"] != "comment":
+                self.py_lines[number] = self.format_py_line(
+                    self.py_lines[number], self.ti_instruction
+                )
+
+        return self.py_lines
 
     def update_prev_operator(self):
         self.prev_operator = self.operators[-1] if self.operators else None

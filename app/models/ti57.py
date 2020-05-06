@@ -55,7 +55,7 @@ instruction_set = """
 "2nd |x|"          : {"ti_code": "  40"  , "action": "py_line"            , "py_line": "x = abs(x)"},
 "EE"               : {"ti_code": "  42"  , "action": "scientific_notation", "type": "EE"},
 "INV EE"           : {"ti_code": "- 42"  , "action": "py_line"            , "py_line": "ee = True"},
-"("                : {"ti_code": "  43"  , "action": "open_parenthesis"   , "type": "("},
+"("                : {"ti_code": "  43"  , "action": "opening_parenthesis", "type": "("},
 ")"                : {"ti_code": "  44"  , "action": "closing_parenthesis", "type": ")"},
 "2nd Nop"          : {"ti_code": "  46"  , "action": "py_line"            , "py_line": ""},
 "2nd Fix NUMBER"   : {"ti_code": "  48"  , "action": "py_line"            , "py_line": "rounding = NUMBER"},
