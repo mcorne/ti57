@@ -6,6 +6,7 @@ from app.models.ti57 import instruction_set
 
 class Translator:
     """Translation of TI instructions into Python code."""
+
     # Python line length:
     # Median = 14 (ex. "if mem[0] > 0:")
     # Q3     = 18 (ex. "x = degrees2dms(x)")
@@ -130,6 +131,19 @@ class Translator:
         py_code = calculator.replace("label.label_rst", replacement, 1)
         return py_code
 
+    def change_program_stop_to_return_in_main(self, py_lines):
+        """Change program stops in the main function to simple return statements instead of raising an exception."""
+        for number, py_line in enumerate(py_lines):
+            if py_line.startswith("def"):
+                # This is a new function definition, main has been processed
+                return
+            if "# R/S" in py_line:
+                # This is a line starting with "raise UserWarning('R/S') # R/S "
+                key = "R/S"
+                ti_instruction = instruction_set[key]
+                ti_instruction.update(value=key)
+                py_lines[number] = self.format_py_line("return", ti_instruction)
+
     def extract_description(self, ti_instructions):
         """Extract the description at the begining of the program."""
         description = ""
@@ -192,12 +206,12 @@ class Translator:
         subroutine_numbers = self.extract_subroutine_numbers(py_lines)
         if subroutine_numbers:
             py_lines = self.add_functions(py_lines, subroutine_numbers)
+        self.change_program_stop_to_return_in_main(py_lines)
 
         self.indent_lines(py_lines)
         py_code = "\n".join(py_lines)
         py_code = self.remove_extra_lines(py_code)
         py_code = py_code.lstrip()
-
         if instruction_not_with_python:
             py_code = self.split_instructions_from_py_lines(py_code)
 

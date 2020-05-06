@@ -10,7 +10,7 @@ class Parser:
 
     def __init__(self, ti_instructions, ti_instruction_set):
         self.ti_instructions = ti_instructions
-        self.ti_instruction_set = eval(ti_instruction_set)
+        self.ti_instruction_set = ti_instruction_set
 
     def convert_key_to_pattern(self, key):
         # Escape metacharacters

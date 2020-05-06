@@ -1,6 +1,7 @@
 # The instruction set is actually a dictionary within a formatted string that will be evaluated before use.
 # Using a string prevents accidental reformatting by the formatter of the source code editor.
-instruction_set = """
+instruction_set = eval(
+    """
 {
 "lnx"              : {"ti_code": "  13"  , "action": "py_line"            , "py_line": "x = log(x)"},
 "INV lnx"          : {"ti_code": "- 13"  , "action": "py_line"            , "py_line": "x = exp(x)"},
@@ -125,3 +126,4 @@ instruction_set = """
 #"."               : {"ti_code": "  83"}, # Not to be captured as a single character
 }
 """
+)
