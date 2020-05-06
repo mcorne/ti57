@@ -45,7 +45,7 @@ instruction_set = eval(
 "INV SUM NUMBER"   : {"ti_code": "- 34 0", "action": "py_line"            , "py_line": "mem[NUMBER] -= x"},
 "y^x"              : {"ti_code": "  35"  , "action": "power"              , "type": "power"},
 "INV y^x"          : {"ti_code": "- 35"  , "action": "power"              , "type": "root"},
-"2nd Pause"        : {"ti_code": "  36"  , "action": "py_line"            , "py_line": "regx.append(roundn(x))"},
+"2nd Pause"        : {"ti_code": "  36"  , "action": "py_line"            , "py_line": "regx.append(fix(x))"},
 "2nd Exc NUMBER"   : {"ti_code": "  38 7", "action": "py_line"            , "py_line": [
                                                                                 "y = mem[NUMBER]",
                                                                                 "mem[NUMBER] = x",
@@ -55,7 +55,7 @@ instruction_set = eval(
 "INV 2nd Prod NUMBER": {"ti_code": "- 39 0", "action": "py_line"          , "py_line": "mem[NUMBER] /= x"},
 "2nd |x|"          : {"ti_code": "  40"  , "action": "py_line"            , "py_line": "x = abs(x)"},
 "EE"               : {"ti_code": "  42"  , "action": "scientific_notation", "type": "EE"},
-"INV EE"           : {"ti_code": "- 42"  , "action": "py_line"            , "py_line": "ee = True"},
+"INV EE"           : {"ti_code": "- 42"  , "action": "py_line"            , "py_line": "ee = False"},
 "("                : {"ti_code": "  43"  , "action": "opening_parenthesis", "type": "("},
 ")"                : {"ti_code": "  44"  , "action": "closing_parenthesis", "type": ")"},
 "2nd Nop"          : {"ti_code": "  46"  , "action": "py_line"            , "py_line": ""},

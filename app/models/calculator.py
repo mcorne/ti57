@@ -58,6 +58,22 @@ def dms2degrees(dms):
     return degrees
 
 
+def fix(number):
+    global ee, rounding
+    if ee:
+        # The scientific notation is on
+        if rounding is None:
+            # Default to the calculator 7 digit precision
+            number = f"{number:.7E}"
+            # Remove trailing 0's
+            number = re.sub("0+E", "E", number)
+        else:
+            number = f"{number:.{rounding}E}"
+    elif rounding is not None:
+        number = f"{number:.{rounding}f}"
+    return number
+
+
 def grd2rad(number):
     return (number / 200) * pi
 
@@ -67,13 +83,13 @@ def get_calculator_state():
     return {
         "ee": ee,
         "error": error,
+        "fixed_x": fix(x),
         "mem": mem,
         "regx": regx,
         "rounding": rounding,
         "stack": stack,
         "unit": unit,
         "x": x,
-        "xrounded": roundn(x),
     }
 
 
@@ -108,13 +124,6 @@ def rad2unit(number):
         number = degrees(number)
     elif unit == "Grd":
         number = rad2grd(number)
-    return number
-
-
-def roundn(number):
-    global rounding
-    if rounding is not None:
-        number = round(number, rounding)
     return number
 
 

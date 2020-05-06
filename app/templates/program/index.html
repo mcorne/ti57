@@ -19,7 +19,7 @@
     </div>
 
     <div id="display_register" class="w3-panel w3-white">
-        <span class="w3-right">{{ calculator_state.xrounded if calculator_state.xrounded is defined else 0 }}</span>
+        <span class="w3-right">{{ calculator_state.fixed_x if calculator_state.fixed_x is defined else 0 }}</span>
     </div>
 
     <table id="display_history" class="w3-panel w3-white w3-table w3-striped w3-bordered" style="display: none">
@@ -27,13 +27,13 @@
             <th>#</th>
             <th class="w3-right">X Register</th>
         </tr>
-        {% for regx in calculator_state.regx %}<tr>
+        {% for x in calculator_state.regx %}<tr>
             <td>{{ loop.index }}.</td>
-            <td class="w3-right">{{ regx }}</td>
+            <td class="w3-right">{{ x }}</td>
         </tr>{% endfor %}
         <tr>
             <td>Current.</td>
-            <td class="w3-right">{{ calculator_state.xrounded if calculator_state.xrounded is defined else 0 }}</td>
+            <td class="w3-right">{{ calculator_state.fixed_x if calculator_state.fixed_x is defined else 0 }}</td>
         </tr>
     </table>
 </div>
@@ -108,7 +108,7 @@
         {{ m.section_value('Scientific Notation (EE)', calculator_state.ee) }}
         {{ m.section_value('Rounding to n digits (2nd Fix)', calculator_state.rounding) }}
         {{ m.section_value('X Register (Display)', calculator_state.x) }}
-        {{ m.section_value('Rounded X Register', calculator_state.xrounded) }}
+        {{ m.section_value('Fixed X (acc. rounding and EE)', calculator_state.fixed_x) }}
         {{ m.section_values('X Register History (2nd Pause)', calculator_state.regx) }}
         {{ m.section_values('Memories (STO, RCL, 2nd Prod)', calculator_state.mem) }}
         {{ m.section_values('Nested Operations Stack', calculator_state.stack) }}

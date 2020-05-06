@@ -1,8 +1,6 @@
 - add intro (default) program with pseudo-random numbers program from https://en.wikipedia.org/wiki/TI-57
 
-- raise exception pop from empty stack
 - fix EN manual
-- fix use of EE
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!
