@@ -1,7 +1,0 @@
-# Introduction
-
-# Input Data
-0
-
-# Entry Point
-R/S
