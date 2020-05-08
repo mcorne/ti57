@@ -4,7 +4,6 @@
 - add new section (game mode) with run button and input to enter x,
   post the form on click, restore state by default when playing, add clear at begining of program otherwise
 - remove &nbsp; within comments
-- fix line number of syntax error, add number of lines of description!
 - fix URL links in highlighted code
 - add CLR on top of most programs, else restore state stored in json in hidden input
 - show mem only if different from 0

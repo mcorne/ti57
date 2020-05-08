@@ -8,8 +8,9 @@ class Parser:
     METACHARACTERS = r"[.\^$*+?{}[\]|()]"
     MISMATCH = r"\S+"
 
-    def __init__(self, ti_instructions, ti_instruction_set):
-        self.ti_instructions = ti_instructions
+    def __init__(self, ti_instructions, ti_instruction_set, description_line_count):
+        self.description_line_count = description_line_count
+        self.ti_instructions = ti_instructions  # expecting \n line ending
         self.ti_instruction_set = ti_instruction_set
 
     def convert_key_to_pattern(self, key):
@@ -26,9 +27,6 @@ class Parser:
                 "NUMBER", f"(?P<_KEY_{key.replace(' ', '_')}>[0-9])"
             )
         return pattern
-
-    def fix_newlines(self):
-        self.ti_instructions = re.sub(r"(\r\n|\r)", r"\n", self.ti_instructions)
 
     def fix_number_in_py_lines(self, number, py_lines):
         if type(py_lines) is not list:
@@ -60,7 +58,6 @@ class Parser:
     def next_instruction(self):
         self.set_lower_case_keys()
         self.set_instruction_patterns()
-        self.fix_newlines()
         self.validate_instructions()
         self.move_inline_comments_up()
         return self.tokenizer()
@@ -145,7 +142,7 @@ class Parser:
 
     # See https://docs.python.org/3.8/library/re.html#writing-a-tokenizer
     def tokenizer(self):
-        line = 1
+        line = self.description_line_count
         start = 0
         for match in re.finditer(self.patterns, self.ti_instructions, re.I):
             start, line, ti_instruction = self.process_token(match, start, line)
@@ -153,7 +150,7 @@ class Parser:
                 yield ti_instruction
 
     def validate_instructions(self):
-        line = 1
+        line = self.description_line_count
         start = 0
         for match in re.finditer(self.patterns, self.ti_instructions, re.I):
             start, line, dummy = self.process_token(match, start, line)

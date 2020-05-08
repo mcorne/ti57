@@ -164,13 +164,15 @@ class Translator:
             ti_instructions = "# Entry Point" + ti_instructions
 
         if description and re.search(
-            r"^ *[^#].*?$", re.sub(r"[\r\n]+", r"\n", description), re.M
+            r"^ *[^#].*?$", re.sub(r"\n+", r"\n", description), re.M
         ):
             # There is an instruction inside the description, assuming this is not a description
             ti_instructions = description + ti_instructions
             description = ""
 
-        return [description.strip(), ti_instructions.strip()]
+        description_line_count = description.count("\n") + 1
+
+        return [description.strip(), description_line_count, ti_instructions.strip()]
 
     def extract_last_comments(self, py_lines):
         """Extract the comments of a subroutine."""
@@ -191,6 +193,9 @@ class Translator:
                 subroutine_numbers.append(subroutine_number)
         return subroutine_numbers
 
+    def fix_newlines(self, ti_instructions):
+        return re.sub(r"(\r\n|\r)", r"\n", ti_instructions)
+
     def format_py_line(self, py_line, ti_instruction):
         """Format a Python line of code: Python code # TI instruction (TI code)."""
         fixed = f"{py_line: <{self.PY_LINE_LENGTH}} # {ti_instruction['value']: <{self.TI_INSTRUCTION_LENGTH}}"
@@ -200,8 +205,13 @@ class Translator:
 
     def generate_py_code(self, ti_instructions, instruction_not_with_python):
         """Generate the Python code from the TI instructions (the class entry point)."""
-        description, ti_instructions = self.extract_description(ti_instructions)
-        py_lines = self.translate_ti_instructions_to_py_lines(ti_instructions)
+        ti_instructions = self.fix_newlines(ti_instructions)
+        description, description_line_count, ti_instructions = self.extract_description(
+            ti_instructions
+        )
+        py_lines = self.translate_ti_instructions_to_py_lines(
+            ti_instructions, description_line_count
+        )
         self.indent_if_statement(py_lines)
 
         subroutine_numbers = self.extract_subroutine_numbers(py_lines)
@@ -325,9 +335,11 @@ class Translator:
         py_code = re.sub(r"^ +(#.*?)$", r"    \g<1>", py_code, 0, re.M)
         return py_code
 
-    def translate_ti_instructions_to_py_lines(self, ti_instructions):
+    def translate_ti_instructions_to_py_lines(
+        self, ti_instructions, description_line_count
+    ):
         """Translate the TI instructions into Python code."""
-        parser = Parser(ti_instructions, instruction_set)
+        parser = Parser(ti_instructions, instruction_set, description_line_count)
         for self.ti_instruction in parser.next_instruction():
             number = len(self.py_lines)
             if self.ti_instruction["action"]:
