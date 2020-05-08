@@ -93,24 +93,27 @@ def get_calculator_state():
     }
 
 
-def init_calculator():
+def init_calculator_state(state={}):
+    """Initialize the calculator state
+
+        ee       -- Scientific notation (EE)
+        error    -- Syntax error etc.
+        mem      -- Memories (STO)
+        regx     -- History of values displayed before a pause (2nd pause)
+        rounding -- Number of digit after the decimal point (2nd Fix)
+        stack    -- Internal memory stack used for computing nested operations
+        unit     -- Angle unit (2nd Deg, 2nd Rad, 2nd Grad)
+        x        -- Display register or X register
+    """
     global ee, error, mem, regx, rounding, stack, unit, x
-    # Scientific notation (EE)
-    ee = False
-    # Syntax error etc.
-    error = None
-    # Memories (STO)
-    mem = [0 for i in range(8)]
-    # History of values displayed before a pause (2nd pause)
-    regx = []
-    # Internal memory stack used for computing nested operations
-    stack = []
-    # Number of digit after the decimal point (2nd Fix)
-    rounding = None
-    # Angle unit (2nd Deg, 2nd Rad, 2nd Grad)
-    unit = "Deg"
-    # Display
-    x = 0
+    ee = state["ee"] if "ee" in state else False
+    error = state["error"] if "error" in state else None
+    mem = state["mem"] if "mem" in state else [0 for i in range(8)]
+    regx = state["regx"] if "regx" in state else []
+    rounding = state["rounding"] if "rounding" in state else None
+    stack = state["stack"] if "stack" in state else []
+    unit = state["unit"] if "unit" in state else "Deg"
+    x = state["x"] if "x" in state else 0
 
 
 def rad2grd(number):
@@ -127,6 +130,16 @@ def rad2unit(number):
     return number
 
 
+def run_program():
+    global error
+    try:
+        main()
+    except UserWarning:  # R/S
+        pass
+    except Exception as e:
+        error = str(e)
+
+
 def unit2rad(number):
     global unit
     number = float(number)
@@ -137,14 +150,8 @@ def unit2rad(number):
     return number
 
 
-# Program execution
-
-try:
-    init_calculator()
-    main()
-except UserWarning:  # R/S
-    pass
-except Exception as e:
-    error = str(e)
-
-# print(get_calculator_state())
+# Example of program execution
+# init_calculator_state()
+# run_program()
+# calculator_state = get_calculator_state()
+# print(calculator_state)

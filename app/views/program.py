@@ -2,7 +2,11 @@ from flask import Blueprint, flash, make_response, render_template, request
 from flask_babel import _
 
 from app.forms import ProgramForm
-from app.models.calculator import get_calculator_state
+from app.models.calculator import (
+    get_calculator_state,
+    init_calculator_state,
+    run_program,
+)
 from app.models.translator import Translator
 
 bp = Blueprint("program", __name__)
@@ -24,6 +28,8 @@ def index():
             with open("app/.~test_generated.py", "w") as file:  # TODO: remove !!!
                 file.write(py_code)
             exec(py_code, globals())
+            init_calculator_state(calculator_state)
+            run_program()
             calculator_state = get_calculator_state()
             if "error" in calculator_state and calculator_state["error"]:
                 flash(calculator_state["error"], "error")

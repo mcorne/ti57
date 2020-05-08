@@ -7,6 +7,7 @@
 - fix line number of syntax error, add number of lines of description!
 - fix URL links in highlighted code
 - add CLR on top of most programs, else restore state stored in json in hidden input
+- show mem only if different from 0
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!
