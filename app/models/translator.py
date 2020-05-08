@@ -5,7 +5,7 @@ from app.models.ti57 import instruction_set
 
 
 class Translator:
-    """Translation of TI instructions into Python code."""
+    """Translation of TI instructions into Python."""
 
     # Python line length:
     # Median = 14 (ex. "if mem[0] > 0:")
@@ -197,7 +197,7 @@ class Translator:
         return re.sub(r"(\r\n|\r)", r"\n", ti_instructions)
 
     def format_py_line(self, py_line, ti_instruction):
-        """Format a Python line of code: Python code # TI instruction (TI code)."""
+        """Format a Python line, format = Python # TI instruction (TI code)."""
         fixed = f"{py_line: <{self.PY_LINE_LENGTH}} # {ti_instruction['value']: <{self.TI_INSTRUCTION_LENGTH}}"
         if "ti_code" in ti_instruction:
             fixed += f" ({ti_instruction['ti_code'].strip()})"
@@ -338,7 +338,7 @@ class Translator:
     def translate_ti_instructions_to_py_lines(
         self, ti_instructions, description_line_count
     ):
-        """Translate the TI instructions into Python code."""
+        """Translate the TI instructions into Python."""
         parser = Parser(ti_instructions, instruction_set, description_line_count)
         for self.ti_instruction in parser.next_instruction():
             number = len(self.py_lines)
