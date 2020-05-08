@@ -1,8 +1,6 @@
 - document all classes and methods
 - fix EN manual
-- add new section (game mode) with run button and input to enter x,
-  post the form on click, restore state by default when playing, add clear at begining of program otherwise
-- add CLR on top of most programs, else restore state stored in json in hidden input
+- add CLR on top of programs if necessary to cancel calculator state init
 - show mem only if different from 0
 
 - handle TI-57 II,  include ti codes that have changed

@@ -1,3 +1,5 @@
+import json
+
 from flask import Blueprint, flash, make_response, render_template, request
 from flask_babel import _
 
@@ -28,9 +30,10 @@ def index():
             with open("app/.~test_generated.py", "w") as file:  # TODO: remove !!!
                 file.write(py_code)
             exec(py_code, globals())
-            init_calculator_state(calculator_state)
+            init_calculator_state(json.loads(form.calculator_state.data))
             run_program()
             calculator_state = get_calculator_state()
+            form.calculator_state.data = json.dumps(calculator_state)
             if "error" in calculator_state and calculator_state["error"]:
                 flash(calculator_state["error"], "error")
         else:
