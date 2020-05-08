@@ -1,4 +1,3 @@
-- add intro (default) program with pseudo-random numbers program from https://en.wikipedia.org/wiki/TI-57
 - document all classes and methods
 - fix EN manual
 - add new section (game mode) with run button and input to enter x,
