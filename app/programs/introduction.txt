@@ -1,4 +1,4 @@
-# What's it all about? (Dice Roll)
+# Introduction to programming the TI-57 (Dice Roll)
 
 # The TI-57 is a programmable pocket calculator made by Texas Instruments around 1980.
 # It has a LED display, 50 program steps and 8 memory registers.

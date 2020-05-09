@@ -2,7 +2,6 @@
 - fix EN manual
 - show error by adding a comment at the end of the instruction, ex # <= ERROR!
 - refactor program.py
-- display doc from highlighted code inside browser
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!

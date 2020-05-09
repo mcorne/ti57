@@ -1,6 +1,13 @@
 import json
 
-from flask import Blueprint, flash, make_response, render_template, request
+from flask import (
+    Blueprint,
+    flash,
+    make_response,
+    render_template,
+    request,
+    send_from_directory,
+)
 from flask_babel import _
 
 from app.forms import ProgramForm
@@ -37,7 +44,7 @@ def index():
             if "error" in calculator_state and calculator_state["error"]:
                 flash(calculator_state["error"], "error")
         else:
-            program = request.args.get("program", "what-s-it-all-about")
+            program = request.args.get("program", "introduction")
             with open(f"app/programs/{program}.txt", "r") as file:
                 ti_instructions = file.read()
                 form.ti_instructions.data = ti_instructions
@@ -66,3 +73,8 @@ def index():
         max_age,
     )
     return response
+
+
+@bp.route("/docs/<filename>")
+def send_pdf(filename):
+    return send_from_directory("static/docs", filename)
