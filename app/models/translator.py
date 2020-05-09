@@ -123,22 +123,33 @@ class Translator:
         """Add the Python code translated from the TI instructions to the main function."""
         with open("app/models/calculator.py", "r") as file:
             calculator = file.read()
-        replacement = "label.label_rst\n    " + py_code
-        py_code = calculator.replace("label.label_rst", replacement, 1)
+        # Revert possible formatter erronous fix
+        calculator = calculator.replace("label.label_rst", "label .label_rst")
+        replacement = "label .label_rst\n    " + py_code
+        py_code = calculator.replace("label .label_rst", replacement, 1)
         return py_code
 
     def change_program_stop_to_return_in_main(self, py_lines):
         """Change program stops in the main function to simple return statements instead of raising an exception."""
+        original = py_lines.copy()
+        changed_program_stop = False
         for number, py_line in enumerate(py_lines):
             if py_line.startswith("def"):
                 # This is a new function definition, main has been processed
-                return
+                break
+            if "label .label_" in py_line and changed_program_stop:
+                # A program stop was changed before a label which the with_goto decorator cannot handle
+                # Restore the original lines of code
+                py_lines = original.copy()
+                break
             if "# R/S" in py_line:
                 # This is a line starting with "raise UserWarning('R/S') # R/S "
                 key = "R/S"
                 ti_instruction = instruction_set[key]
                 ti_instruction.update(value=key)
                 py_lines[number] = self.format_py_line("return", ti_instruction)
+                changed_program_stop = True
+        return py_lines
 
     def extract_description(self, ti_instructions):
         """Extract the description at the begining of the program."""
@@ -208,7 +219,7 @@ class Translator:
         subroutine_numbers = self.extract_subroutine_numbers(py_lines)
         if subroutine_numbers:
             py_lines = self.add_functions(py_lines, subroutine_numbers)
-        self.change_program_stop_to_return_in_main(py_lines)
+        py_lines = self.change_program_stop_to_return_in_main(py_lines)
 
         self.indent_lines(py_lines)
         py_code = "\n".join(py_lines)

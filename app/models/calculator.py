@@ -131,9 +131,11 @@ def rad2unit(number):
 
 
 def run_program():
-    global error
+    global error, x
     try:
         main()
+    except ZeroDivisionError:
+        x = 9.9999999
     except UserWarning:  # R/S
         pass
     except Exception as e:
