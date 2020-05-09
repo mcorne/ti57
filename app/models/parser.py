@@ -8,8 +8,8 @@ class Parser:
     METACHARACTERS = r"[.\^$*+?{}[\]|()]"
     MISMATCH = r"\S+"
 
-    def __init__(self, ti_instructions, ti_instruction_set, description_line_count):
-        self.description_line_count = description_line_count
+    def __init__(self, ti_instructions, description, ti_instruction_set):
+        self.description = description
         self.ti_instructions = ti_instructions  # expecting \n line ending
         self.ti_instruction_set = ti_instruction_set
 
@@ -142,7 +142,7 @@ class Parser:
 
     # See https://docs.python.org/3.8/library/re.html#writing-a-tokenizer
     def tokenizer(self):
-        line = self.description_line_count
+        line = 1
         start = 0
         for match in re.finditer(self.patterns, self.ti_instructions, re.I):
             start, line, ti_instruction = self.process_token(match, start, line)
@@ -150,7 +150,7 @@ class Parser:
                 yield ti_instruction
 
     def validate_instructions(self):
-        line = self.description_line_count
+        line = 1
         start = 0
-        for match in re.finditer(self.patterns, self.ti_instructions, re.I):
+        for match in re.finditer(self.patterns, self.description + self.ti_instructions, re.I):
             start, line, dummy = self.process_token(match, start, line)

@@ -90,11 +90,6 @@ class Translator:
         self.py_lines.append("ee = True")
         self.add_operation()
 
-    def add_description_above_main_function(self, description, py_code):
-        """Add the program description before the decorator of the main function."""
-        replacement = description + "\n" + "@with_goto"
-        return py_code.replace("@with_goto", replacement, 1)
-
     def add_function(self, py_lines, subroutine_numbers, py_line, fixed):
         """Add the function definition of a subroutine."""
         label_number = self.get_label_number(py_line)
@@ -170,9 +165,7 @@ class Translator:
             ti_instructions = description + ti_instructions
             description = ""
 
-        description_line_count = description.count("\n") + 1
-
-        return [description.strip(), description_line_count, ti_instructions.strip()]
+        return [ti_instructions, description]
 
     def extract_last_comments(self, py_lines):
         """Extract the comments of a subroutine."""
@@ -206,11 +199,9 @@ class Translator:
     def generate_py_code(self, ti_instructions, instruction_not_with_python):
         """Generate the Python code from the TI instructions (the class entry point)."""
         ti_instructions = self.fix_newlines(ti_instructions)
-        description, description_line_count, ti_instructions = self.extract_description(
-            ti_instructions
-        )
+        ti_instructions, description = self.extract_description(ti_instructions)
         py_lines = self.translate_ti_instructions_to_py_lines(
-            ti_instructions, description_line_count
+            ti_instructions, description
         )
         self.indent_if_statement(py_lines)
 
@@ -227,8 +218,7 @@ class Translator:
             py_code = self.split_instructions_from_py_lines(py_code)
 
         py_code = self.add_py_code_to_main_function(py_code)
-        if description:
-            py_code = self.add_description_above_main_function(description, py_code)
+        py_code = description + py_code
 
         return py_code.strip()
 
@@ -335,11 +325,9 @@ class Translator:
         py_code = re.sub(r"^ +(#.*?)$", r"    \g<1>", py_code, 0, re.M)
         return py_code
 
-    def translate_ti_instructions_to_py_lines(
-        self, ti_instructions, description_line_count
-    ):
+    def translate_ti_instructions_to_py_lines(self, ti_instructions, description):
         """Translate the TI instructions into Python."""
-        parser = Parser(ti_instructions, instruction_set, description_line_count)
+        parser = Parser(ti_instructions, description, instruction_set)
         for self.ti_instruction in parser.next_instruction():
             number = len(self.py_lines)
             if self.ti_instruction["action"]:
