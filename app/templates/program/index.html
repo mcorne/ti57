@@ -51,11 +51,16 @@
             <a class="link" href="{{ request.url }}" title="Refresh Program Instructions">
                 <i class="fas fa-redo"></i>
             </a>
-            &nbsp;
+            <span class="w3-hide-small">&nbsp;</span>
             <a class="link" href="javascript: erase_instructions()" title="Erase Program Instructions">
                 <i class="fas fa-trash"></i>
             </a>
-            &nbsp;
+            <span class="w3-hide-small">&nbsp;</span>
+            <a class="link" href="javascript: document.getElementById('program').submit()"
+                title="Run Program (Shortcut)">
+                <i class="fas fa-cog"></i>
+            </a>
+            <span class="w3-hide-small">&nbsp;</span>
             <button id="edit" class="w3-button w3-amber w3-hover-indigo w3-small" onclick="toggle_highlight_edit()">
                 Edit
             </button>
@@ -66,7 +71,7 @@
         </span>
     </div>
 
-    <form method="post">
+    <form id="program" method="post">
         {{ form.hidden_tag() }}
 
         {% if request.cookies.get('instructions_display', 'highlighted') == 'highlighted' %}
@@ -81,7 +86,7 @@
             {{ form.instruction_not_with_python(class_="w3-check") }}
             {{ form.instruction_not_with_python.label }}
         </p>
-        <p class="w3-center">{{ form.submit(class_='w3-button w3-amber w3-hover-indigo') }}</p>
+        <p class="w3-center">{{ form.run(class_='w3-button w3-amber w3-hover-indigo') }}</p>
     </form>
 </div>
 

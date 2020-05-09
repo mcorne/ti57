@@ -9,5 +9,5 @@ class ProgramForm(FlaskForm):
     instruction_not_with_python = BooleanField(
         "Show instructions as comments above the corresponding line of Python (recommended on small screens)"
     )
-    submit = SubmitField("Run")
+    run = SubmitField("Run")  # different from submit not to clash with form.submit()
     ti_instructions = TextAreaField("Instructions")

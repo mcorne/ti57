@@ -3,7 +3,6 @@
 - add CLR on top of programs if necessary to cancel calculator state init
 - show error by adding a comment at the end of the instruction, ex # <= ERROR!
 - refactor program.py
-- add run shortcut in program section bar, ex cog
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!
