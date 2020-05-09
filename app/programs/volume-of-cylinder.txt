@@ -11,7 +11,7 @@
 
 # Entry Point
 2nd Fix 2
-RCL 1 / 2 = # Radius =  diameter / 2
+RCL 1 : 2 = # Radius =  diameter/2
 x^2 X 2nd pi # Area = π x radius²
 X RCL 2 =   # Volume = area X height
 R/S

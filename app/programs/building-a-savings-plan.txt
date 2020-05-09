@@ -6,7 +6,7 @@
 # Then $166.16 including $1.16 etc., and finally $686.01 including $26.01 after a year.
 # How much cash will you have in 5 years (60 months)?
 # Answer: 4083.64, 783.64
-# Tip! Amount = PMT X ((1+i)^n - 1) / i.
+# Tip! Amount = PMT X ((1+i)^n - 1) : i.
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=159", p. 8-8
 
@@ -26,8 +26,8 @@ R/S
 2nd Fix 2
 1 SUM 3 RCL 3  # month + 1
 2nd Pause
-# PMT X ((1+i)^n - 1) / i
-RCL 1 X ( ( 1 + RCL 2 ) y^x RCL 3 - 1 ) / RCL 2 =
+# PMT X ((1+i)^n - 1) : i
+RCL 1 X ( ( 1 + RCL 2 ) y^x RCL 3 - 1 ) : RCL 2 =
 2nd Pause
 - RCL 1 X RCL 3 =
 2nd Pause

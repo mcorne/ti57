@@ -3,15 +3,16 @@
 # Select the target distance, choose an angle of elevation then fire!
 # The calculator displays a positive or negative distance if you overshoot or undershoot.
 # It displays 9.9999999 if you score a hit within 100 m of the target.
+# What is the angle to hit a target 20 000 m away?
+# Answer: 15°.
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=210", p. 11-7
 
 # Input Data
-40    # Angle (0 - 90)
-STO 0
-20000 # Distance (1 000 - 40 000)
-STO 3
-100   # Hit Range
+20000 STO 3 # Distance (1 000-40 000)
+40    STO 0 # Angle (0-90)
+100   STO 5 # Hit Range
+
 
 # Entry Point
 2nd Fix 2
@@ -21,7 +22,7 @@ RCL 0 2nd tan X
 RCL 0 2nd cos x^2 X
 RCL 1 =
 STO 2
-100 x<>t
+RCL 5 x<>t
 RCL 2 - RCL 3 =
 2nd |x|
 INV 2nd x>=t

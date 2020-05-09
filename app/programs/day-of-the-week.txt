@@ -1,0 +1,32 @@
+# Day of the Week
+
+# Enter the day, the month (starting with 1 for March), the century and the year.
+# What day of the week was July 4, 1776?
+# Answer: a Thursday (the 4th day of the week).
+
+# Source: "Training with your EC-4000 Programmable Calculator.pdf#page=212", p. 11-9
+
+# Input Data
+4  STO 2 # Day (1-31)
+5  STO 1 # Month (Mar=1, Apr=2 etc.)
+17 STO 3 # Century (0-20)
+76 STO 4 # Year (0-99)
+
+# Entry Point
+RCL 2 +
+(2.6 X RCL 1 - 0.2)
+2nd Int +
+(RCL 4 : 4 + RCL 4)
+2nd Int +
+(RCL 3 : 4)
+2nd Int -
+2 X RCL 3 =
+2nd Lbl 0
+2nd x>=t
+GTO 1
++ 7 =
+GTO 0
+2nd Lbl 1
+: 7 = INV 2nd Int
+X 7 = 2nd Int
+R/S

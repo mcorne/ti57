@@ -121,12 +121,13 @@ instruction_set = eval(
 "x"                : {"ti_code": "  55"  , "action": "multiplication"     , "type": "*"},
 "+"                : {"ti_code": "  75"  , "action": "addition"           , "type": "+"},
 "-"                : {"ti_code": "  65"  , "action": "addition"           , "type": "-"},
-"/"                : {"ti_code": "  45"  , "action": "multiplication"     , "type": "/"},
+":"                : {"ti_code": "  45"  , "action": "multiplication"     , "type": "/"},
 
 #"."               : {"ti_code": "  83"}, # Not to be captured as a single character
 
 # Extended instructions
 "*"                : {"ti_code": "  55"  , "action": "multiplication"     , "type": "*"},
+"/"                : {"ti_code": "  45"  , "action": "multiplication"     , "type": "/"},
 }
 """
 )

@@ -43,5 +43,5 @@ INV SBR
 
 # Subroutine 4: volume of a sphere
 2nd Lbl 4
-y^x 3 X 4 / 3 X 2nd pi = # radius^3 X 4/3π
+y^x 3 X 4 : 3 X 2nd pi = # radius^3 X 4:3π
 INV SBR

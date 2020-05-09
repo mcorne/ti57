@@ -15,13 +15,13 @@
 # Source: [https://en.wikipedia.org/wiki/TI-57 TI-57] on Wikipedia
 
 # Input Data
-6                   # Max number
-STO 1
+6 STO 1           # Max number
+
 
 # Entry Point
-2nd pi + RCL 0 =    # (π + a)^8
-y^x 8 - 2nd Int =   # i - Int(i)
+2nd pi + RCL 0 =  # (π + a)^8
+y^x 8 - 2nd Int = # i - Int(i)
 STO 0
-X RCL 1 + 1 =       # Int(a X 6 + 1)
+X RCL 1 + 1 =     # Int(a X 6 + 1)
 2nd INT
 R/S

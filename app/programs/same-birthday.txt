@@ -19,7 +19,7 @@ x<>t           # Store in memory 7
 0 STO 4        # Number of loops
 2nd Lbl 1
 RCL 2 - 1 =    # Ex. 363
-STO 2 / 365 =  # Ex. 363/365
+STO 2 : 365 =  # Ex. 363/365
 2nd PRod 3     # Multiply to probability
 1 SUM 4 RCL 4  # Add one loop
 Inv 2nd x=t    # Is different from max loops ?
