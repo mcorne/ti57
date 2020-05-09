@@ -108,9 +108,9 @@
         {{ m.section_value('Scientific Notation (EE)', calculator_state.ee) }}
         {{ m.section_value('Rounding to n digits (2nd Fix)', calculator_state.rounding) }}
         {{ m.section_value('X Register (Display)', calculator_state.x) }}
-        {{ m.section_value('Fixed X (acc. rounding and EE)', calculator_state.fixed_x) }}
+        {{ m.section_value('Fixed X (rounding and EE)', calculator_state.fixed_x) }}
         {{ m.section_values('X Register History (2nd Pause)', calculator_state.regx) }}
-        {{ m.section_values('Memories (STO, RCL, 2nd Prod)', calculator_state.mem) }}
+        {{ m.section_values('Non-Zero Memories (STO)', calculator_state.mem, hide_zero_value=True) }}
         {{ m.section_values('Nested Operations Stack', calculator_state.stack) }}
         {{ m.section_value('Error Message', calculator_state.error) }}
     </div>

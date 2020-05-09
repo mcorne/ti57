@@ -39,15 +39,17 @@
 </div>
 {%- endmacro %}
 
-{% macro section_values(name, values) -%}
+{% macro section_values(name, values, hide_zero_value=True) -%}
 <div class="w3-margin-top w3-margin-bottom">{{ name }}</div>
-{% if values %}
+{% if values and (not hide_zero_value or values|select('ne',0)|list) %}
 <table id="display_history" class="w3-panel w3-white w3-table w3-striped w3-bordered">
     {% for value in values %}
+    {% if not hide_zero_value or value != 0 %}
     <tr>
         <td>{{ loop.index-1 }}.</td>
         <td class="w3-right">{{ value }}</td>
     </tr>
+    {% endif %}
     {% endfor %}
 </table>
 {% else %}
