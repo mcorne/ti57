@@ -48,16 +48,16 @@
             ''') }}
 
         <span class="w3-right">
-            <a class="link" href="{{ request.url }}" title="Refresh Program Instructions">
+            <a class="link" href="{{ request.url }}" title="Refresh the Program">
                 <i class="fas fa-redo"></i>
             </a>
             <span class="w3-hide-small">&nbsp;</span>
-            <a class="link" href="javascript: erase_instructions()" title="Erase Program Instructions">
+            <a class="link" href="javascript: erase_instructions()" title="Erase the Program">
                 <i class="fas fa-trash"></i>
             </a>
             <span class="w3-hide-small">&nbsp;</span>
             <a class="link" href="javascript: document.getElementById('program').submit()"
-                title="Run Program (Shortcut)">
+                title="Shortcut to run Program">
                 <i class="fas fa-cog"></i>
             </a>
             <span class="w3-hide-small">&nbsp;</span>
@@ -86,7 +86,9 @@
             {{ form.instruction_not_with_python(class_="w3-check") }}
             {{ form.instruction_not_with_python.label }}
         </p>
-        <p class="w3-center">{{ form.run(class_='w3-button w3-amber w3-hover-indigo') }}</p>
+        <p class="w3-center">
+            {{ form.run(class_='w3-button w3-amber w3-hover-indigo', title='You can also use the cog icon in the Program section bar') }}
+        </p>
     </form>
 </div>
 
