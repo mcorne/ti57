@@ -2,6 +2,7 @@
 - fix EN manual
 - show error by adding a comment at the end of the instruction, ex # <= ERROR!
 - refactor program.py
+- add a data input shortcut to replace a list of numbers in the dat input section
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!
