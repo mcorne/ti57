@@ -2,7 +2,9 @@
 - fix EN manual
 - show error by adding a comment at the end of the instruction, ex # <= ERROR!
 - refactor program.py
-- add a data input shortcut to replace a list of numbers in the dat input section
+- filter non numbers from the display register
+- run program on enter down
+- convert nl to br in text tooltip
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!

@@ -59,8 +59,8 @@
 {% endif %}
 {%- endmacro %}
 
-{% macro toggle_buttons(button_x_id, button_y_id, target_x_id, target_y_id, onclick) -%}
-<span class="w3-small w3-right">
+{% macro toggle_buttons(button_x_id, button_y_id, target_x_id, target_y_id, onclick, right=True) -%}
+<span class="w3-small {% if right %}w3-right{% endif %}">
     <button id="{{ button_x_id }}" class="w3-button w3-indigo w3-hover-amber"
         onclick="{{ onclick }}">{{ target_x_id}}</button>
     <button id="{{ button_y_id }}" class="w3-button w3-indigo w3-hover-amber" onclick="{{ onclick }}"

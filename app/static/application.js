@@ -114,6 +114,19 @@ function toggle_highlight_edit() {
     }
 }
 
+function toggle_history_register() {
+    var display_register = document.getElementById("display_register");
+    var update_instructions = document.getElementById("update_instructions");
+
+    toggle_x_y('display_history_show', 'display_register_show', 'display_register', 'display_history');
+
+    if (display_register.style.display == "none") {
+        update_instructions.style.display = 'none';
+    } else {
+        update_instructions.style.display = 'inline-block';
+    }
+}
+
 function toggle_x_y(button_x_id, button_y_id, target_x_id, target_y_id = null) {
     var button_x = document.getElementById(button_x_id);
     var button_y = document.getElementById(button_y_id);
@@ -136,5 +149,29 @@ function toggle_x_y(button_x_id, button_y_id, target_x_id, target_y_id = null) {
         if (target_y_id) {
             target_y.style.display = "none";
         }
+    }
+}
+
+function update_instructions() {
+    var display_register = document.getElementById("display_register");
+    var index = 0;
+    var replacement;
+    var ti_instructions = document.getElementById("ti_instructions");
+    var values = display_register.innerText.replace(/ +/g, " ").split(" ");
+
+    ti_instructions.value = ti_instructions.value.replace(/^( *[\d.]+(?=[ \n\r]))/gm, function (match, p1) {
+        if (typeof values[index] == "undefined") {
+            // There is nothing to replace with, pass the match
+            replacement = p1;
+        } else {
+            // Replace the match with the register value with same index
+            replacement = values[index];
+        }
+        index++;
+        return replacement;
+    });
+
+    if (ti_instructions.style.display == "none") {
+        document.getElementById("highlighted").innerHTML = w3CodeColorize(ti_instructions.value, "tiinstruction");
     }
 }

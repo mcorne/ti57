@@ -12,14 +12,25 @@
             In the Python code, the X register corresponds to the variable "x", and the display history is stored in the "regx" list.
             ''') }}
 
-        {% if calculator_state.regx is defined and calculator_state.regx %}
-        {{ m.toggle_buttons('display_register_show', 'display_history_show', 'History', 'Current',
-            "toggle_x_y('display_history_show', 'display_register_show', 'display_register', 'display_history')") }}
-        {% endif %}
+        <span class="w3-right">
+            <span id="update_instructions">
+                <a class="link" href="javascript: update_instructions()" title="Update the Instructions">
+                    <i class="fas fa-save"></i>
+                </a>
+                <span class="w3-hide-small">&nbsp;</span>
+            </span>
+
+            {% if calculator_state.regx is defined and calculator_state.regx %}
+            {{ m.toggle_buttons('display_register_show', 'display_history_show', 'History', 'Current', "toggle_history_register()", right=False) }}
+            {% endif %}
+
+        </span>
     </div>
 
     <div id="display_register" class="w3-panel w3-white">
-        <span class="w3-right">{{ calculator_state.fixed_x if calculator_state.fixed_x is defined else 0 }}</span>
+        <span class="w3-right" contenteditable="true">
+            {{ calculator_state.fixed_x if calculator_state.fixed_x is defined else 0 }}
+        </span>
     </div>
 
     <table id="display_history" class="w3-panel w3-white w3-table w3-striped w3-bordered" style="display: none">
@@ -56,8 +67,7 @@
                 <i class="fas fa-trash"></i>
             </a>
             <span class="w3-hide-small">&nbsp;</span>
-            <a class="link" href="javascript: document.getElementById('program').submit()"
-                title="Shortcut to run Program">
+            <a class="link" href="javascript: document.getElementById('program').submit()" title="Run the Program">
                 <i class="fas fa-cog"></i>
             </a>
             <span class="w3-hide-small">&nbsp;</span>
@@ -87,7 +97,7 @@
             {{ form.instruction_not_with_python.label }}
         </p>
         <p class="w3-center">
-            {{ form.run(class_='w3-button w3-amber w3-hover-indigo', title='You can also use the cog icon in the Program section bar') }}
+            {{ form.run(class_='w3-button w3-amber w3-hover-indigo', title='You can also click on the cogwheel above') }}
         </p>
     </form>
 </div>
