@@ -101,7 +101,7 @@ class Parser:
             ti_instruction = self.process_key_type_instruction(ti_instruction, groups)
         elif type == "MISMATCH":
             raise Exception(
-                f"Syntax error: unexpected character {value} on line {line} and column {column}"
+                f"Syntax error: unexpected character: {value} on line {line} and column {column}"
             )
         elif type == "DOUBLE_NEWLINE":
             start = match.end()
@@ -152,5 +152,7 @@ class Parser:
     def validate_instructions(self):
         line = 1
         start = 0
-        for match in re.finditer(self.patterns, self.description + self.ti_instructions, re.I):
+        for match in re.finditer(
+            self.patterns, self.description + self.ti_instructions, re.I
+        ):
             start, line, dummy = self.process_token(match, start, line)

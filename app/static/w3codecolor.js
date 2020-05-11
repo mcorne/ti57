@@ -64,23 +64,30 @@ function w3CodeColorize(x, lang) {
   if (lang == "python") {
     // CUSTOMIZATION: replace spaces to fixed size spaces and newlines to line breaks
     x = x.trim().replace(/\n/g, "<br>\n").replace(/ /g, "&nbsp;");
-    return pythonMode(x);
+    highlighted = pythonMode(x);
+    highlighted = add_line_numbers(highlighted);
+    return highlighted;
   }
-  if (lang == "tiinstruction") {
-    // CUSTOMIZATION
+  // CUSTOMIZATION
+  if (lang == "tiinstruction") { return tiinstructionMode(x); }
+  return x;
+
+  // CUSTOMIZATION
+  function tiinstructionMode(txt) {
     commentcolor = "#3f51b5"; // w3-indigo
-    x = x.trim();
+    txt = txt.trim();
     // Capture page title
-    x = x.replace(/^(# +.+)$/m, '_TITLE_BEGIN_$1_TITLE_END_');
+    txt = txt.replace(/^(# +.+)$/m, '_TITLE_BEGIN_$1_TITLE_END_');
     // Capture section titles
-    x = x.replace(/^(# +(?:Input Data|Entry Point|Subroutine).*)$/gm, '_SECTION_BEGIN_$1_SECTION_END_');
+    txt = txt.replace(/^(# +(?:Input Data|Entry Point|Subroutine).*)$/gm, '_SECTION_BEGIN_$1_SECTION_END_');
     // Replace spaces with "&nbsp;" in instructions up to be begining of comments
-    x = x.replace(/^([^#]+#)/gm, function (match, p1) {
+    txt = txt.replace(/^([^#]+#)/gm, function (match, p1) {
       return p1.replace(/ /g, "&nbsp;");
     });
     // Replace newlines with "<br>"
-    x = x.replace(/\n/g, "<br>\n");
-    var highlighted = pythonMode(x);
+    txt = txt.replace(/\n/g, "<br>\n");
+    var highlighted = pythonMode(txt);
+    highlighted = add_line_numbers(highlighted);
     // Make page and section titles bold and page title larger
     highlighted = highlighted.replace(/_TITLE_BEGIN_/, '<span class="w3-large"><b>');
     highlighted = highlighted.replace(/_TITLE_END_/, '</b></span>');
@@ -96,7 +103,19 @@ function w3CodeColorize(x, lang) {
     });
     return highlighted;
   }
-  return x;
+
+  // CUSTOMIZATION
+  function add_line_numbers(highlighted) {
+    var line_number = 1;
+    var span = '<span class="w3-text-gray w3-tiny">';
+    highlighted = highlighted.replace(/<br>/g, function (match) {
+      line_number++;
+      var number = line_number + ((line_number < 10) ? ".&nbsp;" : ".");
+      return "<br>" + span + number + " </span>";
+    });
+    return span + "1.&nbsp; </span>" + highlighted;
+  }
+
   function extract(str, start, end, func, repl) {
     var s, e, d = "", a = [];
     while (str.search(start) > -1) {
