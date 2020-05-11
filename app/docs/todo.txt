@@ -2,7 +2,6 @@
 - fix EN manual
 - show error by adding a comment at the end of the instruction, ex # <= ERROR!
 - refactor program.py
-- run program on enter down
 - convert nl to br in text tooltip
 - alway show the calulator state
 - improve tooltips, add paragraphs..., explain about input_data

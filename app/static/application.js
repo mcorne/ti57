@@ -89,13 +89,13 @@ function save_input_data() {
     values = input_data.innerText.trim();
     if (!values) {
         input_data.innerText = 0; // must enter something to be able to edit
-        return;
+        return true;
     }
 
     values = values.replace(/\s+/g, " ");
     values = values.split(" ");
     if (!validate_input_data(values)) {
-        return;
+        return false;
     }
 
     ti_instructions.value = ti_instructions.value.replace(/^( *[\d.e-]+(?=[ \n\r]))/igm, function (match, p1) {
@@ -114,6 +114,8 @@ function save_input_data() {
     if (ti_instructions.style.display == "none") {
         document.getElementById("highlighted").innerHTML = w3CodeColorize(ti_instructions.value, "tiinstruction");
     }
+
+    return true;
 }
 
 // https://www.w3schools.com/js/js_cookies.asp
@@ -134,6 +136,19 @@ function set_highlight_edit() {
     } else {
         edit.style.display = 'none';
         highlight.style.display = 'inline-block';
+    }
+}
+
+// https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp
+function submit_on_enter_key(event) {
+    if (event.keyCode === 13) {
+        // This is the enter key, cancel the default action, submit the form
+        if (event.preventDefault) {
+            event.preventDefault();
+        }
+        if (save_input_data()) {
+            document.getElementById('program').submit();
+        }
     }
 }
 
