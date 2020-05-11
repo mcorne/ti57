@@ -91,7 +91,7 @@ function w3CodeColorize(x, lang) {
       return '<a href="' + "/static/docs/" + p1.replace(/&nbsp;/g, " ") + p2 + '">' + p1 + "</a>";
     });
     // Make HTML links and replace "&nbsp;" with spaces, ex. [https://en.wikipedia.org/wiki/TI-57 TI-57]
-    highlighted = highlighted.replace(/\[([^ ]+) +([^\]]+)\]/g, function (match, p1, p2) {
+    highlighted = highlighted.replace(/\[(http[^ ]+) +([^\]]+)\]/g, function (match, p1, p2) {
       return '<a href="' + p1 + '">' + p2.replace(/&nbsp;/g, " ") + "</a>";
     });
     return highlighted;
