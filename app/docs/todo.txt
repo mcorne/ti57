@@ -2,9 +2,13 @@
 - fix EN manual
 - show error by adding a comment at the end of the instruction, ex # <= ERROR!
 - refactor program.py
-- filter non numbers from the display register
 - run program on enter down
 - convert nl to br in text tooltip
+- alway show the calulator state
+- improve tooltips, add paragraphs..., explain about input_data
+- display  line number in highlighted program and python
+- fix 1.05EE01 that returns invalid token (<string>, line 28) because it translates into x = 01
+- fix 1.5EE1 STO 0 that stores 1 in mem0 instead of 15, 1.5EE1= STO 0 works though
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!

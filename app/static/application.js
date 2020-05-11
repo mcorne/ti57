@@ -77,6 +77,45 @@ function open_sidebar() {
     document.getElementById("sidebar").style.display = "block";
 }
 
+function save_input_data() {
+    var index = 0;
+    var input_data = document.getElementById("input_data");
+    var replacement;
+    var ti_instructions = document.getElementById("ti_instructions");
+    var values;
+
+    document.getElementById("input_data_message").style.display = "none";
+
+    values = input_data.innerText.trim();
+    if (!values) {
+        input_data.innerText = 0; // must enter something to be able to edit
+        return;
+    }
+
+    values = values.replace(/\s+/g, " ");
+    values = values.split(" ");
+    if (!validate_input_data(values)) {
+        return;
+    }
+
+    ti_instructions.value = ti_instructions.value.replace(/^( *[\d.e-]+(?=[ \n\r]))/igm, function (match, p1) {
+        if (typeof values[index] == "undefined") {
+            // There is nothing to replace with, pass the match
+            replacement = p1;
+        } else {
+            // Replace the match with the register value with same index
+            // Change scientific notation "e" to "ee", leave "ee" unchanged
+            replacement = values[index].replace(/(e)+/i, "$1$1");
+        }
+        index++;
+        return replacement;
+    });
+
+    if (ti_instructions.style.display == "none") {
+        document.getElementById("highlighted").innerHTML = w3CodeColorize(ti_instructions.value, "tiinstruction");
+    }
+}
+
 // https://www.w3schools.com/js/js_cookies.asp
 function set_cookie(name, value, exdays = 30) {
     var d = new Date();
@@ -114,19 +153,6 @@ function toggle_highlight_edit() {
     }
 }
 
-function toggle_history_register() {
-    var display_register = document.getElementById("display_register");
-    var update_instructions = document.getElementById("update_instructions");
-
-    toggle_x_y('display_history_show', 'display_register_show', 'display_register', 'display_history');
-
-    if (display_register.style.display == "none") {
-        update_instructions.style.display = 'none';
-    } else {
-        update_instructions.style.display = 'inline-block';
-    }
-}
-
 function toggle_x_y(button_x_id, button_y_id, target_x_id, target_y_id = null) {
     var button_x = document.getElementById(button_x_id);
     var button_y = document.getElementById(button_y_id);
@@ -152,26 +178,15 @@ function toggle_x_y(button_x_id, button_y_id, target_x_id, target_y_id = null) {
     }
 }
 
-function update_instructions() {
-    var display_register = document.getElementById("display_register");
-    var index = 0;
-    var replacement;
-    var ti_instructions = document.getElementById("ti_instructions");
-    var values = display_register.innerText.replace(/ +/g, " ").split(" ");
-
-    ti_instructions.value = ti_instructions.value.replace(/^( *[\d.]+(?=[ \n\r]))/gm, function (match, p1) {
-        if (typeof values[index] == "undefined") {
-            // There is nothing to replace with, pass the match
-            replacement = p1;
-        } else {
-            // Replace the match with the register value with same index
-            replacement = values[index];
+function validate_input_data(values) {
+    for (value of values) {
+        if (isNaN(value.replace(/ee/i, "e"))) { // Change scientific notation "ee" to "e"
+            var message = document.getElementById("input_data_message");
+            message.innerText = "Invalid Number: " + value;
+            message.style.display = "block";
+            return false;
         }
-        index++;
-        return replacement;
-    });
-
-    if (ti_instructions.style.display == "none") {
-        document.getElementById("highlighted").innerHTML = w3CodeColorize(ti_instructions.value, "tiinstruction");
     }
+
+    return true;
 }

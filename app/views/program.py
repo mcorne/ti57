@@ -42,7 +42,7 @@ def index():
             calculator_state = get_calculator_state()
             form.calculator_state.data = json.dumps(calculator_state)
             if "error" in calculator_state and calculator_state["error"]:
-                flash(calculator_state["error"], "error")
+                flash(calculator_state["error"])
         else:
             program = request.args.get("program", "introduction")
             with open(f"app/programs/{program}.txt", "r") as file:
@@ -53,9 +53,9 @@ def index():
                 else:
                     form.instruction_not_with_python.data = False
     except FileNotFoundError:
-        flash("Invalid program name", "error")
+        flash("Invalid program name")
     except Exception as e:
-        flash(e, "error")
+        flash(e)
 
     template = render_template(
         "program/index.html",

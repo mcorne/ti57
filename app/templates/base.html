@@ -50,17 +50,12 @@
     <script type="text/javascript" src="{{ url_for('static', filename='application.js') }}"></script>
 
     <div class="w3-panel">
-        {% for category, message in get_flashed_messages(with_categories=true) %}
-        {% if category == "error" %}
-        <div class="w3-panel w3-pale-red">
-            <p>{{ message }}</p>
+        {% for message in get_flashed_messages() %}
+        <div class="w3-panel w3-pale-red w3-padding-large">
+            {{ message }}
         </div>
-        {% else %}
-        <div class="w3-panel w3-pale-green">
-            <p>{{ message }}</p>
-        </div>
-        {% endif %}
         {% endfor %}
+        <div id="input_data_message" class="w3-panel w3-pale-red w3-padding-large" style="display: none"></div>
 
         {% block content %}{% endblock %}
     </div>

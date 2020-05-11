@@ -12,23 +12,14 @@
             In the Python code, the X register corresponds to the variable "x", and the display history is stored in the "regx" list.
             ''') }}
 
-        <span class="w3-right">
-            <span id="update_instructions">
-                <a class="link" href="javascript: update_instructions()" title="Update the Instructions">
-                    <i class="fas fa-save"></i>
-                </a>
-                <span class="w3-hide-small">&nbsp;</span>
-            </span>
-
-            {% if calculator_state.regx is defined and calculator_state.regx %}
-            {{ m.toggle_buttons('display_register_show', 'display_history_show', 'History', 'Current', "toggle_history_register()", right=False) }}
-            {% endif %}
-
-        </span>
+        {% if calculator_state.regx is defined and calculator_state.regx %}
+        {{ m.toggle_buttons('display_register_show', 'display_history_show', 'History', 'Current',
+            "toggle_x_y('display_history_show', 'display_register_show', 'display_register', 'display_history')") }}
+        {% endif %}
     </div>
 
     <div id="display_register" class="w3-panel w3-white">
-        <span class="w3-right" contenteditable="true">
+        <span id="input_data" class="w3-right" contenteditable="true" onblur="save_input_data()">
             {{ calculator_state.fixed_x if calculator_state.fixed_x is defined else 0 }}
         </span>
     </div>
@@ -59,8 +50,8 @@
             ''') }}
 
         <span class="w3-right">
-            <a class="link" href="{{ request.url }}" title="Refresh the Program">
-                <i class="fas fa-redo"></i>
+            <a class="link" href="{{ request.url }}" title="Reload the Program">
+                <i class="fas fa-sync-alt"></i>
             </a>
             <span class="w3-hide-small">&nbsp;</span>
             <a class="link" href="javascript: erase_instructions()" title="Erase the Program">
