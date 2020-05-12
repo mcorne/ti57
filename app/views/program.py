@@ -23,26 +23,19 @@ bp = Blueprint("program", __name__)
 
 @bp.route("/", methods=("GET", "POST"))
 def index():
-    calculator_state = {}
     py_code = ""
     ti_instructions = ""
+    translator = Translator()
     form = ProgramForm()
     try:
         if form.validate_on_submit():
             ti_instructions = form.ti_instructions.data
-            translator = Translator()
             py_code = translator.generate_py_code(
                 ti_instructions, form.instruction_not_with_python.data
             )
-            with open("app/.~test_generated.py", "w") as file:  # TODO: remove !!!
-                file.write(py_code)
             exec(py_code, globals())
             init_calculator_state(json.loads(form.calculator_state.data))
             run_program()
-            calculator_state = get_calculator_state()
-            form.calculator_state.data = json.dumps(calculator_state)
-            if "error" in calculator_state and calculator_state["error"]:
-                flash(calculator_state["error"])
         else:
             program = request.args.get("program", "introduction")
             with open(f"app/programs/{program}.txt", "r") as file:
@@ -52,10 +45,23 @@ def index():
                     form.instruction_not_with_python.data = True
                 else:
                     form.instruction_not_with_python.data = False
+                py_code = translator.generate_py_code(
+                    ti_instructions, form.instruction_not_with_python.data
+                )
+                init_calculator_state()
     except FileNotFoundError:
         flash("Invalid program name")
     except Exception as e:
         flash(e)
+
+    calculator_state = get_calculator_state()
+    form.calculator_state.data = json.dumps(calculator_state)
+    if "error" in calculator_state and calculator_state["error"]:
+        flash(calculator_state["error"])
+
+    # Save file for debugging purposes
+    # with open("app/.~test_generated.py", "w") as file:
+    #     file.write(py_code)
 
     template = render_template(
         "program/index.html",

@@ -230,8 +230,9 @@ class Translator:
 
         py_code = self.add_py_code_to_main_function(py_code)
         py_code = description + py_code
+        py_code = py_code.strip()
 
-        return py_code.strip()
+        return py_code
 
     def get_label_number(self, py_line):
         """Extract label numbers to be matched against subroutine calls."""

@@ -50,7 +50,7 @@
             ''') }}
 
         <span class="w3-right">
-            <a class="link" href="{{ request.url }}" title="Reload the Program">
+            <a class="link" href="{{ request.url }}" title="Reload the Program and clear the Calculator State">
                 <i class="fas fa-sync-alt"></i>
             </a>
             <span class="w3-hide-small">&nbsp;</span>
@@ -88,7 +88,7 @@
             {{ form.instruction_not_with_python.label }}
         </p>
         <p class="w3-center">
-            {{ form.run(class_='w3-button w3-amber w3-hover-indigo', title='You can also click on the cogwheel above') }}
+            {{ form.run(class_='w3-button w3-amber w3-hover-indigo', title='You can also click on the cogwheel above to run the Program') }}
         </p>
     </form>
 </div>
