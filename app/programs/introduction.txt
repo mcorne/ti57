@@ -1,19 +1,19 @@
 # Introduction to programming the TI-57 (Dice Roll)
 
-# The TI-57 is a programmable pocket calculator made by Texas Instruments around 1980.
-# It has a LED display, 50 program steps and 8 memory registers.
-# A TI-57 program is a set of basic instructions that can perform calculations,
+# The TI-57 Programmable Calculator was made by Texas Instruments around 1980.
+# It has a LED Display, 50 Program steps and 8 memory registers.
+# A TI-57 Program is a set of basic instructions that can perform calculations,
 # read or write memory, test a value, go to a program step to make a loop or call a subroutine.
 
-# The TI-57 program emulator (this web site) translates the instructions into Python then runs it.
-# The Python code can be checked below along with the calculator internal state.
+# The TI-57 Program Emulator (this web site) translates the instructions into Python then runs it.
+# The Python code can be checked below along with the Calculator Internal State.
 
 # The program following generates a random number (R) from 2 to 12 to simulate two dice rolls.
 # It implements the following algorithm:
 # A = Fract[(π + A)^8] where A = 0 for the very first run
 # R = Int(A X 6 + 1)
 
-# Now, hit the Run button below!
+# Now, HIT the RUN button below to roll the dice!
 
 # Source: [https://en.wikipedia.org/wiki/TI-57 TI-57] on Wikipedia
 
