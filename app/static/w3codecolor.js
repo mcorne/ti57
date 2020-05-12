@@ -68,11 +68,10 @@ function w3CodeColorize(x, lang) {
     highlighted = add_line_numbers(highlighted);
     return highlighted;
   }
-  // CUSTOMIZATION
+  // CUSTOMIZATION: new tiinstruction mode
   if (lang == "tiinstruction") { return tiinstructionMode(x); }
   return x;
 
-  // CUSTOMIZATION
   function tiinstructionMode(txt) {
     commentcolor = "#3f51b5"; // w3-indigo
     txt = txt.trim();
@@ -104,7 +103,7 @@ function w3CodeColorize(x, lang) {
     return highlighted;
   }
 
-  // CUSTOMIZATION
+  // CUSTOMIZATION: add line numbers
   function add_line_numbers(highlighted) {
     var line_number = 1;
     var span = '<span class="w3-text-gray w3-tiny">';

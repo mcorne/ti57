@@ -1,5 +1,9 @@
 
-// https://stackoverflow.com/questions/23451611/is-there-anyway-to-have-a-textarea-autofit-height-based-on-the-content-at-page
+/**
+ * Autofit the height of the program instruction text area according to the screen width.
+ *
+ * @see https://stackoverflow.com/questions/23451611/is-there-anyway-to-have-a-textarea-autofit-height-based-on-the-content-at-page
+ */
 function autofit_instructions_height() {
     var padding;
     var ti_instructions = document.getElementById("ti_instructions");
@@ -17,23 +21,9 @@ function autofit_instructions_height() {
     }
 }
 
-function close_sidebar() {
-    document.getElementById("overlay").style.display = "none";
-    document.getElementById("sidebar").style.display = "none";
-}
-
-function dropdown_click(name) {
-    var x = document.getElementById(name);
-
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-        x.previousElementSibling.className += " w3-indigo";
-    } else {
-        x.className = x.className.replace(" w3-show", "");
-        x.previousElementSibling.className = x.previousElementSibling.className.replace(" w3-indigo", "");
-    }
-}
-
+/**
+ * Erase the program instructions and resize the height of the text area according to the screen width.
+ */
 function erase_instructions() {
     var ti_instructions = document.getElementById("ti_instructions");
 
@@ -55,7 +45,13 @@ function erase_instructions() {
     ti_instructions.style.height = (screen.width * ratio) + "px";
 }
 
-// https://www.w3schools.com/js/js_cookies.asp
+//
+/**
+ * Return the value of a cookie.
+ *
+ * @param {string} name
+ * @source https://www.w3schools.com/js/js_cookies.asp
+ */
 function get_cookie(name) {
     var name = name + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -72,11 +68,10 @@ function get_cookie(name) {
     return "";
 }
 
-function open_sidebar() {
-    document.getElementById("overlay").style.display = "block";
-    document.getElementById("sidebar").style.display = "block";
-}
-
+/**
+ * Save the input data from the display register into the program instructions text area.
+ * Highligh the program instructions in highlighting is selected.
+ */
 function save_input_data() {
     var index = 0;
     var input_data = document.getElementById("input_data");
@@ -118,7 +113,14 @@ function save_input_data() {
     return true;
 }
 
-// https://www.w3schools.com/js/js_cookies.asp
+/**
+ * Set a cookie.
+ *
+ * @param {string} name
+ * @param {string} value
+ * @param {int} exdays
+ * @source https://www.w3schools.com/js/js_cookies.asp
+ */
 function set_cookie(name, value, exdays = 30) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -126,6 +128,9 @@ function set_cookie(name, value, exdays = 30) {
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
 
+/**
+ * Set the highlight or edit button depending on the corresponding cookie after loading the page.
+ */
 function set_highlight_edit() {
     var edit = document.getElementById("edit");
     var highlight = document.getElementById("highlight");
@@ -139,19 +144,24 @@ function set_highlight_edit() {
     }
 }
 
-// https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp
+//
+/**
+ * Save the input data into the program instructions then submit the form when the enter key is down.
+ * @param {Event} event
+ * @source https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp
+ */
 function submit_on_enter_key(event) {
     if (event.keyCode === 13) {
-        // This is the enter key, cancel the default action, submit the form
-        if (event.preventDefault) {
-            event.preventDefault();
-        }
+        event.preventDefault();
         if (save_input_data()) {
             document.getElementById('program').submit();
         }
     }
 }
 
+/**
+ * Toggle the highlighted program instructions or the textarea.
+ */
 function toggle_highlight_edit() {
     var highlighted = document.getElementById("highlighted");
     var ti_instructions = document.getElementById("ti_instructions");
@@ -168,6 +178,14 @@ function toggle_highlight_edit() {
     }
 }
 
+/**
+ * Toggle two buttons and their corresponding content block.
+ *
+ * @param {string} button_x_id
+ * @param {string} button_y_id
+ * @param {string} target_x_id
+ * @param {string} target_y_id
+ */
 function toggle_x_y(button_x_id, button_y_id, target_x_id, target_y_id = null) {
     var button_x = document.getElementById(button_x_id);
     var button_y = document.getElementById(button_y_id);
@@ -193,9 +211,14 @@ function toggle_x_y(button_x_id, button_y_id, target_x_id, target_y_id = null) {
     }
 }
 
+/**
+ * Validate that the input data is a list of valid numbers.
+ *
+ * @param {array} values
+ */
 function validate_input_data(values) {
     for (value of values) {
-        if (isNaN(value.replace(/ee/i, "e"))) { // Change scientific notation "ee" to "e"
+        if (isNaN(value.replace(/ee/i, "e"))) { // Change the scientific notation "ee" to "e"
             var message = document.getElementById("input_data_message");
             message.innerText = "Invalid Number: " + value;
             message.style.display = "block";
