@@ -1,4 +1,3 @@
-- document all classes and methods
 - fix EN manual
 - convert nl to br in text tooltip
 - improve tooltips, add paragraphs..., explain about input_data
