@@ -72,7 +72,7 @@
 <div id="{{ id }}" class="w3-modal">
     <div class="w3-modal-content w3-panel w3-round-xxlarge w3-indigo"
         onmouseout="document.getElementById('{{ id }}').style.display='none'">
-        <p>{{ text }}</p>
+        <p>{{ text|safe }}</p>
     </div>
 </div>
 {%- endmacro %}
