@@ -59,7 +59,7 @@ def index():
     if "error" in calculator_state and calculator_state["error"]:
         flash(calculator_state["error"])
 
-    # Save file for debugging purposes
+    # Save the Python code to a file, uncomment for debugging purposes.
     # with open("app/.~test_generated.py", "w") as file:
     #     file.write(py_code)
 

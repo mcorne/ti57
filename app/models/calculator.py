@@ -1,6 +1,6 @@
 import re
 from math import *
-from goto import with_goto
+from goto import with_goto  # pip install goto-statement
 
 
 @with_goto
@@ -13,6 +13,7 @@ def main():
 
 
 def degrees2dms(degrees):
+    """Convert decimal degrees to degrees, minutes, seconds."""
     degrees = float(degrees)
     is_positive = degrees >= 0
     if not is_positive:
@@ -30,6 +31,7 @@ def degrees2dms(degrees):
 
 
 def dms2degrees(dms):
+    """Convert degrees, minutes, seconds to decimal degrees."""
     match = re.fullmatch(
         r"(?P<sign>[+-])?(?P<degrees>[0-9]+)\.?(?P<minutes>[0-9]{1,2})?(?P<seconds>[0-9]{1,2})?(?P<remainder>[0-9]*)",
         str(dms),
@@ -59,6 +61,7 @@ def dms2degrees(dms):
 
 
 def fix(number):
+    """Round a number and/or convert it to the scientific notation."""
     global ee, rounding
     if ee:
         # The scientific notation is on
@@ -68,17 +71,24 @@ def fix(number):
             # Remove trailing 0's
             number = re.sub("0+E", "E", number)
         else:
+            # Round as exponent with the given precision
             number = f"{number:.{rounding}E}"
     elif rounding is not None:
+        # Rounding is on
         number = f"{number:.{rounding}f}"
+    else:
+        # No rounding
+        number = str(number)
     return number
 
 
-def grd2rad(number):
-    return (number / 200) * pi
+def grd2rad(gradian):
+    """Convert gradian to radian."""
+    return (gradian / 200) * pi
 
 
 def get_calculator_state():
+    """Return the calculator sate."""
     global ee, error, mem, regx, rounding, stack, unit, x
     return {
         "ee": ee,
@@ -94,8 +104,9 @@ def get_calculator_state():
 
 
 def init_calculator_state(state={}):
-    """Initialize the calculator state
+    """Initialize the calculator state.
 
+        Must be called before running the program, see run().
         ee       -- Scientific notation (EE)
         error    -- Syntax error etc.
         mem      -- Memories (STO)
@@ -116,11 +127,13 @@ def init_calculator_state(state={}):
     x = state["x"] if "x" in state else 0
 
 
-def rad2grd(number):
-    return (number / pi) * 200
+def rad2grd(radian):
+    """Convert radian to gradian."""
+    return (radian / pi) * 200
 
 
 def rad2unit(number):
+    """Convert radian to degree or gradian."""
     global unit
     number = float(number)
     if unit == "Deg":
@@ -131,18 +144,22 @@ def rad2unit(number):
 
 
 def run_program():
+    """Run the program (the entry point).
+       The calculator must be initialized beforehand, see init_calculator_state().
+    """
     global error, x
     try:
         main()
     except ZeroDivisionError:
         x = 9.9999999
-    except UserWarning:  # R/S
+    except UserWarning:  # R/S key
         pass
     except Exception as e:
         error = str(e)
 
 
 def unit2rad(number):
+    """Convert degree or gradian to radian."""
     global unit
     number = float(number)
     if unit == "Deg":
@@ -152,7 +169,7 @@ def unit2rad(number):
     return number
 
 
-# Example of program execution
+# Program execution, uncomment to run the file on its own.
 # init_calculator_state()
 # run_program()
 # calculator_state = get_calculator_state()
