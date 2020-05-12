@@ -4,7 +4,6 @@
 - improve tooltips, add paragraphs..., explain about input_data
 - fix 1.05EE01 that returns invalid token (<string>, line 28) because it translates into x = 01
 - fix 1.5EE1 STO 0 that stores 1 in mem0 instead of 15, 1.5EE1= STO 0 works though
-- add empty program or new, rename math to science, remove basic
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!
