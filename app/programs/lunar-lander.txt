@@ -5,9 +5,9 @@
 # Source: "Ordinateur de poche n°8.pdf#page=52", p. 54
 
 # Input Data
-130  STO 0 # Amount of fuel
-5000 STO 1 # Altitude
--100
+130     STO 0 # Amount of fuel
+5000    STO 1 # Altitude
+100 +/- STO 2 # Initial speed
 
 
 # Entry Point
