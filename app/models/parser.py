@@ -18,7 +18,7 @@ class Parser:
             self.init()
 
     def convert_key_to_pattern(self, key):
-        """Convert a key to a pattern, ex. STO NUMBER -> STO +[0-9]."""
+        """Convert a key to a pattern, ex. STO NUMBER -> STO +[0-7]."""
         # Escape metacharacters
         # Cannot use re.escape() that escapes spaces etc. depending on Python version!
         pattern = re.sub(Parser.METACHARACTERS, r"\\\g<0>", key)
@@ -29,7 +29,7 @@ class Parser:
             # Create a pattern to capture the instance number with a group name based on the original key
             # and a prefix so it can be found easily in the group dictionary, ex. "_KEY_STO_NUMBER".
             pattern = pattern.replace(
-                "NUMBER", f"(?P<_KEY_{key.replace(' ', '_')}>[0-9])"
+                "NUMBER", f"(?P<_KEY_{key.replace(' ', '_')}>[0-7])"
             )
         return pattern
 
@@ -70,7 +70,7 @@ class Parser:
         )
 
     def next_instruction(self):
-        """Yield the next instruction/key, this is the tokenizer (the entry point).
+        """Yield the next instruction/key, this is the tokenizer (the class entry point).
 
             Source: # See https://docs.python.org/3.8/library/re.html#writing-a-tokenizer
         """
@@ -122,7 +122,7 @@ class Parser:
             ti_instruction = self.process_key_type_instruction(ti_instruction, groups)
         elif type == "MISMATCH":
             raise Exception(
-                f"Syntax error: unexpected character: {value} on line {line} and column {column}"
+                f"Syntax error: unexpected character: {value} on line {line} and column {column} (highlight the program to show line numbers)"
             )
         elif type == "DOUBLE_NEWLINE":
             start = match.end()

@@ -68,7 +68,7 @@ def fix(number):
         if rounding is None:
             # Default to the calculator 7 digit precision
             number = f"{number:.7E}"
-            # Remove trailing 0's
+            # Remove trailing 0s
             number = re.sub("0+E", "E", number)
         else:
             # Round as exponent with the given precision

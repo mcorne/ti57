@@ -30,7 +30,7 @@ R/S
 STO 0
 RCL 0 X
 2nd Lbl 1
-INV 2nd Dsz # Decrease the number and test ?
+INV 2nd Dsz # Decrease the number and test?
 GTO 2       # If zero, go finish the multiplication
 RCL 0 X     # If not zero, multiply with the number
 GTO 1

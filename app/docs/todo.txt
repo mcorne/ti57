@@ -1,6 +1,9 @@
 - fix EN manual
 - fix 1.05EE01 that returns invalid token (<string>, line 28) because it translates into x = 01
 - fix 1.5EE1 STO 0 that stores 1 in mem0 instead of 15, 1.5EE1= STO 0 works though
+- add seed in introduction
+- fix return before label in subroutine, add try/catch, raise UserWarning('INV SBR')
+- fix NUMBER for mem/fix from 0 to 7 vs gto from 0 to 9, currently limited to 7
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!

@@ -14,16 +14,16 @@
 # Entry Point
 2nd Fix 2
 RCL 0
-SBR 1          # Call the calculation of the area of a square
+SBR 1          # Calculate the area of a square
 2nd Pause
 RCL 0
-SBR 3          # Call the calculation of the volume of a cube
+SBR 3          # Calculate the volume of a cube
 2nd Pause
 RCL 1
-SBR 2          # Call the calculation of the area of a circle
+SBR 2          # Calculate the area of a circle
 2nd Pause
 RCL 1
-SBR 4          # Call the calculation of the volume of a sphere
+SBR 4          # Calculate the volume of a sphere
 R/S
 
 # Subroutine 1: area of a square

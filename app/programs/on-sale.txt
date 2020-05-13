@@ -2,7 +2,7 @@
 
 # Take 25% off shoes selling for $14.95.
 # Then mark 13% off books selling for $6.00.
-# What are the new prices ?
+# What are the new prices?
 # Answer: $11.21 for the shoes and $5.22 for the books.
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=54", p. 3-11

@@ -143,7 +143,7 @@ class Translator:
                 py_lines = original.copy()
                 break
             if "# R/S" in py_line:
-                # This is a line starting with "raise UserWarning('R/S') # R/S "
+                # This is a line starting with "raise UserWarning('R/S') # R/S"
                 key = "R/S"
                 ti_instruction = instruction_set[key]
                 ti_instruction.update(value=key)
@@ -242,7 +242,7 @@ class Translator:
 
     def get_subroutine_number(self, py_line):
         """Extract the subroutine number."""
-        match = re.match(r"sbr_(\d)", py_line)
+        match = re.search(r"sbr_(\d)", py_line)
         if match:
             return match.group(1)
 

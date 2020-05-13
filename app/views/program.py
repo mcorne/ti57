@@ -1,4 +1,5 @@
 import json
+from random import random
 
 from flask import (
     Blueprint,
@@ -21,8 +22,16 @@ from app.models.translator import Translator
 bp = Blueprint("program", __name__)
 
 
+def fix_ti_instructions(ti_instructions):
+    # Replace the seed number used in some programs to initialize a random generator
+    seed = round(random(), 6)
+    ti_instructions = ti_instructions.replace("0.123456 STO", str(seed) + " STO")
+    return ti_instructions
+
+
 @bp.route("/", methods=("GET", "POST"))
 def index():
+    calculator_state = {}
     py_code = ""
     ti_instructions = ""
     translator = Translator()
@@ -36,10 +45,12 @@ def index():
             exec(py_code, globals())
             init_calculator_state(json.loads(form.calculator_state.data))
             run_program()
+            calculator_state = get_calculator_state()
         else:
             program = request.args.get("program", "introduction")
             with open(f"app/programs/{program}.txt", "r") as file:
                 ti_instructions = file.read()
+                ti_instructions = fix_ti_instructions(ti_instructions)
                 form.ti_instructions.data = ti_instructions
                 if request.cookies.get("instruction_not_with_python", "0") == "1":
                     form.instruction_not_with_python.data = True
@@ -49,12 +60,12 @@ def index():
                     ti_instructions, form.instruction_not_with_python.data
                 )
                 init_calculator_state()
+                calculator_state = get_calculator_state()
     except FileNotFoundError:
         flash("Invalid program name")
     except Exception as e:
         flash(e)
 
-    calculator_state = get_calculator_state()
     form.calculator_state.data = json.dumps(calculator_state)
     if "error" in calculator_state and calculator_state["error"]:
         flash(calculator_state["error"])

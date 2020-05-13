@@ -1,0 +1,52 @@
+# Hi-Lo
+
+# How many guesses will you take to discover a secret number between 0 and 1023?
+# The calculator displays +1 if your guess is too large or -1 if your guess is too small.
+# It adds four traling 0s if you guess correctly.
+# You can then continue to guess the next secret number that is already in store!
+
+# Source: "Training with your EC-4000 Programmable Calculator.pdf#page=214", p. 11-11
+
+# Input Data
+0     STO 2          # Your guess
+
+# Entry Point
+0 STO 7
+RCL 1
+2nd x=t              # No tries yet?
+SBR 1                # Generate secret
+SBR 4                # Test the guess
+R/S
+
+# Subroutine: generate the secret number
+2nd Lbl 1
+RCL 0
+2nd x=t              # No seed?
+0.123456 STO 0       # Set the seed
+2nd pi + RCL 0 =     # i = π + A
+y^x 8 = INV 2nd Int  # A = Fract[i^8]
+STO 0
+X 1023 + 1 = 2nd Int # R = Int(A X 1023 + 1)
+STO 6                # Secret
+INV SBR
+
+# Subroutine: test the guess
+2nd Lbl 4
+RCL 6 STO 7
+1 SUM 1              # Increment the tries
+RCL 2
+2nd Pause
+INV 2nd x>=t         # Guess < Secret?
+GTO 5                # Yes, too low
+2nd x=t              # Guess = Secret?
+GTO 7                # Yes, correct
+1 =                  # +1, too high
+GTO 6                # INV SBR quick fix
+2nd Lbl 5
+1 +/- =              # -1, too low
+GTO 6                # INV SBR quick fix
+2nd Lbl 7            # Good guess
+0 STO 1              # Reset the tries
+RCL 7  X 10000 =     # Add four 0s
+2nd Lbl 6            # INV SBR quick fix
+INV SBR
