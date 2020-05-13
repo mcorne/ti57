@@ -129,7 +129,7 @@
 {% endif %}
 
 <script type="text/javascript">
-    window.addEventListener("keydown", submit_on_enter_key); // not on keyup so no newline shows up
+    document.getElementById('input_data').addEventListener("keydown", submit_on_enter_key); // not on keyup so no newline shows up
     window.addEventListener("load", autofit_instructions_height);
     window.addEventListener("load", set_highlight_edit);
     window.addEventListener("resize", autofit_instructions_height);

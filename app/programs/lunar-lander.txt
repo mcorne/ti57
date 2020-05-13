@@ -1,0 +1,34 @@
+# Hi-Lo
+
+# ...
+
+# Source: "Ordinateur de poche n°8.pdf#page=52", p. 54
+
+# Input Data
+130  STO 0 # Amount of fuel
+5000 STO 1 # Altitude
+-100
+
+
+# Entry Point
+10 X RCL 2 + (2 X RCL 4 - 16)
+STO 3
+SUM 2
+X 5 =
+SUM 1
+2nd Lbl 1
+RCL 1
+INV 2nd x>=t
+GTO 0
+: 4 INV 2nd log + RCL 2 |x| 2nd Int =
+R/S
+STO 4
+INV SUM 0
+RCL 0
+2nd Pause
+RST
+2nd Lbl 0
+X RCL 3 : 5 +/- + RCL 2 x^2 =
+INV x^2
+2nd Int
+R/S
