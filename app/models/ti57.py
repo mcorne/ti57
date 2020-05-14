@@ -8,7 +8,7 @@ instruction_set = eval(
 "CE"               : {"ti_code": "  14"  , "action": "py_line"            , "py_line": "x = 0"},
 "CLR"              : {"ti_code": "  15"  , "action": "clear"},
 "2nd log"          : {"ti_code": "  18"  , "action": "py_line"            , "py_line": "x = log10(x)"},
-"INV 2nd log"      : {"ti_code": "- 18"  , "action": "py_line"            , "py_line": "x = pow(x, 10)"},
+"INV 2nd log"      : {"ti_code": "- 18"  , "action": "py_line"            , "py_line": "x = pow(10, x)"},
 "2nd Ct"           : {"ti_code": "  19"  , "action": "py_line"            , "py_line": "mem[7] = 0"},
 "INV 2nd Ct"       : {"ti_code": "- 19"  , "action": "clear_all"},
 "2nd tan"          : {"ti_code": "  20"  , "action": "py_line"            , "py_line": "x = tan(unit2rad(x))"},

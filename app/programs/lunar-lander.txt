@@ -5,30 +5,55 @@
 # Source: "Ordinateur de poche n°8.pdf#page=52", p. 54
 
 # Input Data
+10      STO 4 # Consumption per 10s
+RCL 5
+INV 2nd x=t
+GTO 0
 130     STO 0 # Amount of fuel
 5000    STO 1 # Altitude
 100 +/- STO 2 # Initial speed
 
-
 # Entry Point
+2nd Lbl 0
+RCL 4 STO 7
+RCL 0 INV 2nd x>=t
+GTO 2
+1 SUM 5
+RCL 4
+INV SUM 0
+RCL 0
+INV 2nd Fix 2nd Pause 2nd Fix 4
 10 X RCL 2 + (2 X RCL 4 - 16)
 STO 3
 SUM 2
 X 5 =
 SUM 1
-2nd Lbl 1
-RCL 1
-INV 2nd x>=t
-GTO 0
-: 4 INV 2nd log + RCL 2 |x| 2nd Int =
-R/S
-STO 4
-INV SUM 0
-RCL 0
+RCL 1 : 10000 + RCL 2 2nd |x| 2nd Int =
+STO 6
+RCL 2 STO 7
+0 INV 2nd x>=t
+GTO 4
+RCL 6 +/- STO 6
+2nd Lbl 4
+RCL 6
 2nd Pause
-RST
-2nd Lbl 0
-X RCL 3 : 5 +/- + RCL 2 x^2 =
-INV x^2
-2nd Int
+2nd Fix 4
+RCL 1 STO 7
+0 INV 2nd x>=t
+GTO 3
+0 STO 5
+5 STO 7
+RCL 2 2nd |x|
+2nd x>=t
+GTO 1
+1111.1111
+R/S
+2nd Lbl 1
+9999.9999
+R/S
+2nd Lbl 2
+5555.5555
+R/S
+2nd Lbl 3
+RCL 6
 R/S
