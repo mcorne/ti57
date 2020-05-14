@@ -7,6 +7,7 @@
 - fix NUMBER for mem/fix from 0 to 7 vs gto from 0 to 9 currently limited to 7
 - fix negative number in input data, ex. -1 -> 1 +/-
 - add list of keys, in program tooltip (?), or maybe only the keys not obvious to type ex. x^2, V2, and also / *
+- add addition of comments to instructions in program tooltip
 - enforce optionally the 50 steps limit
 - fix pattern to allow STO6 for STO 6
 
