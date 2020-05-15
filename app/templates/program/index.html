@@ -59,6 +59,31 @@
 <div class="w3-panel w3-card-4 w3-light-grey">
     <div class="w3-margin-top w3-margin-bottom">
         {{ m.section_title('Program') }}
+        {{ m.question_mark('instructions_display_tooltip') }}
+        {{ m.tooltip('instructions_display_tooltip', '''
+            <b>Program Keys</b><br>
+            A program is a set of instructions written with the TI-57 keys.
+            You will find the list of keys in the Reference Guide (link at the bottom of the page).<br>
+            <br>
+            You can use <b>X</b> or <b>*</b> for multiplications and <b>:</b> or <b>/</b> for divisions.<br>
+            <br>
+            Most keys are simple to enter, some require some clarification
+            (on the left, how to enter the key, on the right, which key it represents):<br>
+            2nd&nbspCt&nbsp;=&nbsp;2nd&nbspC.t |
+            x<>t&nbsp;=&nbsp;x↔t |
+            x^2&nbsp;=&nbsp;x² |
+            Vx&nbsp;=&nbsp;√ |
+            2nd&nbspDMS&nbsp;=&nbsp;2nd&nbspD.MS |
+            2nd&nbspP->R&nbsp;=&nbsp;2nd&nbspP→R |
+            2nd&nbsppi&nbsp;=&nbsp;2nd&nbspπ |
+            y^x&nbsp;=&nbsp;y<sup>x</sup> |
+            2nd&nbsps2&nbsp;=&nbsp;2nd&nbspσ2 |
+            2nd&nbspS+&nbsp;=&nbsp;2nd&nbspΣ+ |
+            2nd&nbspx&nbsp;=&nbsp;2nd&nbsp<span style="text-decoration: overline;">x</span>.<br>
+            <br>
+            <b>Comments</b><br>
+            The Emulator accepts comments starting with a <b>#</b>.
+        ''') }}
 
         <span class="w3-right">
             <a class="link" href="{{ request.url }}" title="Reload the Program and clear the Calculator State">

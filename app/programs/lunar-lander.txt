@@ -48,7 +48,7 @@ GTO 1              # Descending
 2nd Lbl 4
 0 STO 5
 # V = √(V² - H X ΔV)/5
-RCL 2 x^2 - RCL 1 X RCL 3 : 5 = V2 2nd Int
+RCL 2 x^2 - RCL 1 X RCL 3 : 5 = Vx 2nd Int
 STO 6
 SBR 3
 2nd Pause
