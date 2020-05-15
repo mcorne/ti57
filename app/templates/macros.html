@@ -16,7 +16,7 @@
 {%- endmacro %}
 
 {% macro question_mark(tooltip_id) -%}
-<i class="fas fa-question-circle" onmouseover="document.getElementById('{{ tooltip_id }}').style.display='block'"></i>
+{{ tooltip_icon(tooltip_id, 'fas fa-question-circle') }}
 {%- endmacro %}
 
 {% macro round_button_doc(filename, text, title=None) -%}
@@ -75,4 +75,8 @@
         <p>{{ text|safe }}</p>
     </div>
 </div>
+{%- endmacro %}
+
+{% macro tooltip_icon(tooltip_id, icon) -%}
+<i class="{{ icon }}" onmouseover="document.getElementById('{{ tooltip_id }}').style.display='block'"></i>
 {%- endmacro %}

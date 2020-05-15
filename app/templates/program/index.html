@@ -10,19 +10,28 @@
             <i>In the Python code, the X Register corresponds to the variable "x".</i><br>
             <br>
             The <b>Display History</b> shows the values of the Display Register each time the Program encounters the "2nd Pause" key.
-            The real Calculator would pause for a second whereas the Emulator keeps track of the X Register.
-            <i>In the Python code, the Display History is stored in the "regx" list.</i><br>
-            <br>
-            <i class="far fa-lightbulb"></i> The <b>Display Register is editable</b>.
-            Enter a list of numbers separated by spaces to change the Input Data.
-            Then click elsewhere to see the effect of the change in the Program.
-            Or hit the enter key right after to run the Program with the new Input Data.
+            The real Calculator would pause for a second while the Emulator keeps track of the X Register.
+            <i>In the Python code, the Display History is stored in the "regx" list.</i>
             ''') }}
 
-        {% if calculator_state.regx is defined and calculator_state.regx %}
-        {{ m.toggle_buttons('display_register_show', 'display_history_show', 'History', 'X Register',
+        <span class="w3-right">
+            {{ m.tooltip_icon('editable_display', 'fas fa-lightbulb') }}
+            {{ m.tooltip('editable_display', """
+                The <b>Display Register is editable</b>.
+                Enter a list of numbers separated by spaces to change the Input Data.
+                Then click elsewhere to see the effect of the change in the Program.
+                Or press the Enter key right after to run the Program with the new Input Data.
+                For example, suppose the Input Data begins with 10 STO 1 20 STO 2 and you want to replace it with 11 STO 1 22 STO 2.
+                You can either edit the program directly or enter 11 22 in the Display Register.
+                It is handy especially with games.
+                """) }}
+
+            {% if calculator_state.regx is defined and calculator_state.regx %}
+            <span class="w3-hide-small">&nbsp;</span>
+            {{ m.toggle_buttons('display_register_show', 'display_history_show', 'History', 'X Register',
             "toggle_x_y('display_history_show', 'display_register_show', 'display_register', 'display_history')") }}
-        {% endif %}
+            {% endif %}
+        </span>
     </div>
 
     <div id="display_register" class="w3-panel w3-white">

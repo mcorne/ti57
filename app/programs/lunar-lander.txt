@@ -1,14 +1,14 @@
 # Lunar Lander
 
 # You are in a Lunar Lander at an altitude of 5 000 m with 130 L left of gas.
-# Your job is to touch the surface at less than 5 m/s by adjusting the consumption every 10 sec.
+# Your job is to touch the ground at less than 5 m/s by adjusting the consumption every 10 sec.
 # So, go ahead! Keep or change the consumption then run the program!
 # The calculator will display the current speed and height in one number, ex. -96.4020.
 # That means you are descending at 96 m/s at an altitude of 4 020 m.
 # Click on the history to check how much gas you have left.
 # You will know you have hit the ground when you see a number ending in .0000.
 # You landed safely if the speed is under 5 m/s, otherwise you crashed!
-# You can also see 9999.9999 if you are trying to consume more than you have left...
+# Lastly, if you see 9999.9999, that means you are trying to consume more than you have left...
 # Good luck!
 
 # Source: "Ordinateur de poche n°8.pdf#page=52", p. 54
