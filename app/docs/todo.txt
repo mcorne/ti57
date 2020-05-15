@@ -10,6 +10,7 @@
 - add addition of comments to instructions in program tooltip
 - enforce optionally the 50 steps limit
 - fix pattern to allow STO6 for STO 6
+- add tip icon in display section to tell about the display that is editable
 
 - handle TI-57 II,  include ti codes that have changed
 2nd x!

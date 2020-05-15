@@ -71,8 +71,8 @@ def index():
         flash(calculator_state["error"])
 
     # Save the Python code to a file, uncomment for debugging purposes.
-    # with open("app/.~test_generated.py", "w") as file:
-    #     file.write(py_code)
+    with open("app/.~test_generated.py", "w") as file:
+        file.write(py_code)
 
     template = render_template(
         "program/index.html",

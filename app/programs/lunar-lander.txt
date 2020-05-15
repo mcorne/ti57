@@ -1,69 +1,75 @@
 # Lunar Lander
 
-# You are in a Lunar Lander at an altitude of 5 000 m with 130 kg left of propellant.
+# You are in a Lunar Lander at an altitude of 5 000 m with 130 L left of gas.
 # Your job is to touch the surface at less than 5 m/s by adjusting the consumption every 10 sec.
-# So, go ahead! Keep or change the consumption rate then hit return!
+# So, go ahead! Keep or change the consumption then run the program!
 # The calculator will display the current speed and height in one number, ex. -96.4020.
 # That means you are descending at 96 m/s at an altitude of 4 020 m.
-# Click on the history to check how much propellant you have left.
-# At some point, 1111.1111 will show if you landed safely or 9999.9999 if you crashed!
-# You can also see 5555.5555 if you are trying to consume more than you have left...
+# Click on the history to check how much gas you have left.
+# You will know you have hit the ground when you see a number ending in .0000.
+# You landed safely if the speed is under 5 m/s, otherwise you crashed!
+# You can also see 9999.9999 if you are trying to consume more than you have left...
 # Good luck!
 
 # Source: "Ordinateur de poche n°8.pdf#page=52", p. 54
 
 # Input Data
-10      STO 4      # Consumption rate (n)
-RCL 5
-INV 2nd x=t        # Tries != 0?
-GTO 0              # Yep, descending
-                   # Nope (new game)
-130     STO 0      # Propellant (P)
+10      STO 4      # Consumption (n)
+RCL 5 INV 2nd x=t  # Game on?
+GTO 0              # Descending
+# New game
+130     STO 0      # Gas (G)
 5000    STO 1      # Altitude (H)
 100 +/- STO 2      # Speed (V)
+1       STO 5      # Game on
+2nd Fix 4
 
-# Entry Point
+# Entry Goint
 2nd Lbl 0
-RCL 4 STO 7
-RCL 0 INV 2nd x>=t # P < n?
-GTO 2              # Not enough propellant
-1 SUM 5            # Add one try
-RCL 4
-INV SUM 0          # P -= n
+SBR 2              # Check gas left (add-on)
+RCL 4              # n
+INV SUM 0          # G -= n
 RCL 0
 INV 2nd Fix 2nd Pause 2nd Fix 4
 10 X RCL 2         # 10V
 + (2 X RCL 4 - 16) # ΔV = 2n - 16
+STO 3
 SUM 2              # V += Δv
 X 5 =              # ΔH = 10V + 5ΔV
 SUM 1              # H += ΔH
 # V.H = H/1000 + Int(|V|), ex. 96.4020
 RCL 1 : 10000 + RCL 2 2nd |x| 2nd Int =
 STO 6
-RCL 2 STO 7
-0 INV 2nd x>=t     # V >= 0?
-GTO 4              # Going up!
-RCL 6 +/- STO 6    # V.H = -V.H
+SBR 3              # Fix V.H sign (add-on)
+RCL 1 INV 2nd x>=t # H < 0?
+GTO 4              # Game over!
+INV 2nd x=t        # H != 0?
+GTO 1              # Descending
 2nd Lbl 4
-RCL 6
-2nd Pause
-2nd Fix 4
-RCL 1 STO 7
-0 INV 2nd x>=t     # H < 0?
-GTO 3              # Not landed yet
 0 STO 5
-5 STO 7
-RCL 2 2nd |x|
-2nd x>=t           # |V| >= 5?
-GTO 1              # Too fast!
-1111.1111          # Landed!
+# V = √(V² - H X ΔV)/5
+RCL 2 x^2 - RCL 1 X RCL 3 : 5 = V2 2nd Int
+STO 6
+SBR 3
+2nd Pause
 R/S
 2nd Lbl 1
-9999.9999          # Crashed!
+RCL 6
+2nd Pause
 R/S
+
+# Subroutine: check gas left
 2nd Lbl 2
-5555.5555          # Not enough propellant
+RCL 0 - RCL 4 =
+2nd x>=t           # G - n >= 0?
+INV SBR
+9999.9999          # Not enough gas
 R/S
+
+# Subroutine: fix V.H sign
 2nd Lbl 3
-RCL 6              # Still descending...
-R/S
+RCL 2 2nd x>=t     # V >= 0?
+INV SBR              # Going up!
+RCL 6 +/- STO 6    # V.H = -V.H
+RCL 6
+INV SBR
