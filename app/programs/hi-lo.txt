@@ -22,7 +22,8 @@ R/S
 2nd Lbl 1
 RCL 0
 2nd x=t              # No seed?
-0.123456 STO 0       # Set the seed
+0.123456             # Set the seed
+STO 0
 2nd pi + RCL 0 =     # i = π + A
 y^x 8 = INV 2nd Int  # A = Fract[i^8]
 STO 0

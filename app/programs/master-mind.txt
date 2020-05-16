@@ -1,0 +1,77 @@
+# Master Mind
+
+# How many guesses will you take to discover a 4-digit number with digits ranging from 1 to 6?
+# Enter a number then press Return!
+# The calculator will return the number of digits placed correctly.
+# Keep trying until you get 4 and check the History to narrow down the number.
+# You can then continue to guess the next number that is already in store!
+
+# Input Data
+0 STO 3             # Your guess
+2nd Pause
+
+# Data Preprocessing (27 steps)
+0 STO 7
+RCL 1
+INV 2nd x=t         # Seed != 0?
+GTO 0
+0.123456 STO 1      # Set the seed
+
+2nd Lbl 0
+4 STO 7
+RCL 6
+INV 2nd x=t         # Digit found != 4?
+GTO 1               # Keep trying
+0 STO 2             # New game
+
+2nd Lbl 1
+0 STO 7
+RCL 2
+2nd x=t             # Secret = 0?
+SBR 4               # Generate secret
+
+# Entry Point  (40 steps)
+4 STO 0             # Digit position
+0 STO 6             # Number of correctly placed digits
+RCL 2 STO 4         # Copy the target number
+2nd Lbl 2
+# Shift one digit of the target number right
+RCL 4 : 10 = - 2nd Int STO 4 = # Fractional part
+STO 5
+# Shift one digit of the guessed number right
+RCL 3 : 10 = - 2nd Int STO 3 = # Fractional part
+INV SUM 5           # Digit difference (Fract difference)
+0.01 STO 7
+RCL 5 2nd |x|       # Digit difference
+2nd x>=t            # Digit difference > 0.01?
+GTO 3
+1 SUM 6             # Add on digit correctly placed
+2nd Lbl 3
+2nd Dsz             # Digits left?
+GTO 2
+RCL 6               # Correctly placed digits
+2nd Pause
+R/S
+
+# Subroutine: generate a 4-digit random number (13 steps)
+2nd Lbl 4
+4 STO 0             # Number of digits
+0 STO 2             # Initialize the number
+2nd Lbl 5
+10 2nd Prd 2        # Shift previous digits left
+SBR 6
+SUM 2               # Add a digit to the number
+2nd Dsz             # Digits left?
+GTO 5               # Yep
+INV SBR             # 4-digit number ready
+
+# Subroutine: generate a random digit from 1 to 6 (17 steps)
+2nd Lbl 6
+2nd pi + RCL 1 =    # i = π + A
+y^x 8 = INV 2nd Int # A = Fract[i^8]
+STO 1
+X 6 + 1 = 2nd Int   # R = Int(A X 6 + 1)
+INV SBR
+
+# Unfortunately, this program would not fit into a real calculator that has 50 steps only.
+# The Entry Point and Subroutines require 70 steps!

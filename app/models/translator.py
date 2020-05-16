@@ -15,7 +15,7 @@ class Translator:
     # TI instruction length:
     # Median = 7 (ex. "2nd Dsz")
     # Q3     = 9 (ex. "2nd Exc 0")
-    # Max    = 14 (ex. "INV 2nd Prod 0")
+    # Max    = 13 (ex. "INV 2nd Prd 0")
     TI_INSTRUCTION_LENGTH = 9
 
     def __init__(self):

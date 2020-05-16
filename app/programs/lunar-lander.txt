@@ -24,7 +24,7 @@ GTO 0              # Descending
 1       STO 5      # Game on
 2nd Fix 4
 
-# Entry Goint
+# Entry Point
 2nd Lbl 0
 SBR 2              # Check gas left (add-on)
 RCL 4              # n
@@ -69,7 +69,7 @@ R/S
 # Subroutine: fix V.H sign
 2nd Lbl 3
 RCL 2 2nd x>=t     # V >= 0?
-INV SBR              # Going up!
+INV SBR            # Going up!
 RCL 6 +/- STO 6    # V.H = -V.H
 RCL 6
 INV SBR
