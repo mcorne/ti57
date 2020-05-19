@@ -10,14 +10,14 @@
 # The following program generates a random number (R) from 2 to 12 to simulate two dice rolls.
 # Here is the algorithm: R = Int(A X 6 + 1) where A = Fract[(π + A)^8] and A = 0 to start.
 
-# Now, HIT THE RUN BUTTON below to roll the dice!
+# Run the Program to roll the dice then check the details in the History.
 
 # Source: [https://en.wikipedia.org/wiki/TI-57 TI-57] on Wikipedia
 
 # Data Input
 2 STO 0             # Number of dice
 
-# Data Processing
+# Data Processing (25 steps)
 0 STO 1             # Reset the total
 2nd Lbl 1
 2nd pi + RCL 2 =    # i = π + A
@@ -29,4 +29,5 @@ SUM 1               # Update the total
 2nd DSZ             # Dice left to roll?
 GTO 1               # Yes, roll the next dice
 RCL 1               # No, display the total
+2nd Pause
 R/S

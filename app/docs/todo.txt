@@ -4,7 +4,5 @@
 - fix in hi-lo exception on return before label in subroutine:
   in instruction set: change INV SBR to goto.end, add label.end at the end
   add post treatment to replace goto.end with return and remove label.end if no return before a label
-- fix NUMBER for mem/fix from 0 to 7 vs gto from 0 to 9 currently limited to 7
 - fix negative number in input data, ex. -1 -> 1 +/-
 - fix pattern to allow STO6 for STO 6
-- add note on data preprocessing, postprocessing etc. in program tooltip
