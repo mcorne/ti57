@@ -8,7 +8,7 @@
 # Data Input
 5 STO 0     # Number
 
-# Entry Point
+# Data Processing
 RCL 0 X
 2nd Lbl 1
 INV 2nd Dsz # Decrease the number and test?

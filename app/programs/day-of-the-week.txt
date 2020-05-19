@@ -21,7 +21,7 @@
 76 STO 4    # Year
 SBR 1
 
-# Entry Point
+# Data Processing
 RCL 1
 + (2.6 X RCL 2 - 0.2) 2nd Int
 - 2 X RCL 3

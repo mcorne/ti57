@@ -8,7 +8,7 @@
 # Data Input
 10 STO 7     # Number of seconds
 
-# Entry Point
+# Data Processing
 2nd Lbl 0
 CE           # Reset the display register
 1 SUM 1      # Add one second

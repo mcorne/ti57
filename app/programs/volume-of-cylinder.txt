@@ -9,7 +9,7 @@
 10 STO 1    # Diameter
 4  STO 2    # Height
 
-# Entry Point
+# Data Processing
 2nd Fix 2
 RCL 1 : 2 = # Radius =  diameter/2
 x^2 X 2nd pi # Area = π x radius²

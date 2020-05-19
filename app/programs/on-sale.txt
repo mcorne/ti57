@@ -11,7 +11,7 @@
 0.25 STO 3 # Discount
 14.95      # Shoe price
 
-# Entry Point
+# Data Processing
 2nd Fix 2
 # New price = old price X (1 - old price)
 X ( 1 - RCL 3 ) =

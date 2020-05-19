@@ -14,7 +14,7 @@
 100   STO 5 # Hit Range
 
 
-# Entry Point
+# Data Processing
 2nd Fix 2
 1 SUM 4
 80000 STO 1

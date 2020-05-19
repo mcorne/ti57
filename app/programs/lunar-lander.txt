@@ -24,7 +24,7 @@ GTO 0              # Descending
 1       STO 5      # Game on
 2nd Fix 4
 
-# Entry Point
+# Data Processing
 2nd Lbl 0
 SBR 2              # Check gas left (add-on)
 RCL 4              # n

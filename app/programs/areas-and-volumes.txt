@@ -11,7 +11,7 @@
 6.17 STO 0     # Side
 2.98 STO 1     # Radius
 
-# Entry Point
+# Data Processing
 2nd Fix 2
 RCL 0
 SBR 1          # Calculate the area of a square

@@ -10,7 +10,7 @@
 0.06 STO 2   # Interest rate (i)
 10   STO 7   # Number of years
 
-# Entry Point
+# Data Processing
 2nd Fix 2
 2nd Lbl 1
 CE           # Reset the display register

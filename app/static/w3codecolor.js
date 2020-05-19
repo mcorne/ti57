@@ -78,7 +78,7 @@ function w3CodeColorize(x, lang) {
     // Capture page title
     txt = txt.replace(/^(# +.+)$/m, '_TITLE_BEGIN_$1_TITLE_END_');
     // Capture section titles
-    txt = txt.replace(/^(# +(?:Data Input|Data Preprocessing|Entry Point|Subroutine).*)$/gm, '_SECTION_BEGIN_$1_SECTION_END_');
+    txt = txt.replace(/^(# +(?:Data Input|Data Preprocessing|Data Processing|Subroutine).*)$/gm, '_SECTION_BEGIN_$1_SECTION_END_');
     // Replace spaces with "&nbsp;" in instructions up to be begining of comments
     txt = txt.replace(/^([^#]+#)/gm, function (match, p1) {
       return p1.replace(/ /g, "&nbsp;");

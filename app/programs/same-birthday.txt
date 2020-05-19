@@ -10,7 +10,7 @@
 # Data Input
 5              # Number of people
 
-# Entry Point
+# Data Processing
 2nd Fix 1
 - 1 =          # Max number of loops
 x<>t           # Store in memory 7

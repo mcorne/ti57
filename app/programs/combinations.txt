@@ -10,7 +10,7 @@
 52 STO 5    # Cards in the deck (n)
 5  STO 6    # Cards in a hand (r)
 
-# Entry Point
+# Data Processing
 2nd Fix 0
 RCL 5
 SBR 3       # n!

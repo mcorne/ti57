@@ -19,7 +19,7 @@ SBR 0
 59    STO 3    # 60th month
 SBR 0
 
-# Entry Point
+# Data Processing
 R/S
 
 2nd Lbl 0

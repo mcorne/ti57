@@ -10,7 +10,7 @@
 # Data Input
 0     STO 2          # Your guess
 
-# Entry Point
+# Data Processing
 0 STO 7
 RCL 1
 2nd x=t              # No tries yet?

@@ -30,7 +30,7 @@ RCL 2
 2nd x=t             # Secret = 0?
 SBR 4               # Generate secret
 
-# Entry Point  (40 steps)
+# Data Processing  (40 steps)
 4 STO 0             # Digit position
 0 STO 6             # Number of correctly placed digits
 RCL 2 STO 4         # Copy the target number
@@ -74,4 +74,4 @@ X 6 + 1 = 2nd Int   # R = Int(A X 6 + 1)
 INV SBR
 
 # Unfortunately, this program would not fit into a real calculator that has 50 steps only.
-# The Entry Point and Subroutines require 70 steps!
+# The Data Processing and Subroutines require 70 steps!

@@ -7,7 +7,7 @@
 # Data Input
 1 # Number to start from
 
-# Entry Point
+# Data Processing
 2nd Pause
 + 2 = 2nd Pause
 + 3 = 2nd Pause

@@ -155,7 +155,7 @@ class Translator:
         """Extract the description at the begining of the program."""
         description = ""
         input_data_pieces = ti_instructions.split("# Data Input", 1)
-        entry_point_pieces = ti_instructions.split("# Entry Point", 1)
+        entry_point_pieces = ti_instructions.split("# Data Processing", 1)
 
         if len(input_data_pieces) != 1:
             # There is input data, assuming this is a description above
@@ -167,7 +167,7 @@ class Translator:
         ):
             # There is the entry point and before the input data if any, assuming this is a description above
             description, ti_instructions = entry_point_pieces
-            ti_instructions = "# Entry Point" + ti_instructions
+            ti_instructions = "# Data Processing" + ti_instructions
 
         if description and re.search(
             r"^ *[^#].*?$", re.sub(r"\n+", r"\n", description), re.M

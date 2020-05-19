@@ -8,7 +8,7 @@
 # Data Input
 10                   # Diameter
 
-# Entry Point
+# Data Processing
 2nd Fix 2
 : 2 =                # Radius = diameter/2
 STO 1

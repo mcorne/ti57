@@ -17,7 +17,7 @@
 # Data Input
 2 STO 0             # Number of dice
 
-# Entry Point
+# Data Processing
 0 STO 1             # Reset the total
 2nd Lbl 1
 2nd pi + RCL 2 =    # i = π + A
