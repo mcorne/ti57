@@ -22,7 +22,7 @@ RCL 5 - RCL 6 =
 SBR 3       # n! - r!
 STO 3
 # n! / (n! - r!) / r!
-RCL 1 / ( RCL 3 X RCL 2 ) =
+RCL 1 / (RCL 3 X RCL 2) =
 =
 R/S
 

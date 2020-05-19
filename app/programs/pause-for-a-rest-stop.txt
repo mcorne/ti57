@@ -1,13 +1,14 @@
 # Pause for a Rest Stop
 
 # Add the digits 1 through 9 and pause for each result before the next digit is added.
+# Run the Program then check the details in the History.
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=56", p. 3-13
 
 # Data Input
 1 # Number to start from
 
-# Data Processing
+# Data Processing (33 steps)
 2nd Pause
 + 2 = 2nd Pause
 + 3 = 2nd Pause

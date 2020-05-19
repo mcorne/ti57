@@ -4,13 +4,12 @@
 # Enter a number in the Display Register then press Return!
 # The calculator will return the number of digits placed correctly.
 # Keep trying until you get 4 and check the History to narrow down the number.
-# You can then continue to guess the next number that is already in store!
 
 # Data Input
 0 STO 3             # Your guess
 2nd Pause
 
-# Data Preprocessing (27 steps)
+# Data Preprocessing
 0 STO 7
 RCL 1
 INV 2nd x=t         # Seed != 0?
@@ -30,7 +29,7 @@ RCL 2
 2nd x=t             # Secret = 0?
 SBR 4               # Generate secret
 
-# Data Processing  (40 steps)
+# Data Processing  (70 steps)
 4 STO 0             # Digit position
 0 STO 6             # Number of correctly placed digits
 RCL 2 STO 4         # Copy the target number
@@ -53,7 +52,7 @@ RCL 6               # Correctly placed digits
 2nd Pause
 R/S
 
-# Subroutine: Generate a 4-digit random number (13 steps)
+# Subroutine: Generate a 4-digit random number
 2nd Lbl 4
 4 STO 0             # Number of digits
 0 STO 2             # Initialize the number
@@ -65,7 +64,7 @@ SUM 2               # Add a digit to the number
 GTO 5               # Yep
 INV SBR             # 4-digit number ready
 
-# Subroutine: Generate a random digit from 1 to 6 (17 steps)
+# Subroutine: Generate a random digit from 1 to 6
 2nd Lbl 6
 2nd pi + RCL 1 =    # i = π + A
 y^x 8 = INV 2nd Int # A = Fract[i^8]
@@ -73,5 +72,4 @@ STO 1
 X 6 + 1 = 2nd Int   # R = Int(A X 6 + 1)
 INV SBR
 
-# Unfortunately, this program would not fit into a real calculator that has 50 steps only.
-# The Data Processing and Subroutines require 70 steps!
+# Note that this program would not fit in a real calculator!

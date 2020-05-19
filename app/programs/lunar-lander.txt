@@ -24,13 +24,13 @@ GTO 0              # Descending
 1       STO 5      # Game on
 2nd Fix 4
 
-# Data Processing
+# Data Processing (58 steps excl. Add-ons)
 2nd Lbl 0
-SBR 2              # Check gas left (add-on)
+SBR 2              # Check gas left (Add-on)
 RCL 4              # n
 INV SUM 0          # G -= n
 RCL 0
-INV 2nd Fix 2nd Pause 2nd Fix 4
+INV 2nd Fix 2nd Pause 2nd Fix 4 # (Add-on)
 10 X RCL 2         # 10V
 + (2 X RCL 4 - 16) # ΔV = 2n - 16
 STO 3
@@ -38,9 +38,9 @@ SUM 2              # V += Δv
 X 5 =              # ΔH = 10V + 5ΔV
 SUM 1              # H += ΔH
 # V.H = H/1000 + Int(|V|), ex. 96.4020
-RCL 1 : 10000 + RCL 2 2nd |x| 2nd Int =
+RCL 1 : 4 INV 2nd log + RCL 2 2nd |x| 2nd Int =
 STO 6
-SBR 3              # Fix V.H sign (add-on)
+SBR 3              # Fix V.H sign (Add-on)
 RCL 1 INV 2nd x>=t # H < 0?
 GTO 4              # Game over!
 INV 2nd x=t        # H != 0?
@@ -58,7 +58,7 @@ RCL 6
 2nd Pause
 R/S
 
-# Subroutine: Check gas left
+# Subroutine: Check gas left (Add-on)
 2nd Lbl 2
 RCL 0 - RCL 4 =
 2nd x>=t           # G - n >= 0?
@@ -66,10 +66,12 @@ INV SBR
 9999.9999          # Not enough gas
 R/S
 
-# Subroutine: Fix V.H sign
+# Subroutine: Fix V.H sign (Add-on)
 2nd Lbl 3
 RCL 2 2nd x>=t     # V >= 0?
 INV SBR            # Going up!
 RCL 6 +/- STO 6    # V.H = -V.H
 RCL 6
 INV SBR
+
+# Note that this program would not fit into a real calculator even excluding Add-ons!

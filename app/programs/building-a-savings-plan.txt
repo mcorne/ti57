@@ -27,7 +27,7 @@ R/S
 1 SUM 3 RCL 3  # month + 1
 2nd Pause
 # PMT X ((1+i)^n - 1) : i
-RCL 1 X ( ( 1 + RCL 2 ) y^x RCL 3 - 1 ) : RCL 2 =
+RCL 1 X ((1 + RCL 2 ) y^x RCL 3 - 1) : RCL 2 =
 2nd Pause
 - RCL 1 X RCL 3 =
 2nd Pause

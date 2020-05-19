@@ -1,9 +1,8 @@
 # On Sale
 
 # Take 25% off shoes selling for $14.95.
-# Then mark 13% off books selling for $6.00.
-# What are the new prices?
-# Answer: $11.21 for the shoes and $5.22 for the books.
+# What is the new price?
+# Answer: $11.21.
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=54", p. 3-11
 
@@ -11,8 +10,8 @@
 0.25 STO 3 # Discount
 14.95      # Shoe price
 
-# Data Processing
+# Data Processing (9 steps)
 2nd Fix 2
 # New price = old price X (1 - old price)
-X ( 1 - RCL 3 ) =
+X (1 - RCL 3) =
 R/S
