@@ -14,7 +14,7 @@
 
 # Source: "Frequently Asked Questions in Mathematics.pdf#page=64", p. 63
 
-# Input Data
+# Data Input
 4  STO 1    # Day (1-31)
 7  STO 2    # Month (1-12)
 17 STO 3    # Century

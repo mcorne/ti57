@@ -18,12 +18,12 @@
             {{ m.tooltip_icon('editable_display', 'fas fa-lightbulb') }}
             {{ m.tooltip('editable_display', """
                 The <b>Display Register is editable</b>.
-                Enter a list of numbers separated by spaces to change the Input Data.
+                Enter a list of numbers separated by spaces to change the Data.
                 Then click elsewhere to see the effect of the change in the Program.
-                Or press the Enter key right after to run the Program with the new Input Data.
-                For example, suppose the Input Data begins with 10 STO 1 20 STO 2 and you want to replace it with 11 STO 1 22 STO 2.
+                Or press the Enter key to run the Program with the new Data.
+                For example, suppose the Data begins with 10 STO 1 20 STO 2 30 STO 3 and you want to replace the first two with 11 STO 1 22 STO 2.
                 You can either edit the program directly or enter 11 22 in the Display Register.
-                It is handy especially with games.
+                This is handy especially with games.
                 """) }}
 
             {% if calculator_state.regx is defined and calculator_state.regx %}

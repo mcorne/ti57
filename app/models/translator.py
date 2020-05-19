@@ -154,13 +154,13 @@ class Translator:
     def extract_description(self, ti_instructions):
         """Extract the description at the begining of the program."""
         description = ""
-        input_data_pieces = ti_instructions.split("# Input Data", 1)
+        input_data_pieces = ti_instructions.split("# Data Input", 1)
         entry_point_pieces = ti_instructions.split("# Entry Point", 1)
 
         if len(input_data_pieces) != 1:
             # There is input data, assuming this is a description above
             description, ti_instructions = input_data_pieces
-            ti_instructions = "# Input Data" + ti_instructions
+            ti_instructions = "# Data Input" + ti_instructions
 
         if len(entry_point_pieces) != 1 and (
             not description or len(entry_point_pieces[0]) < len(description)

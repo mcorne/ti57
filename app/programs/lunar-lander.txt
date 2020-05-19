@@ -13,7 +13,7 @@
 
 # Source: "Ordinateur de poche n°8.pdf#page=52", p. 54
 
-# Input Data
+# Data Input
 10      STO 4      # Consumption (n)
 RCL 5 INV 2nd x=t  # Game on?
 GTO 0              # Descending

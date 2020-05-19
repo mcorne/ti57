@@ -7,7 +7,7 @@
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=54", p. 3-11
 
-# Input Data
+# Data Input
 0.25 STO 3 # Discount
 14.95      # Shoe price
 

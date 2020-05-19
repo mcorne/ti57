@@ -8,7 +8,7 @@
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=210", p. 11-7
 
-# Input Data
+# Data Input
 40    STO 0 # Angle (0-90)
 20000 STO 3 # Distance (1 000-40 000)
 100   STO 5 # Hit Range

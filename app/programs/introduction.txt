@@ -14,7 +14,7 @@
 
 # Source: [https://en.wikipedia.org/wiki/TI-57 TI-57] on Wikipedia
 
-# Input Data
+# Data Input
 2 STO 0             # Number of dice
 
 # Entry Point

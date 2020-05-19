@@ -5,7 +5,7 @@
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=80", p. 4-10
 
-# Input Data
+# Data Input
 1000 STO 1   # Initial amount
 0.06 STO 2   # Interest rate (i)
 10   STO 7   # Number of years

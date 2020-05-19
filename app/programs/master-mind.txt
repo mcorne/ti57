@@ -6,7 +6,7 @@
 # Keep trying until you get 4 and check the History to narrow down the number.
 # You can then continue to guess the next number that is already in store!
 
-# Input Data
+# Data Input
 0 STO 3             # Your guess
 2nd Pause
 

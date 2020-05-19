@@ -4,7 +4,7 @@
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=56", p. 3-13
 
-# Input Data
+# Data Input
 1 # Number to start from
 
 # Entry Point

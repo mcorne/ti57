@@ -6,7 +6,7 @@
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=126", p. 6-14
 
-# Input Data
+# Data Input
 52 STO 5    # Cards in the deck (n)
 5  STO 6    # Cards in a hand (r)
 
