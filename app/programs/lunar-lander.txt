@@ -5,7 +5,7 @@
 # So, go ahead! Keep or change the consumption then run the program!
 # The calculator will display the current speed and height in one number, ex. -96.4020.
 # That means you are descending at 96 m/s at an altitude of 4 020 m.
-# Click on the history to check how much gas you have left.
+# Check how much gas you have left in the History.
 # You will know you have hit the ground when you see a number ending in .0000.
 # You landed safely if the speed is under 5 m/s, otherwise you crashed!
 # Lastly, if you see 9999.9999, that means you are trying to consume more than you have left...
@@ -58,7 +58,7 @@ RCL 6
 2nd Pause
 R/S
 
-# Subroutine: check gas left
+# Subroutine: Check gas left
 2nd Lbl 2
 RCL 0 - RCL 4 =
 2nd x>=t           # G - n >= 0?
@@ -66,7 +66,7 @@ INV SBR
 9999.9999          # Not enough gas
 R/S
 
-# Subroutine: fix V.H sign
+# Subroutine: Fix V.H sign
 2nd Lbl 3
 RCL 2 2nd x>=t     # V >= 0?
 INV SBR            # Going up!

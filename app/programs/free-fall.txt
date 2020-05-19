@@ -2,13 +2,14 @@
 
 # What is the distance in feet an object travels in free fall every second for 10 seconds?
 # Answer: 16 feet after 1 sec, 64 after 2, 144 after 3 etc.
+# Run the Program then check the details in the History.
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=74", p. 4-4
 
 # Data Input
 10 STO 7     # Number of seconds
 
-# Data Processing
+# Data Processing (17 steps)
 2nd Lbl 0
 CE           # Reset the display register
 1 SUM 1      # Add one second

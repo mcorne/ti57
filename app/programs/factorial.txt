@@ -1,14 +1,14 @@
 # Factorial
 
-# What is the factorial of 5? 10?
-# Answer: 120 for 5 and 3 628 800 for 10.
+# What is the factorial of 5?
+# Answer: 120.
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=87", p. 4-17
 
 # Data Input
 5 STO 0     # Number
 
-# Data Processing
+# Data Processing (12 steps)
 RCL 0 X
 2nd Lbl 1
 INV 2nd Dsz # Decrease the number and test?
@@ -17,6 +17,7 @@ RCL 0 X     # If not zero, multiply with the number
 GTO 1
 2nd Lbl 2
 1 =
+R/S
 
 # Note that the following code is more efficient but does work after the translation into python.
 # The decreased number is added to the stack after each loop instead of being multiplied.
@@ -25,5 +26,3 @@ GTO 1
 # 2nd Dsz   # Decrease the number and test?
 # GTO 1     # If not zero, go back to the begining
 # 1 =       # If not zero, finish multiplication
-
-R/S

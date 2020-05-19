@@ -5,8 +5,9 @@
 # Answer: $110.38 including $0.38 of earned interest after a the first full month.
 # Then $166.16 including $1.16 etc., and finally $686.01 including $26.01 after a year.
 # How much cash will you have in 5 years (60 months)?
-# Answer: 4083.64, 783.64
-# Tip! Amount = PMT X ((1+i)^n - 1) : i.
+# Answer: 4083.64 including 783.64.
+# Run the Program then check the details in the History.
+# Formula: Amount = PMT X ((1+i)^n - 1) : i.
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=159", p. 8-8
 
@@ -18,10 +19,9 @@
 SBR 0
 59    STO 3    # 60th month
 SBR 0
-
-# Data Processing
 R/S
 
+# Data Processing (33 steps)
 2nd Lbl 0
 2nd Fix 2
 1 SUM 3 RCL 3  # month + 1

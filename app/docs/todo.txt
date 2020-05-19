@@ -8,4 +8,6 @@
 - fix negative number in input data, ex. -1 -> 1 +/-
 - display number of steps, total and for input data, entry point, subroutine
 - fix pattern to allow STO6 for STO 6
-- fix seed as it cannot be done after a test since you need 7 steps for .123456
+- rename tip in programs into formula
+- simplify description extraction, split on "# Data"
+- add note on data preprocessing, postprocessing etc. in program tooltip

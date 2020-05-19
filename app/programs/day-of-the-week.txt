@@ -5,7 +5,7 @@
 # So, what day of the week was July 4, 1776?
 # Answer: a Thursday (the 4th day of the week).
 
-# Tip! W = (k + Int(2.6m − 0.2) −2C + Y + Int(Y/4) + Int(C/4)) mod 7
+# Formula: W = (k + Int(2.6m − 0.2) −2C + Y + Int(Y/4) + Int(C/4)) mod 7
 # k = Day (1 to 31)
 # m = Month (March=1, etc.)
 # C = Century, ex. 19 for 1987
@@ -19,9 +19,24 @@
 7  STO 2    # Month (1-12)
 17 STO 3    # Century
 76 STO 4    # Year
-SBR 1
 
-# Data Processing
+# Data Preprocessing: Convert the month to Mar=1, Apr=2 etc.
+2 INV SUM 2 # Month - 2
+1 x<>t
+RCL 2
+2nd x>=t    # Month >= 1?
+GTO 1       # Mar=1 to Dec=10
+12 SUM 2    # Jan=11, Feb=12
+1 INV SUM 4 # Year - 1
+1 +/- x<>t
+RCL 4
+INV 2nd x=t # Year != -1?
+GTO 1       # Year OK
+99 STO 4    # Year = 99
+1 INV SUM 3 # Century - 1
+
+# Data Processing (46 steps)
+2nd Lbl 1
 RCL 1
 + (2.6 X RCL 2 - 0.2) 2nd Int
 - 2 X RCL 3
@@ -30,20 +45,3 @@ RCL 1
 + (RCL 3 : 4) 2nd Int =
 : 7 = INV 2nd Int X 7 = 2nd Fix 0 2nd |x|
 R/S
-
-# Subroutine 1: convert the month to Mar=1, Apr=2 etc.
-2nd Lbl 1
-2 INV SUM 2 # Month - 2
-1 x<>t
-RCL 2
-2nd x>=t    # Month >= 1?
-INV SBR     # Mar=1 to Dec=10
-12 SUM 2    # Jan=11, Feb=12
-1 INV SUM 4 # Year - 1
-1 +/- x<>t
-RCL 4
-INV 2nd x=t # Year != -1?
-INV SBR     # Year OK
-99 STO 4    # Year = 99
-1 INV SUM 3 # Century - 1
-INV SBR

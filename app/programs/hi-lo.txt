@@ -1,16 +1,24 @@
 # Hi-Lo
 
 # How many guesses will you take to discover a secret number between 0 and 1023?
-# The calculator displays +1 if your guess is too large or -1 if your guess is too small.
-# It adds four traling 0s if you guess correctly.
-# You can then continue to guess the next secret number that is already in store!
+# Enter a number in the Display Register then press Return.
+# The calculator displays +1 if your guess is too large, -1 if too small or 0 if correct!
+# Check the History to narrow down the number.
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=214", p. 11-11
 
 # Data Input
 0     STO 2          # Your guess
 
-# Data Processing
+# Data Preprocessing
+0 STO 7
+RCL 0
+INV 2nd x=t         # Seed != 0?
+GTO 0
+0.123456 STO 0      # Set the seed
+2nd Lbl 0
+
+# Data Processing (50 steps)
 0 STO 7
 RCL 1
 2nd x=t              # No tries yet?
@@ -18,12 +26,8 @@ SBR 1                # Generate secret
 SBR 4                # Test the guess
 R/S
 
-# Subroutine: generate the secret number
+# Subroutine: Generate the secret number
 2nd Lbl 1
-RCL 0
-2nd x=t              # No seed?
-0.123456             # Set the seed
-STO 0
 2nd pi + RCL 0 =     # i = π + A
 y^x 8 = INV 2nd Int  # A = Fract[i^8]
 STO 0
@@ -31,7 +35,7 @@ X 1023 + 1 = 2nd Int # R = Int(A X 1023 + 1)
 STO 6                # Secret
 INV SBR
 
-# Subroutine: test the guess
+# Subroutine: Test the guess
 2nd Lbl 4
 RCL 6 STO 7
 1 SUM 1              # Increment the tries
@@ -48,6 +52,5 @@ GTO 6                # INV SBR quick fix
 GTO 6                # INV SBR quick fix
 2nd Lbl 7            # Good guess
 0 STO 1              # Reset the tries
-RCL 7  X 10000 =     # Add four 0s
 2nd Lbl 6            # INV SBR quick fix
 INV SBR

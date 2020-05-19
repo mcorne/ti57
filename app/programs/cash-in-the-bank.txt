@@ -1,7 +1,8 @@
 # Cash in the Bank
 
-# How much a $1000 will grow each year for the next 10 years at a 6% interest rate?
+# How much will $1000 grow each year for the next 10 years at a 6% interest rate?
 # Answer: $1060.0 after 1 year, $1123.6 after 2, $1191.02 after 3 etc.
+# Run the Program then check the details in the History.
 
 # Source: "Training with your EC-4000 Programmable Calculator.pdf#page=80", p. 4-10
 
@@ -10,7 +11,7 @@
 0.06 STO 2   # Interest rate (i)
 10   STO 7   # Number of years
 
-# Data Processing
+# Data Processing (24 steps)
 2nd Fix 2
 2nd Lbl 1
 CE           # Reset the display register

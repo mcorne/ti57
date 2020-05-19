@@ -3,7 +3,8 @@
 {% block content %}
 <div class="w3-panel w3-card-4 w3-light-grey">
     <div class="w3-margin-top w3-margin-bottom">
-        {{ m.section_title('Display') }}
+        <span class="w3-hide-small w3-hide-medium">{{ m.section_title('Display Register') }}</span>
+        <span class="w3-hide-large">{{ m.section_title('Display') }}</span>
         {{ m.question_mark('display_tooltip') }}
         {{ m.tooltip('display_tooltip', '''
             The <b>Display Register</b> or X Register shows the result after the execution of a Program.
@@ -29,7 +30,8 @@
             {% if calculator_state.regx is defined and calculator_state.regx %}
             <span class="w3-hide-small">&nbsp;</span>
             {{ m.toggle_buttons('display_register_show', 'display_history_show', 'History', 'X Register',
-            "toggle_x_y('display_history_show', 'display_register_show', 'display_register', 'display_history')") }}
+                "toggle_x_y('display_history_show', 'display_register_show', 'display_register', 'display_history')",
+                right=False) }}
             {% endif %}
         </span>
     </div>
