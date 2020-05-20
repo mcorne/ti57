@@ -1,5 +1,7 @@
 import re
 
+from flask import current_app
+
 from app.models.parser import Parser
 from app.models.ti57 import instruction_set
 
@@ -121,7 +123,7 @@ class Translator:
 
     def add_py_code_to_main_function(self, py_code):
         """Add the Python code translated from the TI instructions to the main function."""
-        with open("app/models/calculator.py", "r") as file:
+        with open(current_app.root_path + "/models/calculator.py", "r") as file:
             calculator = file.read()
         # Revert possible formatter erronous fix
         calculator = calculator.replace("label.label_rst", "label .label_rst")

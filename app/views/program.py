@@ -3,6 +3,7 @@ from random import random
 
 from flask import (
     Blueprint,
+    current_app,
     flash,
     make_response,
     render_template,
@@ -47,7 +48,7 @@ def index():
             calculator_state = get_calculator_state()
         else:
             program = request.args.get("program", "introduction")
-            with open(f"app/programs/{program}.txt", "r") as file:
+            with open(current_app.root_path + f"/programs/{program}.txt", "r") as file:
                 ti_instructions = file.read()
                 ti_instructions = fix_ti_instructions(ti_instructions)
                 form.ti_instructions.data = ti_instructions
@@ -70,8 +71,8 @@ def index():
         flash(calculator_state["error"])
 
     # Save the Python code to a file, uncomment for debugging purposes.
-    # with open("app/.~test_generated.py", "w") as file:
-    #     file.write(py_code)
+    with open(current_app.root_path + "/.~test_generated.py", "w") as file:
+        file.write(py_code)
 
     template = render_template(
         "program/index.html",
