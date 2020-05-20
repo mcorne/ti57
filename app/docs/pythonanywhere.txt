@@ -6,16 +6,16 @@
 git clone https://github.com/mcorne/ti57.git
 
 # Make virtual env
-mkvirtualenv --python=/usr/bin/python3.8 env
+mkvirtualenv --python=/usr/bin/python3.6 env
 
 # Install packages
 pip install flask
 pip install flask-wtf
-pip install goto-statement
+pip install goto-statement # not working with 3.8
 
 # Web Tab > Add a new web app
 # Select Manual configuration
-# Select Python 3.8
+# Select Python 3.6
 # Set Source code: /home/ti57/ti57
 # Set virtual env: /home/ti57/.virtualenvs/env
 
