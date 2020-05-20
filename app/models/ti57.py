@@ -83,7 +83,7 @@ instruction_set = eval(
                                                                             ]},
 "2nd Rad"          : {"ti_code": "  60"  , "action": "py_line"            , "py_line": "unit = 'Rad'"},
 "SBR NUMBER"       : {"ti_code": "  61 0", "action": "py_line"            , "py_line": "sbr_NUMBER()"},
-"INV SBR"          : {"ti_code": "- 61"  , "action": "py_line"            , "py_line": "return"},
+"INV SBR"          : {"ti_code": "- 61"  , "action": "py_line"            , "py_line": "goto .end"},
 "2nd x=t"          : {"ti_code": "  66"  , "action": "py_line"            , "py_line": "if x == mem[7]:"},
 "INV 2nd x=t"      : {"ti_code": "- 66"  , "action": "py_line"            , "py_line": "if x != mem[7]:"},
 "2nd Grad"         : {"ti_code": "  70"  , "action": "py_line"            , "py_line": "unit = 'Grd'"},

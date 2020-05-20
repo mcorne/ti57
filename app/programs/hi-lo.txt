@@ -46,11 +46,10 @@ GTO 5                # Yes, too low
 2nd x=t              # Guess = Secret?
 GTO 7                # Yes, correct
 1 =                  # +1, too high
-GTO 6                # INV SBR quick fix
+INV SBR
 2nd Lbl 5
 1 +/- =              # -1, too low
-GTO 6                # INV SBR quick fix
+INV SBR              #
 2nd Lbl 7            # Good guess
 0 STO 1              # Reset the tries
-2nd Lbl 6            # INV SBR quick fix
 INV SBR

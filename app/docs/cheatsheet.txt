@@ -12,7 +12,7 @@ source envwslubuntu/bin/activate
 pip install black
 pip install flask
 pip install flask-wtf
-pip install goto-statement
+pip install goto-statement # not working on 3.8
 pip install pylint
 
 -- run app

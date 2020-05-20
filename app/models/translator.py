@@ -92,6 +92,28 @@ class Translator:
         self.py_lines.append("ee = True")
         self.add_operation()
 
+    def add_end_labels(self, py_lines):
+        """Add an end label to each function."""
+        is_function_end = True
+        last = len(py_lines) - 1
+        for number, py_line in enumerate(reversed(py_lines)):
+            if py_line and py_line[0] != "#":
+                # This is not a blank line or a comment
+                if py_line[0:3] == "def":
+                    # This is a function definition
+                    is_function_end = True
+                elif is_function_end:
+                    if "goto .end" in py_line:
+                        # This is the last "INV SBR" (the end of the subroutine), replace the goto with the label
+                        py_lines[last - number] = py_line.replace(
+                            "goto .end ", "label .end"
+                        )
+                        is_function_end = False
+                    elif "raise UserWarning('R/S')" in py_line:
+                        # This is a subroutine finishing with "R/S", add the label
+                        py_lines[last - number] += "\n    label .end"
+                        is_function_end = False
+
     def add_function(self, py_lines, subroutine_numbers, py_line, fixed):
         """Add the function definition of a subroutine."""
         label_number = self.get_label_number(py_line)
@@ -213,6 +235,7 @@ class Translator:
         subroutine_numbers = self.extract_subroutine_numbers(py_lines)
         if subroutine_numbers:
             py_lines = self.add_functions(py_lines, subroutine_numbers)
+            self.add_end_labels(py_lines)
         py_lines = self.change_program_stop_to_return_in_main(py_lines)
 
         self.indent_lines(py_lines)
