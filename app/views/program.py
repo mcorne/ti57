@@ -9,7 +9,6 @@ from flask import (
     request,
     send_from_directory,
 )
-from flask_babel import _
 
 from app.forms import ProgramForm
 from app.models.calculator import (

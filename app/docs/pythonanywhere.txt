@@ -1,0 +1,49 @@
+# Installation on eu.pythonanywhere.com
+
+# Read https://help.pythonanywhere.com/pages/Flask/
+
+# Open bash console to clone project
+git clone https://github.com/mcorne/ti57.git
+
+# Make virtual env
+mkvirtualenv --python=/usr/bin/python3.8 env
+
+# Install packages
+pip install flask
+pip install flask-wtf
+pip install goto-statement
+
+# Web Tab > Add a new web app
+# Select Manual configuration
+# Select Python 3.8
+# Set Source code: /home/ti57/ti57
+# Set virtual env: /home/ti57/.virtualenvs/env
+
+# Configure /var/www/ti57_eu_pythonanywhere_com_wsgi.pyimport sys
+path = '/home/ti57/ti57'
+if path not in sys.path:
+    sys.path.append(path)
+from app import create_app
+application = create_app()
+
+# Force HTTPS in Web table
+# Click on reload
+# Test https://ti57.eu.pythonanywhere.com/
+
+# Misc stuff
+
+# https://help.pythonanywhere.com/pages/RebuildingVirtualenvs
+# Activate virtual env
+workon env
+# Decativate virtual env
+deactivate
+# remove virtual env
+rmvirtualenv env
+
+# List of packages
+pip freeze > requirements.txt
+# Install packages from list
+pip install -r requirements.txt
+
+# Refresh code from repository
+git pull
