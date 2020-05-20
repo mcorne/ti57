@@ -70,7 +70,7 @@ function get_cookie(name) {
 
 /**
  * Save the input data from the display register into the program instructions text area.
- * Highligh the program instructions in highlighting is selected.
+ * Highlight the program instructions if highlighting is selected.
  */
 function save_input_data() {
     var index = 0;
@@ -93,14 +93,13 @@ function save_input_data() {
         return false;
     }
 
-    ti_instructions.value = ti_instructions.value.replace(/^( *[\d.e-]+(?=[ \n\r]))/igm, function (match, p1) {
+    ti_instructions.value = ti_instructions.value.replace(/^ *((\d+(\.\d+?)?|\.\d+)( *\+\/-)?)/gm, function (match, p1) {
         if (typeof values[index] == "undefined") {
             // There is nothing to replace with, pass the match
             replacement = p1;
         } else {
             // Replace the match with the register value with same index
-            // Change scientific notation "e" to "ee", leave "ee" unchanged
-            replacement = values[index].replace(/(e)+/i, "$1$1");
+            replacement = values[index].replace(/\+([\d.]+)/g, "$1").replace(/-([\d.]+)/g, "$1 +/-");
         }
         index++;
         return replacement;
@@ -217,10 +216,17 @@ function toggle_x_y(button_x_id, button_y_id, target_x_id, target_y_id = null) {
  * @param {array} values
  */
 function validate_input_data(values) {
+    var error;
+
     for (value of values) {
         if (isNaN(value.replace(/ee/i, "e"))) { // Change the scientific notation "ee" to "e"
+            error = "Invalid Number";
+        } else if (value.match(/e/i)) {
+            error = "Unable to manage scientific notation at this time"
+        }
+        if (error) {
             var message = document.getElementById("input_data_message");
-            message.innerText = "Invalid Number: " + value;
+            message.innerText = error + ": " + value;
             message.style.display = "block";
             return false;
         }
