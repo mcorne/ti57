@@ -6,3 +6,5 @@
   add post treatment to replace goto.end with return and remove label.end if no return before a label
 - fix negative number in input data, ex. -1 -> 1 +/-
 - fix pattern to allow STO6 for STO 6
+- display ti code next to key on small screen, remove trailing blanks, to do in js including the moving of comments above python line
+- move comment above ti instruction on small screen

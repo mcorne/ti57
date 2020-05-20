@@ -1,6 +1,6 @@
 # Day of the Week
 
-# Enter the day, month, century and year then run to get the day of the week:
+# Enter the day, month, century and year in the Display Register then press Return to get the day of the week:
 # Sunday=0, Monday=1, Tuesday=2, Wednesday=3, Thursday=4, Friday=5 or Saturday=6.
 # So, what day of the week was July 4, 1776?
 # Answer: a Thursday (the 4th day of the week).
