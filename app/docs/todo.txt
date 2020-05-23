@@ -1,5 +1,3 @@
 - fix EN manual
-- fix 1.5EE1 STO 0 that stores 1 in mem0 instead of 15, 1.5EE1= STO 0 works though, parse ee number specifically
-- fix 3ee= that return 3e3, same fix as above
 - fix pattern to allow STO6 for STO 6
 - cache generated files, cache jinja files with flask-caching

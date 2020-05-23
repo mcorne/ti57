@@ -21,6 +21,8 @@ class Translator:
     TI_INSTRUCTION_LENGTH = 9
 
     def __init__(self):
+        self.ee_exponant = False
+        self.ee_number = False
         self.py_lines = []
         self.operators = []
         self.prev_operator = None
@@ -39,6 +41,7 @@ class Translator:
 
         self.operators = []
         self.prev_operator = None
+        self.reset_ee_number()
 
     def action_clear_all(self):
         """Process the INV 2nd Ct key."""
@@ -69,8 +72,11 @@ class Translator:
     def action_number(self):
         """Process a number."""
         # Remove leading 0s
-        number = re.sub(r"^0+(\d)", "\g<1>", self.ti_instruction["value"])
+        number = re.sub(r"^0+(\d)", r"\g<1>", self.ti_instruction["value"])
         self.py_lines.append(f"x = {number}")
+        if self.ee_number:
+            # This is a number entered after "EE", the exponant
+            self.ee_exponant = True
 
     def action_opening_parenthesis(self):
         """Process the ( character."""
@@ -84,6 +90,9 @@ class Translator:
 
     def action_py_line(self):
         """Adds one or more Python lines of code corresponding to a key."""
+        if self.ee_number and self.ti_instruction["value"] != "+/-":
+            # This is any instruction following the scientific notation except "+/-"
+            self.process_prev_scientific_notation()
         if type(self.ti_instruction["py_line"]) is list:
             self.py_lines += self.ti_instruction["py_line"]
         else:
@@ -93,6 +102,7 @@ class Translator:
         """Process the EE key (within a number)."""
         self.py_lines.append("ee = True")
         self.add_operation()
+        self.ee_number = True
 
     def add_end_labels(self, py_lines):
         """Add an end label to each function."""
@@ -338,13 +348,22 @@ class Translator:
         self.update_prev_operator() if self.operators else None
         if self.prev_operator == "EE":
             self.operators.pop()
-            self.py_lines.append("y = stack.pop()")
-            self.py_lines.append("x = y * pow(10, x)")
+            if self.ee_exponant:
+                # The exponant was entered, retrieve exponant and mantissa
+                self.py_lines.append("y = stack.pop()")
+                self.py_lines.append("x = y * pow(10, x)")
+            else:  # No exponant was entered, retrieve the number itself
+                self.py_lines.append("x = stack.pop()")
             self.update_prev_operator()
+            self.reset_ee_number()
 
     def remove_extra_lines(self, py_code):
         """Remove extra blank lines (2 following blank lines max)."""
         return re.sub(r"\n{2,}", r"\n\n", py_code)
+
+    def reset_ee_number(self):
+        self.ee_exponant = False
+        self.ee_number = False
 
     def translate_ti_instructions_to_py_lines(self, ti_instructions, description):
         """Translate the TI instructions into Python."""

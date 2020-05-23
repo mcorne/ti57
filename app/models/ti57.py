@@ -93,7 +93,7 @@ instruction_set = eval(
 "2nd s2"           : {"ti_code": "  80"  , "action": "py_line"            , "py_line": "x = (mem[2] - mem[1] * mem[1] / mem[0]) / mem[0]"}, # var(Y) = sum(Y^2) / N - avg(Y)
 "INV 2nd s2"       : {"ti_code": "- 80"  , "action": "py_line"            , "py_line": "x = (mem[4] - mem[3] * mem[3] / mem[0]) / mem[0]"}, # var(X) = sum(X^2) / N - avg(X)
 "R/S"              : {"ti_code": "  81"  , "action": "py_line"            , "py_line": "raise UserWarning('R/S')"},
-"+/-"              : {"ti_code": "  84"  , "action": "py_line"            , "py_line": "x = -x"},
+"+/-"              : {"ti_code": "  84"  , "action": "py_line"            , "py_line": "x = -x"}, # key tested in translator.translate_ti_instructions_to_py_lines()
 "="                : {"ti_code": "  85"  , "action": "equality"           , "type": "="},
 "2nd Lbl NUMBER"   : {"ti_code": "  86 0", "action": "py_line"            , "py_line": "label .label_NUMBER"},
 "2nd S+"           : {"ti_code": "  88"  , "action": "py_line"            , "py_line": [
