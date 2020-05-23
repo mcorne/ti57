@@ -28,8 +28,9 @@ class Parser:
             # This is an instruction with an instance number, ex. "STO NUMBER" for "STO 7" etc.
             # Create a pattern to capture the instance number with a group name based on the original key
             # and a prefix so it can be found easily in the group dictionary, ex. "_KEY_STO_NUMBER".
+            # Allow no space before the number.
             pattern = pattern.replace(
-                "NUMBER", f"(?P<_KEY_{key.replace(' ', '_')}>[0-7])"
+                " +NUMBER", f" *(?P<_KEY_{key.replace(' ', '_')}>[0-7])"
             )
         return pattern
 
