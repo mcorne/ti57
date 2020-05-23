@@ -1,5 +1,4 @@
 - fix EN manual
-- fix 1.05EE01 that returns invalid token (<string>, line 28) because it translates into x = 01
 - fix 1.5EE1 STO 0 that stores 1 in mem0 instead of 15, 1.5EE1= STO 0 works though
 - fix pattern to allow STO6 for STO 6
 - cache generated files, cache jinja files with flask-caching

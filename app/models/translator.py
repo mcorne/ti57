@@ -68,7 +68,9 @@ class Translator:
 
     def action_numeric(self):
         """Process a number."""
-        self.py_lines.append(f"x = {self.ti_instruction['value']}")
+        # Remove leading 0s
+        number = re.sub(r"^0+(\d)", "\g<1>", self.ti_instruction["value"])
+        self.py_lines.append(f"x = {number}")
 
     def action_opening_parenthesis(self):
         """Process the ( character."""
