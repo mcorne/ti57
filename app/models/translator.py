@@ -66,7 +66,7 @@ class Translator:
         self.process_prev_multiplication()
         self.add_operation()
 
-    def action_numeric(self):
+    def action_number(self):
         """Process a number."""
         # Remove leading 0s
         number = re.sub(r"^0+(\d)", "\g<1>", self.ti_instruction["value"])

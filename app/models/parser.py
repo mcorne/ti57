@@ -4,7 +4,7 @@ import re
 class Parser:
     """TI instructions Parser."""
 
-    DECIMAL = r"([0-9]*\.[0-9]+)|([0-9]+\.[0-9]*)"
+    DECIMAL = r"[0-9]*\.[0-9]+|[0-9]+\.[0-9]*"
     INTEGER = r"[0-9]+"
     # https://docs.python.org/3/howto/regex.html#regex-howto
     METACHARACTERS = r"[.\^$*+?{}[\]|()]"
@@ -132,8 +132,8 @@ class Parser:
             start = match.end()
             line += 1
             ti_instruction["action"] = "continue"
-        elif type == "NUMERIC":
-            ti_instruction["action"] = "numeric"
+        elif type == "NUMBER":
+            ti_instruction["action"] = "number"
         elif type == "SKIP":
             ti_instruction["action"] = "continue"
         else:
@@ -148,7 +148,7 @@ class Parser:
         ]
         groups = [
             ("KEY", "|".join(patterns)),
-            ("NUMERIC", Parser.DECIMAL + "|" + Parser.INTEGER),
+            ("NUMBER", Parser.DECIMAL + "|" + Parser.INTEGER),
             ("COMMENT", r"#[^\n]*"),
             ("DOUBLE_NEWLINE", r"\n{2,}"),
             ("NEWLINE", r"\n"),
