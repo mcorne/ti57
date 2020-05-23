@@ -153,11 +153,6 @@
         {{ form.ti_instructions(class_='w3-input w3-panel', style='font-family: Consolas,"courier new";') }}
         {{ m.highlight_code('tiinstruction', 'highlighted', form.ti_instructions.data, display=False) }}
         {% endif %}
-
-        <p>
-            {{ form.instruction_not_with_python(class_="w3-check") }}
-            {{ form.instruction_not_with_python.label }}
-        </p>
         <p class="w3-center">
             {{ form.run(class_='w3-button w3-amber w3-hover-indigo', title='You can also click on the cogwheel above to run the Program') }}
         </p>

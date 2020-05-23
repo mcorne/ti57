@@ -1,5 +1,5 @@
 /* w3codecolor ver 1.32 by w3schools.com */
-// Apply CUSTOMIZATION's when upgrading
+// Apply CUSTOMIZATIONs when upgrading
 function w3CodeColor() {
   var x, i, j, k, l, modes = ["html", "js", "java", "css", "sql", "python", "kotlin", "tiinstruction"]; // CUSTOMIZATION: added tiinstruction
   if (!document.getElementsByClassName) { return; }
@@ -61,20 +61,24 @@ function w3CodeColorize(x, lang) {
   if (lang == "kotlin") { return kotlinMode(x); }
   if (lang == "php") { return phpMode(x); }
   if (lang == "sql") { return sqlMode(x); }
+
+  // CUSTOMIZATION BEGINING
+
   if (lang == "python") {
-    // CUSTOMIZATION: replace spaces to fixed size spaces and newlines to line breaks
-    x = x.trim().replace(/\n/g, "<br>\n").replace(/ /g, "&nbsp;");
+    x = fix_txt(x);
+    // Replace spaces to fixed size spaces and newlines to line breaks
+    x = x.replace(/\n/g, "<br>\n").replace(/ /g, "&nbsp;");
     highlighted = pythonMode(x);
     highlighted = add_line_numbers(highlighted);
     return highlighted;
   }
-  // CUSTOMIZATION: new tiinstruction mode
+  // New tiinstruction mode
   if (lang == "tiinstruction") { return tiinstructionMode(x); }
   return x;
 
   function tiinstructionMode(txt) {
     commentcolor = "#3f51b5"; // w3-indigo
-    txt = txt.trim();
+    txt = fix_txt(txt)
     // Capture page title
     txt = txt.replace(/^(# +.+)$/m, '_TITLE_BEGIN_$1_TITLE_END_');
     // Capture section titles
@@ -103,7 +107,6 @@ function w3CodeColorize(x, lang) {
     return highlighted;
   }
 
-  // CUSTOMIZATION: add line numbers
   function add_line_numbers(highlighted) {
     var line_number = 1;
     var span = '<span class="w3-text-gray w3-tiny">';
@@ -114,6 +117,25 @@ function w3CodeColorize(x, lang) {
     });
     return span + "1.&nbsp; </span>" + highlighted;
   }
+
+  function fix_txt(txt) {
+    txt = txt.trim();
+    // Replace new lines with "\n"
+    txt = txt.replace(/(\r\n|\r)/g, "\n")
+    if (screen.width < 601) { // w3-hide-small
+      // This is a small screen, split/move comments from/above the current line
+      txt = txt.replace(/^( *)([^#\n ][^#\n]+) *(#[^\n]+)$/mg, "$1$3\n$1$2");
+      // Reduce indentation from 4 spaces to 1 space
+      txt = txt.replace(/    /g, " ");
+      // Move the TI code next to the key
+      txt = txt.replace(/ +(\([^)\n]+\))/g, " $1");
+    }
+    // Remove trailing blanks
+    txt = txt.replace(/ +$/gm, "");
+    return txt;
+  }
+
+  // CUSTOMIZATION END
 
   function extract(str, start, end, func, repl) {
     var s, e, d = "", a = [];

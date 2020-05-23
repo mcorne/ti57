@@ -2,6 +2,5 @@
 - fix 1.05EE01 that returns invalid token (<string>, line 28) because it translates into x = 01
 - fix 1.5EE1 STO 0 that stores 1 in mem0 instead of 15, 1.5EE1= STO 0 works though
 - fix pattern to allow STO6 for STO 6
-- display ti code next to key on small screen, remove trailing blanks, to do in js including the moving of comments above python line
-- move comment above ti instruction on small screen
 - cache generated files, cache jinja files with flask-caching
+- display edit instead of highlight button when site is run after navigator is restarted (and there is no cookie)

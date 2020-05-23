@@ -5,7 +5,6 @@ from flask import (
     Blueprint,
     current_app,
     flash,
-    make_response,
     render_template,
     request,
     send_from_directory,
@@ -39,9 +38,7 @@ def index():
     try:
         if form.validate_on_submit():
             ti_instructions = form.ti_instructions.data
-            py_code = translator.generate_py_code(
-                ti_instructions, form.instruction_not_with_python.data
-            )
+            py_code = translator.generate_py_code(ti_instructions)
             exec(py_code, globals())
             init_calculator_state(json.loads(form.calculator_state.data))
             run_program()
@@ -52,13 +49,7 @@ def index():
                 ti_instructions = file.read()
                 ti_instructions = fix_ti_instructions(ti_instructions)
                 form.ti_instructions.data = ti_instructions
-                if request.cookies.get("instruction_not_with_python", "0") == "1":
-                    form.instruction_not_with_python.data = True
-                else:
-                    form.instruction_not_with_python.data = False
-                py_code = translator.generate_py_code(
-                    ti_instructions, form.instruction_not_with_python.data
-                )
+                py_code = translator.generate_py_code(ti_instructions)
                 init_calculator_state()
                 calculator_state = get_calculator_state()
     except FileNotFoundError:
@@ -74,22 +65,13 @@ def index():
     with open(current_app.root_path + "/.~test_generated.py", "w") as file:
         file.write(py_code)
 
-    template = render_template(
+    return render_template(
         "program/index.html",
         calculator_state=calculator_state,
         form=form,
         py_code=py_code,
         ti_instructions=ti_instructions,
     )
-
-    response = make_response(template)
-    max_age = 3600 * 24 * 30  # 30 days
-    response.set_cookie(
-        "instruction_not_with_python",
-        str(int(form.instruction_not_with_python.data)),
-        max_age,
-    )
-    return response
 
 
 @bp.route("/docs/<filename>")

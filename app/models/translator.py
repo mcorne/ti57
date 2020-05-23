@@ -223,7 +223,7 @@ class Translator:
             fixed += f" ({ti_instruction['ti_code'].strip()})"
         return fixed
 
-    def generate_py_code(self, ti_instructions, instruction_not_with_python):
+    def generate_py_code(self, ti_instructions):
         """Generate the Python code from the TI instructions (the class entry point)."""
         ti_instructions = self.fix_newlines(ti_instructions)
         ti_instructions, description = self.extract_description(ti_instructions)
@@ -242,8 +242,6 @@ class Translator:
         py_code = "\n".join(py_lines)
         py_code = self.remove_extra_lines(py_code)
         py_code = py_code.lstrip()
-        if instruction_not_with_python:
-            py_code = self.split_instructions_from_py_lines(py_code)
 
         py_code = self.add_py_code_to_main_function(py_code)
         py_code = description + py_code
@@ -345,14 +343,6 @@ class Translator:
     def remove_extra_lines(self, py_code):
         """Remove extra blank lines (2 following blank lines max)."""
         return re.sub(r"\n{2,}", r"\n\n", py_code)
-
-    def split_instructions_from_py_lines(self, py_code):
-        """Split/move the TI instruction comment from/above the Python line of code (uses for small screens)."""
-        py_code = re.sub(
-            r"^( +)(.*?[^ \n] *)(#.*?)$", r"\g<1>\g<3>\n\g<1>\g<2>", py_code, 0, re.M
-        )
-        py_code = re.sub(r"^ +(#.*?)$", r"    \g<1>", py_code, 0, re.M)
-        return py_code
 
     def translate_ti_instructions_to_py_lines(self, ti_instructions, description):
         """Translate the TI instructions into Python."""
