@@ -3,4 +3,3 @@
 - fix 1.5EE1 STO 0 that stores 1 in mem0 instead of 15, 1.5EE1= STO 0 works though
 - fix pattern to allow STO6 for STO 6
 - cache generated files, cache jinja files with flask-caching
-- display edit instead of highlight button when site is run after navigator is restarted (and there is no cookie)

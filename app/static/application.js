@@ -131,10 +131,12 @@ function set_cookie(name, value, exdays = 30) {
  * Set the highlight or edit button depending on the corresponding cookie after loading the page.
  */
 function set_highlight_edit() {
+    var cookie = get_cookie('instructions_display');
     var edit = document.getElementById("edit");
     var highlight = document.getElementById("highlight");
 
-    if (get_cookie('instructions_display') == 'highlighted') {
+
+    if (!cookie || cookie == 'highlighted') {
         edit.style.display = 'inline-block';
         highlight.style.display = 'none';
     } else {
