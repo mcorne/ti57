@@ -4,7 +4,7 @@
 # What is the new price?
 # Answer: $11.21.
 
-# Source: "Training with your EC-4000 Programmable Calculator.pdf#page=54", p. 3-11
+# Source: "TI-57 Making Tracks into Programming.pdf#page=54", p. 3-11
 
 # Data Input
 0.25 STO 3 # Discount

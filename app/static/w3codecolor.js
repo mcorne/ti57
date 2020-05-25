@@ -96,7 +96,7 @@ function w3CodeColorize(x, lang) {
     highlighted = highlighted.replace(/_TITLE_END_/, '</b></span>');
     highlighted = highlighted.replace(/_SECTION_BEGIN_/g, '<b>');
     highlighted = highlighted.replace(/_SECTION_END_/g, '</b>');
-    // Make links to docs and replace "&nbsp;" with spaces, ex. "Training with your EC-4000 Programmable Calculator.pdf"
+    // Make links to docs and replace "&nbsp;" with spaces, ex. "TI-57 Making Tracks into Programming.pdf"
     highlighted = highlighted.replace(/"([^"]+)(\.pdf#page=\d+)"/g, function (match, p1, p2) {
       return '<a href="' + "/static/docs/" + p1.replace(/&nbsp;/g, " ") + p2 + '">' + p1 + "</a>";
     });

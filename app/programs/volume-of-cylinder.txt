@@ -3,7 +3,7 @@
 # What is the volume of a cylinder for a diameter and height of 10 and 4?
 # Answer: 314.16.
 
-# Source: "Training with your EC-4000 Programmable Calculator.pdf#page=61", p. 3-18
+# Source: "TI-57 Making Tracks into Programming.pdf#page=61", p. 3-18
 
 # Data Input
 10 STO 1     # Diameter

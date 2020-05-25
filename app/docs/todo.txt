@@ -1,2 +1,1 @@
-- fix EN manual
 - cache generated files, cache jinja files with flask-caching

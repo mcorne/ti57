@@ -4,7 +4,7 @@
 # Answer: $1060.0 after 1 year, $1123.6 after 2, $1191.02 after 3 etc.
 # Run the Program then check the details in the History.
 
-# Source: "Training with your EC-4000 Programmable Calculator.pdf#page=80", p. 4-10
+# Source: "TI-57 Making Tracks into Programming.pdf#page=80", p. 4-10
 
 # Data Input
 1000 STO 1   # Initial amount

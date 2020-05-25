@@ -4,7 +4,7 @@
 # Answer: 16 feet after 1 sec, 64 after 2, 144 after 3 etc.
 # Run the Program then check the details in the History.
 
-# Source: "Training with your EC-4000 Programmable Calculator.pdf#page=74", p. 4-4
+# Source: "TI-57 Making Tracks into Programming.pdf#page=74", p. 4-4
 
 # Data Input
 10 STO 7     # Number of seconds

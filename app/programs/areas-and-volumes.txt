@@ -5,7 +5,7 @@
 # Answer: 38.07, 234.89, 27.9 and 110.85.
 # Run the Program then check the details in the History.
 
-# Source: "Training with your EC-4000 Programmable Calculator.pdf#page=66", p. 3-23
+# Source: "TI-57 Making Tracks into Programming.pdf#page=66", p. 3-23
 
 # Data Input
 6.17 STO 0     # Side
