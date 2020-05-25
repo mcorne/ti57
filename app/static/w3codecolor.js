@@ -98,7 +98,7 @@ function w3CodeColorize(x, lang) {
     highlighted = highlighted.replace(/_SECTION_END_/g, '</b>');
     // Make links to docs and replace "&nbsp;" with spaces, ex. "TI-57 Making Tracks into Programming.pdf"
     highlighted = highlighted.replace(/"([^"]+)(\.pdf#page=\d+)"/g, function (match, p1, p2) {
-      return '<a href="' + "/static/docs/" + p1.replace(/&nbsp;/g, " ") + p2 + '">' + p1 + "</a>";
+      return '<a target="ti57pdf" href="' + "/static/docs/" + p1.replace(/&nbsp;/g, " ") + p2 + '">' + p1 + "</a>";
     });
     // Make HTML links and replace "&nbsp;" with spaces, ex. [https://en.wikipedia.org/wiki/TI-57 TI-57]
     highlighted = highlighted.replace(/\[(http[^ ]+) +([^\]]+)\]/g, function (match, p1, p2) {

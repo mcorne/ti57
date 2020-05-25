@@ -76,4 +76,4 @@ def index():
 
 @bp.route("/docs/<filename>")
 def send_pdf(filename):
-    return send_from_directory("static/docs", filename)
+    return send_from_directory("static/docs", filename, cache_timeout=3600)
