@@ -28,20 +28,20 @@ R/S
 
 # Subroutine: Area of a square
 2nd lbl 1
-x^2            # side²
+x^2            # Side²
 INV SBR
 
 # Subroutine: Area of a circle
 2nd Lbl 2
-x^2 X 2nd pi = # radius² X π
+x^2 X 2nd pi = # Radius² X π
 INV SBR
 
 # Subroutine: Volume of a cube (5 steps)
 2nd Lbl 3
-y^x 3 =        # side³
+y^x 3 =        # Side³
 INV SBR
 
 # Subroutine: Volume of a sphere
 2nd Lbl 4
-y^x 3 X 4 : 3 X 2nd pi = # radius^3 X 4:3π
+y^x 3 X 4 : 3 X 2nd pi = # Radius^3 X 4:3π
 INV SBR

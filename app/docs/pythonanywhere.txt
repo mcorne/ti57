@@ -37,7 +37,7 @@ application = create_app()
 workon env
 # Decativate virtual env
 deactivate
-# remove virtual env
+# Remove virtual env
 rmvirtualenv env
 
 # List of packages
