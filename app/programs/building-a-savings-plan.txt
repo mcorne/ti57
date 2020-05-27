@@ -1,8 +1,8 @@
 # Building a Savings Plan
 
 # Let's say you make a monthly deposit (PMT) of $55.
-# How much your cash will grow every month (n) at a 0.7% interest rate (i)?
-# Answer: $110.38 including $0.38 of earned interest after a the first full month.
+# How much will your cash grow every month (n) at a 0.7% interest rate (i)?
+# Answer: $110.38 including $0.38 of earned interest after the first full month.
 # Then $166.16 including $1.16 etc., and finally $686.01 including $26.01 after a year.
 # How much cash will you have in 5 years (60 months)?
 # Answer: 4083.64 including 783.64.
@@ -33,5 +33,5 @@ RCL 1 X ((1 + RCL 2 ) y^x RCL 3 - 1) : RCL 2 =
 2nd Pause
 RCL 3
 INV 2nd x>=t   # Month lower than number of months?
-GTO 0          # Yes, go back to the begining
+GTO 0          # Yes, go back to the beginning
 INV SBR        # No, stop

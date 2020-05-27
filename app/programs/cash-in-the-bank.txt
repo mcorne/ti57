@@ -24,6 +24,6 @@ STO 4
 2nd Pause
 RCL 3
 INV 2nd x>=t # Year lower than the number of years?
-GTO 1        # Yes, go back to the begining
+GTO 1        # Yes, go back to the beginning
 RCL 4
 R/S          # No, stop

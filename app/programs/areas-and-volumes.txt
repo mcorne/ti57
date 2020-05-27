@@ -1,7 +1,7 @@
 # Areas & Volumes (Sign Posts)
 
 # What is the area of a square and the volume of a cube with a side of 6.17?
-# What is the area of a circle and the volume of a sphere with radius of 2.98?
+# What is the area of a circle and the volume of a sphere with a radius of 2.98?
 # Answer: 38.07, 234.89, 27.9 and 110.85.
 # Run the Program then check the details in the History.
 

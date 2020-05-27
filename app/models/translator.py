@@ -188,7 +188,7 @@ class Translator:
         return py_lines
 
     def extract_description(self, ti_instructions):
-        """Extract the description at the begining of the program."""
+        """Extract the description at the beginning of the program."""
         description = ""
         input_data_pieces = ti_instructions.split("# Data", 1)
 

@@ -19,10 +19,10 @@ GTO 1
 1 =
 R/S
 
-# Note that the following code is more efficient but does work after the translation into python.
-# The decreased number is added to the stack after each loop instead of being multiplied.
+# Note that the following code is more efficient but does not work after the translation into python,
+# because the decreased number is added to the stack after each loop instead of being multiplied.
 # 2nd Lbl 1
 # RCL 0 X
 # 2nd Dsz   # Decrease the number and test?
-# GTO 1     # If not zero, go back to the begining
+# GTO 1     # If not zero, go back to the beginning
 # 1 =       # If not zero, finish multiplication

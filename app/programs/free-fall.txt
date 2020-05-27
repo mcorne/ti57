@@ -20,6 +20,6 @@ STO 2
 2nd Pause
 RCL 1
 INV 2nd x>=t # Time lower than the number of seconds?
-GTO 0        # Yes, go back to the begining
+GTO 0        # Yes, go back to the beginning
 RCL 2
 R/S          # No, stop

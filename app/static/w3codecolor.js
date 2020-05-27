@@ -62,7 +62,7 @@ function w3CodeColorize(x, lang) {
   if (lang == "php") { return phpMode(x); }
   if (lang == "sql") { return sqlMode(x); }
 
-  // CUSTOMIZATION BEGINING
+  // CUSTOMIZATION BEGINNING
 
   if (lang == "python") {
     x = fix_txt(x);
@@ -83,7 +83,7 @@ function w3CodeColorize(x, lang) {
     txt = txt.replace(/^(# +.+)$/m, '_TITLE_BEGIN_$1_TITLE_END_');
     // Capture section titles
     txt = txt.replace(/^(# +(?:Data Input|Data Preprocessing|Data Processing|Subroutine).*)$/gm, '_SECTION_BEGIN_$1_SECTION_END_');
-    // Replace spaces with "&nbsp;" in instructions up to be begining of comments
+    // Replace spaces with "&nbsp;" in instructions up to be beginning of comments
     txt = txt.replace(/^([^#]+#)/gm, function (match, p1) {
       return p1.replace(/ /g, "&nbsp;");
     });
