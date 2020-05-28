@@ -115,7 +115,13 @@
                     The Labels are limited to 7 on the Emulator while labels 8 and 9 are available on a real Calculator.
                 </li>
                 <li>
-                    The 50-steps limit is not enforced. This is used in a few  cases to improve the "user experience".
+                    The 50-steps limit is not enforced. This is used in a few cases to improve the "user experience".
+                </li>
+                <li>
+                    Numbers are extracted as a whole integer or float but not digit by digit.
+                </li>
+                <li>
+                    Jumps between subroutines (GTO or RST) are not implemented.
                 </li>
             </ul>
         ''') }}
