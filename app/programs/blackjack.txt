@@ -28,7 +28,7 @@ RCL 5 2nd x=t  # Stop drawing?
 GTO 0
 GTO 1
 
-# Data Processing (56 steps)
+# Data Processing (59 steps)
 2nd Lbl 0      # The calculator plays
 SBR 4
 +/-
