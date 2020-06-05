@@ -1,0 +1,82 @@
+# Black Jack
+
+# Play Blackjack against the calculator!
+# Enter 1 to draw a card then then press Return.
+# The calculator will return your card from 1 to 11.
+# Keep drawing to get as close as possible to 21.
+# You will lose the game if you exceed 21.
+# Enter 0 when you are happy with your hand.
+# The calculator then draws its cards and displays the overall score.
+# For example, 3.2 means you have won 3 times and lost twice.
+# You can check the cards that have been drawn in the History.
+# You cards are shown as positive numbers, those of the calculator as negative numbers.
+
+# Source: "Ordinateur de poche n°21.pdf#page=53", p. 53
+
+# Data Input
+1 STO 5        # Your choice
+
+# Data Preprocessing
+0 STO 7
+RCL 3
+INV 2nd x=t    # Seed != 0?
+GTO 3
+0.123456 STO 3 # Set the seed
+
+2nd Lbl 3
+RCL 5 2nd x=t  # Stop drawing?
+GTO 0
+GTO 1
+
+# Data Processing (56 steps)
+2nd Lbl 0      # The calculator plays
+SBR 4
++/-
+2nd Pause
+INV SUM 2
+RCL 2
+2nd x>=t       # Total>=22?
+GTO 6          # Yes, the calculator lost
+x<>t
+RCL 1
+2nd x=t        # Same hand values?
+GTO 7          # Yes, no winner
+2nd x>=t       # Your hand value greater?
+GTO 0          # Yes, the calculor always keeps drawing!
+GTO 5
+
+2nd Lbl 1      # You play
+SBR 4
+STO 0
+2nd Pause
+SUM 1
+RCL 1
+2nd x>=t       # Total>=22?
+GTO 5          # Yes, you lost
+RCL 0
+R/S
+2nd Lbl 5
+0.1 SUM 4      # Game lost
+GTO 7
+2nd Lbl 6
+1 SUM 4        # Game won
+2nd Lbl 7
+0 STO 1 STO 2  # Reset hand values
+RCL 4          # Score
+2nd Fix 1
+2nd Pause
+R/S
+
+# Subroutine: Card draw
+2nd Lbl 4
+22 x<>t
+RCL 3
+INV 2nd log
+INV 2nd Int
+STO 3
+X 11 + 1 =
+2nd Int
+INV 2nd Fix
+INV SBR
+
+# Note that this program would not fit into a real calculator!
