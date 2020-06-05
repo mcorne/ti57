@@ -6,6 +6,7 @@
 # What sales performance would a test score of 9 predict?
 # What test score would indicate a sales performance 75% above target?
 # Answer: 2.68, 6.14, 0.75, 0.87, 30.29, 25.66.
+# Run the Program then check the details in the History.
 
 # Source: "TI-57 Making Tracks into Programming.pdf#page=182", p. 9-14
 
@@ -21,7 +22,7 @@
 18 x<>t 50 2nd S+
 6  x<>t 20 2nd S+
 
-# Data Processing
+# Data Preprocessing
 2nd Fix 2
 SBR 0    2nd Pause
 SBR 1    2nd Pause
@@ -29,6 +30,8 @@ SBR 2    2nd Pause
 Vx       2nd Pause
 9  SBR 3 2nd Pause
 75 SBR 4 2nd Pause
+
+# Data Processing (49 steps)
 R/S
 
 # Subroutine: Calculate the slope (m)
@@ -49,7 +52,7 @@ INV SBR
 
 # Subroutine: Calculate y given x
 2nd lbl 3
-STO 7 SBR 0 2nd Prd 7 SBR 1 SUM7 RCL7
+STO 7 SBR 0 2nd Prd 7 SBR 1 SUM 7 RCL 7
 INV SBR
 
 # Subroutine: Calculate x given y

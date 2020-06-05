@@ -1,10 +1,10 @@
 # Lunar Lander
 
-# You are in a Lunar Lander at an altitude of 5 000 m with 130 L left of gas.
+# You are in a Lunar Lander at an altitude of 5000 m with 130 L left of gas.
 # Your job is to touch the ground at less than 5 m/s by adjusting the consumption every 10 sec.
 # Enter a number in the Display Register then press Return.
 # The calculator will display the current speed and height in one number, ex. -96.4020.
-# That means you are descending at 96 m/s at an altitude of 4 020 m.
+# That means you are descending at 96 m/s at an altitude of 4020 m.
 # Check how much gas you have left in the History.
 # You will know you have hit the ground when you see a number ending in .0000.
 # You landed safely if the speed is under 5 m/s, otherwise you crashed!
