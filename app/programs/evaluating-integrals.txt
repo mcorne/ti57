@@ -1,7 +1,7 @@
 # Evaluating Integrals: Simpson's Rule
 
 # What is the area between 1 and 5 under y = 2x² + 3x - 1?
-# Answer: 114.66667.
+# Answer: 114.666...
 # Tip! The function can easily be changed in the subroutine.
 
 # Formula: Area = w/3 (Y1 + 4Y2 + 2Y3 + 4Y4 + ... + 2Yn-1 + 4Yn + Yn+1)

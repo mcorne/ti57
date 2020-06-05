@@ -1,4 +1,4 @@
-# Circumference and Area of a Circle (Getting Around)
+# Circumference & Area of a Circle (Getting Around)
 
 # What is the circumference and the area of a circle with a diameter of 10?
 # Answer: the circumference is 31.42 and the area 78.54.
