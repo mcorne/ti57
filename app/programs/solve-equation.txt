@@ -1,0 +1,51 @@
+# Solve an Equation with the Newtown & Raphson Method
+
+# What is the root of Ln(x) - cos(x) = 0?
+# Answer: 1.302964.
+# Run the Program then check the iterations in the History.
+# Tip! The function is coded in the subroutine, feel free to change it!
+# The calculator will display 9.9999999 when the function returns 0 due to division by 0.
+# It will display an error message when trying to perform an invalid calculation.
+# For example, the log or square of a negative number will display "math domain error".
+
+# Formula: Xn+1 = Xn + Hn + En
+# Hn = En-1 / 9
+# En = Hn / (f(Xn)/f(Xn+Hn) - 1)
+
+# Source: "Mathématiques Appliquées et Calculatrices Programmables.pdf#page=67", p. 123
+
+# Data Input
+1        STO 1 # x = x0
+1        STO 2 # h = h0
+0.000001 STO 7 # Precision
+
+# Data Processing (24 steps excl. function)
+2nd Rad
+2nd Lbl 1
+RCL 1
+2nd Pause
+SBR 2          # f(x)
+STO 3
+RCL 2          # h
+SUM 1          # x = x + h
+SBR 2          # f(x+h)
+INV 2nd Prd 3  # f(x)/f(x+h)
+1
+INV SUM 3      # f(x)/f(x+h) - 1
+RCL 3
+INV 2nd Prd 2  # e = h / (f(x)/f(x+h) - 1)
+RCL 2
+SUM 1          # x = x + h + e
+9
+INV 2nd Prd 2  # h = e/9
+RCL 2
+2nd |x|
+2nd x>=t
+GTO 1
+RCL 1
+R/S
+
+# Subroutine: The function, ex. y = Ln(x) - cos(x)
+2nd lbl 2
+RCL 1 Lnx - RCL 1 2nd cos =
+INV SBR
