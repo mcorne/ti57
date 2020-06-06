@@ -1,6 +1,6 @@
 # Solve an Equation with the Newtown & Raphson Method
 
-# What is the root of Ln(x) - cos(x) = 0?
+# What is the root of ln(x) - cos(x) = 0?
 # Answer: 1.302964.
 # Run the Program then check the iterations in the History.
 # Tip! The function is coded in the subroutine, feel free to change it!
@@ -45,7 +45,7 @@ GTO 1
 RCL 1
 R/S
 
-# Subroutine: The function, ex. y = Ln(x) - cos(x)
+# Subroutine: The function, ex. y = ln(x) - cos(x)
 2nd lbl 2
 RCL 1 Lnx - RCL 1 2nd cos =
 INV SBR
