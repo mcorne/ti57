@@ -1,0 +1,25 @@
+# https://www.python.org/downloads/
+python-3.6.8-amd64.exe
+# install python:
+# DO NOT add to PATH
+# Install for all users
+
+# https://code.visualstudio.com/docs/python/environments
+Command Palette
+Python: Create Environment
+Select Venv etc.
+
+cd C:\Data\vscode\ti57
+# start new terminal to verify prompt is prefixed with (.venv)
+
+# import in project environment
+pip install black
+pip install flask
+pip install flask-wtf
+pip install goto-statement
+# not working with 3.8
+
+-- run app
+set FLASK_APP=app
+set FLASK_ENV=development
+flask run

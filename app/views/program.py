@@ -45,7 +45,11 @@ def index():
             calculator_state = get_calculator_state()
         else:
             program = request.args.get("program", "introduction")
-            with open(current_app.root_path + f"/programs/{program}.txt", "r") as file:
+            with open(
+                current_app.root_path + f"/programs/{program}.txt",
+                "r",
+                encoding="utf-8",
+            ) as file:
                 ti_instructions = file.read()
                 ti_instructions = fix_ti_instructions(ti_instructions)
                 form.ti_instructions.data = ti_instructions
